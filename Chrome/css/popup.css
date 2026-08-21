@@ -930,30 +930,50 @@ body.is-sidepanel .btn-icon-fav {
   gap: 6px;
 }
 
-/* GitHub Action Button */
+/* GitHub & Website Action Buttons */
 .github-btn-card {
   display: flex;
   gap: 8px;
   margin-top: 2px;
 }
 
-.btn-github-link {
+.btn-github-link,
+.btn-website-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background-color: #24292e;
-  color: #ffffff;
-  padding: 8px 14px;
+  gap: 6px;
+  padding: 8px 12px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   text-decoration: none;
-  width: 100%;
+  flex: 1;
   transition: all 0.2s ease;
+}
+
+.btn-github-link {
+  background-color: #24292e;
+  color: #ffffff;
 }
 
 .btn-github-link:hover {
   background-color: #1b1f23;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-website-link {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  color: #ffffff;
+}
+
+.btn-website-link:hover {
+  opacity: 0.95;
+  box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+}
+
+.icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
 }

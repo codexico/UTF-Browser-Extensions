@@ -193,5 +193,8 @@
   },
   "aboutGithubBtn": {
     "message": "Repositorio en GitHub"
+  },
+  "aboutWebsiteBtn": {
+    "message": "codexico.com.br"
   }
 }
