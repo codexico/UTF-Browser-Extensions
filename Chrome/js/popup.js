@@ -409,10 +409,6 @@ function createCardElement(g) {
     selectGlyph(g, card);
   });
 
-  card.addEventListener('mouseenter', () => {
-    updateInspector(g);
-  });
-
   return card;
 }
 
