@@ -31,6 +31,39 @@ const UNICODE_EXACT_NAMES = {
 };
 
 /**
+ * i18n Translation Helper
+ */
+function getMsg(key, fallback) {
+  if (typeof chrome !== 'undefined' && chrome.i18n && chrome.i18n.getMessage) {
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) return msg;
+  }
+  return fallback;
+}
+
+function applyI18n() {
+  if (typeof chrome === 'undefined' || !chrome.i18n || !chrome.i18n.getMessage) return;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) el.textContent = msg;
+  });
+
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.dataset.i18nTitle;
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) el.title = msg;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) el.placeholder = msg;
+  });
+}
+
+/**
  * Dynamic Unicode Character Naming Engine
  */
 function getUnicodeName(symbol, hex, section) {
@@ -74,6 +107,8 @@ function getUnicodeName(symbol, hex, section) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  applyI18n();
+
   // Detect Side Panel mode via query param or window width
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('mode') === 'sidepanel' || window.innerWidth < 440) {
@@ -203,11 +238,11 @@ function setupEventListeners() {
 
   // Inspector Action Buttons
   id('btnCopyChar').addEventListener('click', () => {
-    if (activeGlyph) copyToClipboard(activeGlyph.symbol, `Copiado: ${activeGlyph.symbol}`);
+    if (activeGlyph) copyToClipboard(activeGlyph.symbol, `${getMsg('copiedMsg', 'Copiado: ')}${activeGlyph.symbol}`);
   });
 
   id('btnCopyHex').addEventListener('click', () => {
-    if (activeGlyph) copyToClipboard(`U+${activeGlyph.hex}`, `Copiado: U+${activeGlyph.hex}`);
+    if (activeGlyph) copyToClipboard(`U+${activeGlyph.hex}`, `${getMsg('copiedMsg', 'Copiado: ')}U+${activeGlyph.hex}`);
   });
 
   id('btnFav').addEventListener('click', () => {
@@ -229,7 +264,7 @@ function setupEventListeners() {
           console.error('Error opening side panel:', err);
         }
       } else {
-        showToast('Abra o Painel Lateral no menu de extensões do Chrome');
+        showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões do Chrome'));
       }
     });
   }
@@ -241,23 +276,19 @@ function setupEventListeners() {
 async function switchCategory(cat, pillElement) {
   currentCategory = cat;
 
-  // Update active pill UI
   document.querySelectorAll('.nav-pill').forEach(btn => btn.classList.remove('active'));
   if (pillElement) pillElement.classList.add('active');
 
-  // Clear search box
   id('searchInput').value = '';
 
-  // Render category content
   if (cat === 'home') {
     renderHomeView();
   } else if (cat === 'favorites') {
-    renderGlyphList(favoriteGlyphs, 'Nenhum favorito salvo. Clique no ★ no painel inferior para salvar!');
+    renderGlyphList(favoriteGlyphs, getMsg('emptyFavoritesMsg', 'Nenhum favorito salvo. Clique no ★ no painel inferior para salvar!'));
   } else {
     await loadCategory(cat);
   }
 
-  // Scroll pill into view smoothly
   if (pillElement) {
     pillElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
@@ -281,10 +312,11 @@ function renderHomeView() {
 
   const fragment = document.createDocumentFragment();
 
-  // Section 1: ⏱ Recentes
+  // Section 1: Recentes
   const headerRecents = document.createElement('div');
   headerRecents.className = 'grid-section-header';
-  headerRecents.innerHTML = '<span>⏱ Recentes</span>';
+  const recentsTitle = getMsg('sectionRecents', 'Recentes');
+  headerRecents.innerHTML = `<span>⏱ ${recentsTitle}</span>`;
   fragment.appendChild(headerRecents);
 
   if (recentGlyphs && recentGlyphs.length > 0) {
@@ -297,15 +329,16 @@ function renderHomeView() {
     emptyNotice.style.textTransform = 'none';
     emptyNotice.style.fontWeight = '400';
     emptyNotice.style.color = 'var(--text-muted)';
-    emptyNotice.textContent = 'Os caracteres que você copiar aparecerão aqui!';
+    emptyNotice.textContent = getMsg('emptyRecentsNotice', 'Os caracteres que você copiar aparecerão aqui!');
     fragment.appendChild(emptyNotice);
   }
 
-  // Section 2: 🔥 Populares & Essenciais
+  // Section 2: Populares & Essenciais
   const headerPopular = document.createElement('div');
   headerPopular.className = 'grid-section-header';
   headerPopular.style.marginTop = '12px';
-  headerPopular.innerHTML = '<span>🔥 Mais Populares</span>';
+  const popularTitle = getMsg('sectionPopular', 'Mais Populares');
+  headerPopular.innerHTML = `<span>🔥 ${popularTitle}</span>`;
   fragment.appendChild(headerPopular);
 
   const popularList = (typeof POPULAR_GLYPHS !== 'undefined') ? POPULAR_GLYPHS : [];
@@ -315,7 +348,6 @@ function renderHomeView() {
 
   grid.appendChild(fragment);
 
-  // Select first available item
   const firstGlyph = (recentGlyphs && recentGlyphs.length > 0) ? recentGlyphs[0] : popularList[0];
   if (firstGlyph) selectGlyph(firstGlyph, grid.querySelector('.glyph-card'));
 }
@@ -340,7 +372,7 @@ function createCardElement(g) {
 
   card.addEventListener('click', () => {
     selectGlyph(g, card);
-    copyToClipboard(g.symbol, `Copiado: ${g.symbol}`);
+    copyToClipboard(g.symbol, `${getMsg('copiedMsg', 'Copiado: ')}${g.symbol}`);
     addToRecent(g);
   });
 
@@ -567,16 +599,16 @@ async function toggleFavorite(glyph) {
   const index = favoriteGlyphs.findIndex(f => f.hex === glyph.hex);
   if (index >= 0) {
     favoriteGlyphs.splice(index, 1);
-    showToast(`Removido dos favoritos: ${glyph.symbol}`);
+    showToast(`${getMsg('removedFavMsg', 'Removido dos favoritos: ')}${glyph.symbol}`);
   } else {
     favoriteGlyphs.unshift(glyph);
-    showToast(`Adicionado aos favoritos! ${glyph.symbol}`);
+    showToast(`${getMsg('addedFavMsg', 'Adicionado aos favoritos! ')}${glyph.symbol}`);
   }
   await saveStorage();
   updateInspector(glyph);
 
   if (currentCategory === 'favorites') {
-    renderGlyphList(favoriteGlyphs, 'Nenhum favorito salvo. Clique no ★ no painel inferior para salvar!');
+    renderGlyphList(favoriteGlyphs, getMsg('emptyFavoritesMsg', 'Nenhum favorito salvo. Clique no ★ no painel inferior para salvar!'));
   }
 }
 

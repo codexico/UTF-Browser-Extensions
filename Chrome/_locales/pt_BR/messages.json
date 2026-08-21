@@ -1,0 +1,176 @@
+{
+  "extName": {
+    "message": "Unicode & UTF-8 Character Studio"
+  },
+  "extDesc": {
+    "message": "Repositório completo de caracteres UTF-8, símbolos Unicode e emojis com busca instantânea e Painel Lateral."
+  },
+  "searchPlaceholder": {
+    "message": "Pesquisar símbolos, hex, nomes..."
+  },
+  "fontInfoTitle": {
+    "message": "Fontes Recomendadas para Caracteres Raros"
+  },
+  "sidepanelTitle": {
+    "message": "Fixar no Painel Lateral (não fecha ao trocar de app)"
+  },
+  "navHome": {
+    "message": "Início"
+  },
+  "navFavorites": {
+    "message": "Favoritos"
+  },
+  "navEmoticons": {
+    "message": "Emoticons"
+  },
+  "navMiscPictographs": {
+    "message": "Misc Pictogramas"
+  },
+  "navTransportMaps": {
+    "message": "Transporte & Mapas"
+  },
+  "navMiscSymbols": {
+    "message": "Misc Símbolos"
+  },
+  "navDingbats": {
+    "message": "Dingbats"
+  },
+  "navCurrencies": {
+    "message": "Moedas"
+  },
+  "navMathOperators": {
+    "message": "Operadores Matemáticos"
+  },
+  "navArrows": {
+    "message": "Setas"
+  },
+  "navMiscTechnical": {
+    "message": "Técnicos / UI"
+  },
+  "navEnclosedAlphanumerics": {
+    "message": "Alfanuméricos Circulados"
+  },
+  "navBoxDrawing": {
+    "message": "Desenho de Caixas"
+  },
+  "navBlockElements": {
+    "message": "Elementos em Bloco"
+  },
+  "navGeometricShapes": {
+    "message": "Formas Geométricas"
+  },
+  "navPunctuation": {
+    "message": "Pontuação"
+  },
+  "navSuperSubscripts": {
+    "message": "Super & Subscritos"
+  },
+  "navLetterlikeSymbols": {
+    "message": "Símbolos Tipográficos"
+  },
+  "navNumberForms": {
+    "message": "Numerais / Frações"
+  },
+  "navGamesCards": {
+    "message": "Jogos & Cartas"
+  },
+  "navLatin": {
+    "message": "Escrita Latina"
+  },
+  "navGreek": {
+    "message": "Grego & Copta"
+  },
+  "navHebrew": {
+    "message": "Escrita Hebraica"
+  },
+  "navArabic": {
+    "message": "Escrita Árabe"
+  },
+  "navDevanagari": {
+    "message": "Escrita Devanagari"
+  },
+  "navThai": {
+    "message": "Escrita Tailandesa"
+  },
+  "navTibetan": {
+    "message": "Escrita Tibetana"
+  },
+  "navRunic": {
+    "message": "Escrita Rúnica"
+  },
+  "navEthiopic": {
+    "message": "Escrita Etíope"
+  },
+  "navCherokee": {
+    "message": "Escrita Cherokee"
+  },
+  "navKhmer": {
+    "message": "Escrita Khmer"
+  },
+  "navMongolian": {
+    "message": "Escrita Mongol"
+  },
+  "navHiragana": {
+    "message": "Hiragana"
+  },
+  "navKatakana": {
+    "message": "Katakana"
+  },
+  "navBraille": {
+    "message": "Padrões Braille"
+  },
+  "navCJK": {
+    "message": "Ideogramas CJK"
+  },
+  "navYi": {
+    "message": "Sílabas Yi"
+  },
+  "sectionRecents": {
+    "message": "Recentes"
+  },
+  "sectionPopular": {
+    "message": "Mais Populares"
+  },
+  "emptyRecentsNotice": {
+    "message": "Os caracteres que você copiar aparecerão aqui!"
+  },
+  "emptyFavoritesMsg": {
+    "message": "Nenhum favorito salvo. Clique no ★ no painel inferior para salvar!"
+  },
+  "copiedMsg": {
+    "message": "Copiado: "
+  },
+  "addedFavMsg": {
+    "message": "Adicionado aos favoritos! "
+  },
+  "removedFavMsg": {
+    "message": "Removido dos favoritos: "
+  },
+  "sidepanelOpenTip": {
+    "message": "Abra o Painel Lateral no menu de extensões do Chrome"
+  },
+  "modalTitle": {
+    "message": "Fontes Recomendadas"
+  },
+  "modalSubtitle": {
+    "message": "Alguns caracteres Unicode raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema operacional."
+  },
+  "modalDownloadSection": {
+    "message": "Pacotes de Fontes Gratuitos Sugeridos:"
+  },
+  "modalFontGoogleNoto": {
+    "message": "Google Noto Fonts (Cobertura Universal)"
+  },
+  "modalFontBabelStone": {
+    "message": "BabelStone Fonts (Símbolos & Escritas Raras)"
+  },
+  "modalFontQuivira": {
+    "message": "Quivira (Fonte Unicode Abrangente)"
+  },
+  "modalTip": {
+    "message": "Dica: Se algum símbolo aparecer como um retângulo em branco (tofu), baixar as fontes Google Noto resolverá."
+  },
+  "modalCloseBtn": {
+    "message": "Entendi"
+  }
+}

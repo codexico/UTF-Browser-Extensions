@@ -1,0 +1,176 @@
+{
+  "extName": {
+    "message": "Unicode & UTF-8 Character Studio"
+  },
+  "extDesc": {
+    "message": "Repositorio completo de caracteres UTF-8, símbolos Unicode y emoticonos con búsqueda instantánea y Panel Lateral."
+  },
+  "searchPlaceholder": {
+    "message": "Buscar símbolos, hex, nombres..."
+  },
+  "fontInfoTitle": {
+    "message": "Fuentes Recomendadas para Caracteres Raros"
+  },
+  "sidepanelTitle": {
+    "message": "Fijar en el Panel Lateral (permanece abierto al cambiar de app)"
+  },
+  "navHome": {
+    "message": "Inicio"
+  },
+  "navFavorites": {
+    "message": "Favoritos"
+  },
+  "navEmoticons": {
+    "message": "Emoticonos"
+  },
+  "navMiscPictographs": {
+    "message": "Misc Pictogramas"
+  },
+  "navTransportMaps": {
+    "message": "Transporte y Mapas"
+  },
+  "navMiscSymbols": {
+    "message": "Misc Símbolos"
+  },
+  "navDingbats": {
+    "message": "Dingbats"
+  },
+  "navCurrencies": {
+    "message": "Monedas"
+  },
+  "navMathOperators": {
+    "message": "Operadores Matemáticos"
+  },
+  "navArrows": {
+    "message": "Flechas"
+  },
+  "navMiscTechnical": {
+    "message": "Técnicos / UI"
+  },
+  "navEnclosedAlphanumerics": {
+    "message": "Alfanuméricos Encelados"
+  },
+  "navBoxDrawing": {
+    "message": "Dibujo de Cajas"
+  },
+  "navBlockElements": {
+    "message": "Elementos de Bloque"
+  },
+  "navGeometricShapes": {
+    "message": "Formas Geométricas"
+  },
+  "navPunctuation": {
+    "message": "Puntuación"
+  },
+  "navSuperSubscripts": {
+    "message": "Super y Subíndices"
+  },
+  "navLetterlikeSymbols": {
+    "message": "Símbolos Tipográficos"
+  },
+  "navNumberForms": {
+    "message": "Numerales / Fracciones"
+  },
+  "navGamesCards": {
+    "message": "Juegos y Cartas"
+  },
+  "navLatin": {
+    "message": "Escritura Latina"
+  },
+  "navGreek": {
+    "message": "Griego y Copto"
+  },
+  "navHebrew": {
+    "message": "Escritura Hebrea"
+  },
+  "navArabic": {
+    "message": "Escritura Árabe"
+  },
+  "navDevanagari": {
+    "message": "Escritura Devanagari"
+  },
+  "navThai": {
+    "message": "Escritura Tailandesa"
+  },
+  "navTibetan": {
+    "message": "Escritura Tibetana"
+  },
+  "navRunic": {
+    "message": "Escritura Rúnica"
+  },
+  "navEthiopic": {
+    "message": "Escritura Etíope"
+  },
+  "navCherokee": {
+    "message": "Escritura Cherokee"
+  },
+  "navKhmer": {
+    "message": "Escritura Jemer"
+  },
+  "navMongolian": {
+    "message": "Escritura Mongola"
+  },
+  "navHiragana": {
+    "message": "Hiragana"
+  },
+  "navKatakana": {
+    "message": "Katakana"
+  },
+  "navBraille": {
+    "message": "Patrones Braille"
+  },
+  "navCJK": {
+    "message": "Ideogramas CJK"
+  },
+  "navYi": {
+    "message": "Sílabas Yi"
+  },
+  "sectionRecents": {
+    "message": "Recientes"
+  },
+  "sectionPopular": {
+    "message": "Más Populares"
+  },
+  "emptyRecentsNotice": {
+    "message": "¡Los caracteres que copies aparecerán aquí!"
+  },
+  "emptyFavoritesMsg": {
+    "message": "¡Sin favoritos guardados. Haz clic en ★ abajo para guardar!"
+  },
+  "copiedMsg": {
+    "message": "Copiado: "
+  },
+  "addedFavMsg": {
+    "message": "¡Añadido a favoritos! "
+  },
+  "removedFavMsg": {
+    "message": "Eliminado de favoritos: "
+  },
+  "sidepanelOpenTip": {
+    "message": "Abre el Panel Lateral desde el menú de extensiones de Chrome"
+  },
+  "modalTitle": {
+    "message": "Fuentes Recomendadas"
+  },
+  "modalSubtitle": {
+    "message": "Algunos caracteres Unicode raros (como CJK, Tibetano, Rúnico o Braille) requieren fuentes específicas para renderizarse correctamente en tu sistema operativo."
+  },
+  "modalDownloadSection": {
+    "message": "Paquetes de Fuentes Gratuitos Sugeridos:"
+  },
+  "modalFontGoogleNoto": {
+    "message": "Google Noto Fonts (Cobertura Universal)"
+  },
+  "modalFontBabelStone": {
+    "message": "BabelStone Fonts (Símbolos y Escrituras Raras)"
+  },
+  "modalFontQuivira": {
+    "message": "Quivira (Fuente Unicode Completa)"
+  },
+  "modalTip": {
+    "message": "Consejo: Si algún símbolo aparece como un rectángulo blanco (tofu), descargar Google Noto Fonts lo solucionará."
+  },
+  "modalCloseBtn": {
+    "message": "Entendido"
+  }
+}

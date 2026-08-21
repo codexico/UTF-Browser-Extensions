@@ -1,22 +1,21 @@
 {
-  "name": "UTF-8 and unicode characters",
-  "short_name": "UTF-8",
-  "version": "3.3",
-  "description": "UTF-8 characters and unicode picker with quick search, clipboard copy and side panel.",
   "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDesc__",
+  "version": "1.0",
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ],
   "action": {
-    "default_title": "Unicode Characters",
     "default_popup": "popup.html",
-    "default_icon": "icon128-96.png"
+    "default_title": "__MSG_extName__"
   },
   "side_panel": {
     "default_path": "popup.html?mode=sidepanel"
   },
   "background": {
     "service_worker": "js/background.js"
-  },
-  "permissions": [
-    "storage",
-    "sidePanel"
-  ]
+  }
 }

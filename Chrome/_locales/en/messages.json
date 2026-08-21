@@ -1,0 +1,176 @@
+{
+  "extName": {
+    "message": "Unicode & UTF-8 Character Studio"
+  },
+  "extDesc": {
+    "message": "Complete repository of UTF-8 characters, Unicode symbols, and emojis with instant search and Side Panel support."
+  },
+  "searchPlaceholder": {
+    "message": "Search symbols, hex, names..."
+  },
+  "fontInfoTitle": {
+    "message": "Recommended Fonts for Rare Characters"
+  },
+  "sidepanelTitle": {
+    "message": "Pin to Side Panel (stays open across app switching)"
+  },
+  "navHome": {
+    "message": "Home"
+  },
+  "navFavorites": {
+    "message": "Favorites"
+  },
+  "navEmoticons": {
+    "message": "Emoticons"
+  },
+  "navMiscPictographs": {
+    "message": "Misc Pictographs"
+  },
+  "navTransportMaps": {
+    "message": "Transport & Maps"
+  },
+  "navMiscSymbols": {
+    "message": "Misc Symbols"
+  },
+  "navDingbats": {
+    "message": "Dingbats"
+  },
+  "navCurrencies": {
+    "message": "Currencies"
+  },
+  "navMathOperators": {
+    "message": "Math Operators"
+  },
+  "navArrows": {
+    "message": "Arrows"
+  },
+  "navMiscTechnical": {
+    "message": "Misc Technical"
+  },
+  "navEnclosedAlphanumerics": {
+    "message": "Enclosed Alphanumerics"
+  },
+  "navBoxDrawing": {
+    "message": "Box Drawing"
+  },
+  "navBlockElements": {
+    "message": "Block Elements"
+  },
+  "navGeometricShapes": {
+    "message": "Geometric Shapes"
+  },
+  "navPunctuation": {
+    "message": "Punctuation"
+  },
+  "navSuperSubscripts": {
+    "message": "Super & Subscripts"
+  },
+  "navLetterlikeSymbols": {
+    "message": "Letterlike Symbols"
+  },
+  "navNumberForms": {
+    "message": "Number Forms"
+  },
+  "navGamesCards": {
+    "message": "Games & Cards"
+  },
+  "navLatin": {
+    "message": "Latin Script"
+  },
+  "navGreek": {
+    "message": "Greek & Coptic"
+  },
+  "navHebrew": {
+    "message": "Hebrew Script"
+  },
+  "navArabic": {
+    "message": "Arabic Script"
+  },
+  "navDevanagari": {
+    "message": "Devanagari Script"
+  },
+  "navThai": {
+    "message": "Thai Script"
+  },
+  "navTibetan": {
+    "message": "Tibetan Script"
+  },
+  "navRunic": {
+    "message": "Runic Script"
+  },
+  "navEthiopic": {
+    "message": "Ethiopic Script"
+  },
+  "navCherokee": {
+    "message": "Cherokee Script"
+  },
+  "navKhmer": {
+    "message": "Khmer Script"
+  },
+  "navMongolian": {
+    "message": "Mongolian Script"
+  },
+  "navHiragana": {
+    "message": "Hiragana"
+  },
+  "navKatakana": {
+    "message": "Katakana"
+  },
+  "navBraille": {
+    "message": "Braille Patterns"
+  },
+  "navCJK": {
+    "message": "CJK Ideographs"
+  },
+  "navYi": {
+    "message": "Yi Syllables"
+  },
+  "sectionRecents": {
+    "message": "Recents"
+  },
+  "sectionPopular": {
+    "message": "Top Popular"
+  },
+  "emptyRecentsNotice": {
+    "message": "Copied characters will appear here!"
+  },
+  "emptyFavoritesMsg": {
+    "message": "No favorites saved. Click ★ in the bottom bar to save!"
+  },
+  "copiedMsg": {
+    "message": "Copied: "
+  },
+  "addedFavMsg": {
+    "message": "Added to favorites! "
+  },
+  "removedFavMsg": {
+    "message": "Removed from favorites: "
+  },
+  "sidepanelOpenTip": {
+    "message": "Open the Side Panel from Chrome extension menu"
+  },
+  "modalTitle": {
+    "message": "Recommended Fonts"
+  },
+  "modalSubtitle": {
+    "message": "Some rare Unicode characters (such as CJK, Tibetan, Runic or Braille) require specific fonts to render correctly on your OS."
+  },
+  "modalDownloadSection": {
+    "message": "Suggested Free Font Packages:"
+  },
+  "modalFontGoogleNoto": {
+    "message": "Google Noto Fonts (Universal Coverage)"
+  },
+  "modalFontBabelStone": {
+    "message": "BabelStone Fonts (Rare Symbols & Scripts)"
+  },
+  "modalFontQuivira": {
+    "message": "Quivira (Comprehensive Unicode Font)"
+  },
+  "modalTip": {
+    "message": "Tip: If a symbol renders as a blank rectangle (tofu), downloading Google Noto Fonts will fix it."
+  },
+  "modalCloseBtn": {
+    "message": "Got it"
+  }
+}
