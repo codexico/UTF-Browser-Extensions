@@ -241,10 +241,6 @@ function setupEventListeners() {
     if (activeGlyph) copyToClipboard(activeGlyph.symbol, `${getMsg('copiedMsg', 'Copiado: ')}${activeGlyph.symbol}`);
   });
 
-  id('btnCopyHex').addEventListener('click', () => {
-    if (activeGlyph) copyToClipboard(`U+${activeGlyph.hex}`, `${getMsg('copiedMsg', 'Copiado: ')}U+${activeGlyph.hex}`);
-  });
-
   id('btnFav').addEventListener('click', () => {
     if (activeGlyph) toggleFavorite(activeGlyph);
   });

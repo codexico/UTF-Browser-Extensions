@@ -758,26 +758,26 @@ body.is-sidepanel .glyph-code {
 
 body.is-sidepanel .inspector {
   height: auto;
-  min-height: 72px;
+  min-height: 68px;
   padding: 8px 10px;
   gap: 8px 10px;
   align-items: center;
 }
 
 body.is-sidepanel .inspector-preview {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   font-size: 24px;
 }
 
 body.is-sidepanel .inspector-details {
   flex: 1;
-  min-width: 110px;
+  min-width: 120px;
 }
 
 body.is-sidepanel .inspect-subgroup {
-  max-width: 110px;
-  font-size: 10px;
+  max-width: 120px;
+  font-size: 11px;
 }
 
 body.is-sidepanel .inspect-info-grid {
@@ -787,21 +787,16 @@ body.is-sidepanel .inspect-info-grid {
 }
 
 body.is-sidepanel .inspector-actions {
-  gap: 4px;
+  gap: 6px;
 }
 
 body.is-sidepanel .btn-copy-primary {
-  padding: 5px 9px;
-  font-size: 11px;
-}
-
-body.is-sidepanel .btn-copy-secondary {
-  padding: 4px 6px;
-  font-size: 10px;
+  padding: 6px 12px;
+  font-size: 12px;
 }
 
 body.is-sidepanel .btn-icon-fav {
-  width: 28px;
-  height: 28px;
-  font-size: 14px;
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
 }
