@@ -249,6 +249,35 @@ function setupEventListeners() {
     if (activeGlyph) toggleFavorite(activeGlyph);
   });
 
+  // Inspector Clickable Code Badges
+  const inspectCodepoint = id('inspectCodepoint');
+  if (inspectCodepoint) {
+    inspectCodepoint.addEventListener('click', () => {
+      if (activeGlyph) copyToClipboard(`U+${activeGlyph.hex}`, `${getMsg('copiedMsg', 'Copiado: ')}U+${activeGlyph.hex}`);
+    });
+  }
+
+  const btnCopyHexVal = id('btnCopyHexVal');
+  if (btnCopyHexVal) {
+    btnCopyHexVal.addEventListener('click', () => {
+      if (activeGlyph) copyToClipboard(activeGlyph.hex, `${getMsg('copiedMsg', 'Copiado: ')}${activeGlyph.hex}`);
+    });
+  }
+
+  const btnCopyDecVal = id('btnCopyDecVal');
+  if (btnCopyDecVal) {
+    btnCopyDecVal.addEventListener('click', () => {
+      if (activeGlyph) copyToClipboard(activeGlyph.dec, `${getMsg('copiedMsg', 'Copiado: ')}${activeGlyph.dec}`);
+    });
+  }
+
+  const btnCopyEntityVal = id('btnCopyEntityVal');
+  if (btnCopyEntityVal) {
+    btnCopyEntityVal.addEventListener('click', () => {
+      if (activeGlyph) copyToClipboard(`&#${activeGlyph.dec};`, `${getMsg('copiedMsg', 'Copiado: ')}&#${activeGlyph.dec};`);
+    });
+  }
+
   // Side Panel Pin Button
   const btnSidePanel = id('btnSidePanel');
   if (btnSidePanel) {
