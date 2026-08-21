@@ -1,12 +1,22 @@
 {
   "name": "UTF-8 and unicode characters",
   "short_name": "UTF-8",
-  "version": "3.1",
-  "description": "UTF-8 characters",
+  "version": "3.3",
+  "description": "UTF-8 characters and unicode picker with quick search, clipboard copy and side panel.",
   "manifest_version": 3,
   "action": {
-    "default_title": "unicode chars",
-    "default_popup": "popup/popup.html",
+    "default_title": "Unicode Characters",
+    "default_popup": "popup.html",
     "default_icon": "icon128-96.png"
-  }
+  },
+  "side_panel": {
+    "default_path": "popup.html?mode=sidepanel"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ]
 }
