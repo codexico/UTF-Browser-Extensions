@@ -2,116 +2,215 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Unicode chars</title>
-  <style>
-    body {
-        background-color: #fff;
-        color: #000;
-        width: 500px;
-        font-size: 22px;
-    }
-    button {
-      font-size: 14px;
-      color: #fff;
-      background-color: #3276b1;
-      border: 1px solid #285e8e;
-      padding: 6px 12px;
-      border-radius: 4px;
-    }
-  </style>
-  <script src="js/popup.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unicode & UTF-8 Characters</title>
+  <link rel="stylesheet" href="css/popup.css">
+  <script src="js/unicode-names.js" defer></script>
+  <script src="js/unicode-data.js" defer></script>
+  <script src="js/popup.js" defer></script>
 </head>
 <body>
+  <div id="app">
+    <!-- Header with Search, Font Info and Side Panel pin button -->
+    <header class="search-header">
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search symbols, hex, names..." autocomplete="off">
+        <span class="shortcut-badge">Ctrl+F</span>
+      </div>
+      <button id="btnFontInfo" class="btn-sidepanel btn-tofu" title="Fontes Recomendadas para Caracteres Raros">
+        <span class="tofu-icon">
+          <span class="tofu-box">
+            <span class="tofu-qmark">?</span>
+          </span>
+        </span>
+      </button>
+      <button id="btnSidePanel" class="btn-sidepanel" title="Fixar no Painel Lateral (não fecha ao trocar de app)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="15" y1="3" x2="15" y2="21"></line>
+        </svg>
+      </button>
+    </header>
 
-    <div id="fun">
-      <button class="js-load-chars" href="#fun">Fun</button>
-      <div class="chars"></div>
+    <!-- Category Pill Navigation -->
+    <nav class="category-nav">
+      <div class="nav-scroll" id="navScroll">
+        <button class="nav-pill active color-home" data-category="home">
+          <span class="pill-icon">⚡</span> Início
+        </button>
+        <button class="nav-pill color-favorites" data-category="favorites">
+          <span class="pill-icon">★</span> Favoritos
+        </button>
+        <button class="nav-pill color-emoticons" data-category="emoticons">
+          <span class="pill-icon">😀</span> Emoticons
+        </button>
+        <button class="nav-pill color-miscellaneous_symbols_and_pictographs" data-category="miscellaneous_symbols_and_pictographs">
+          <span class="pill-icon">🎨</span> Misc Pictographs
+        </button>
+        <button class="nav-pill color-transport_and_map_symbols" data-category="transport_and_map_symbols">
+          <span class="pill-icon">🚀</span> Transport & Maps
+        </button>
+        <button class="nav-pill color-miscellaneous_symbols" data-category="miscellaneous_symbols">
+          <span class="pill-icon">☀</span> Misc Symbols
+        </button>
+        <button class="nav-pill color-dingbats" data-category="dingbats">
+          <span class="pill-icon">✨</span> Dingbats
+        </button>
+        <button class="nav-pill color-currency_symbols" data-category="currency_symbols">
+          <span class="pill-icon">🪙</span> Currency Symbols
+        </button>
+        <button class="nav-pill color-mathematical_operators" data-category="mathematical_operators">
+          <span class="pill-icon">∑</span> Math Operators
+        </button>
+        <button class="nav-pill color-arrows" data-category="arrows">
+          <span class="pill-icon">➔</span> Arrows
+        </button>
+        <button class="nav-pill color-miscellaneous_technical" data-category="miscellaneous_technical">
+          <span class="pill-icon">⌘</span> Misc Technical
+        </button>
+        <button class="nav-pill color-enclosed_alphanumerics" data-category="enclosed_alphanumerics">
+          <span class="pill-icon">①</span> Enclosed Alphanumerics
+        </button>
+        <button class="nav-pill color-box_drawing" data-category="box_drawing">
+          <span class="pill-icon">┼</span> Box Drawing
+        </button>
+        <button class="nav-pill color-block_elements" data-category="block_elements">
+          <span class="pill-icon">█</span> Block Elements
+        </button>
+        <button class="nav-pill color-geometric_shapes" data-category="geometric_shapes">
+          <span class="pill-icon">▲</span> Geometric Shapes
+        </button>
+        <button class="nav-pill color-general_punctuation" data-category="general_punctuation">
+          <span class="pill-icon">“</span> General Punctuation
+        </button>
+        <button class="nav-pill color-superscripts_and_subscripts" data-category="superscripts_and_subscripts">
+          <span class="pill-icon">²</span> Super & Subscripts
+        </button>
+        <button class="nav-pill color-letterlike_symbols" data-category="letterlike_symbols">
+          <span class="pill-icon">№</span> Letterlike Symbols
+        </button>
+        <button class="nav-pill color-number_forms" data-category="number_forms">
+          <span class="pill-icon">Ⅳ</span> Number Forms
+        </button>
+        <button class="nav-pill color-games" data-category="games">
+          <span class="pill-icon">🎮</span> Games & Cards
+        </button>
+        <button class="nav-pill color-latin" data-category="latin">
+          <span class="pill-icon">À</span> Latin
+        </button>
+        <button class="nav-pill color-greek" data-category="greek">
+          <span class="pill-icon">Ω</span> Greek & Coptic
+        </button>
+        <button class="nav-pill color-hebrew" data-category="hebrew">
+          <span class="pill-icon">א</span> Hebrew
+        </button>
+        <button class="nav-pill color-arabic" data-category="arabic">
+          <span class="pill-icon">ع</span> Arabic
+        </button>
+        <button class="nav-pill color-devanagari" data-category="devanagari">
+          <span class="pill-icon">ॐ</span> Devanagari
+        </button>
+        <button class="nav-pill color-thai" data-category="thai">
+          <span class="pill-icon">ก</span> Thai
+        </button>
+        <button class="nav-pill color-tibetan" data-category="tibetan">
+          <span class="pill-icon">ༀ</span> Tibetan
+        </button>
+        <button class="nav-pill color-runic" data-category="runic">
+          <span class="pill-icon">ᚠ</span> Runic
+        </button>
+        <button class="nav-pill color-ethiopic" data-category="ethiopic">
+          <span class="pill-icon">ሀ</span> Ethiopic
+        </button>
+        <button class="nav-pill color-cherokee" data-category="cherokee">
+          <span class="pill-icon">ꮍ</span> Cherokee
+        </button>
+        <button class="nav-pill color-khmer" data-category="khmer">
+          <span class="pill-icon">ក</span> Khmer
+        </button>
+        <button class="nav-pill color-mongolian" data-category="mongolian">
+          <span class="pill-icon">ᠡ</span> Mongolian
+        </button>
+        <button class="nav-pill color-hiragana" data-category="hiragana">
+          <span class="pill-icon">あ</span> Hiragana
+        </button>
+        <button class="nav-pill color-katakana" data-category="katakana">
+          <span class="pill-icon">ア</span> Katakana
+        </button>
+        <button class="nav-pill color-braile" data-category="braile">
+          <span class="pill-icon">⠁</span> Braille Patterns
+        </button>
+        <button class="nav-pill color-cjk" data-category="cjk">
+          <span class="pill-icon">字</span> CJK Ideographs
+        </button>
+        <button class="nav-pill color-yi" data-category="yi">
+          <span class="pill-icon">ꆈ</span> Yi Syllables
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area: Glyph Grid -->
+    <main class="grid-container">
+      <div id="glyphGrid" class="glyph-grid">
+        <!-- Rendered dynamically -->
+      </div>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <p class="empty-title">Nenhum símbolo encontrado</p>
+        <p class="empty-sub">Tente pesquisar por outro termo ou código hexadecimal.</p>
+      </div>
+    </main>
+
+    <!-- Bottom Character Inspector Drawer -->
+    <footer class="inspector" id="inspector">
+      <div class="inspector-preview" id="inspectGlyph">∞</div>
+      <div class="inspector-details">
+        <div class="inspect-title-row">
+          <span class="inspect-subgroup" id="inspectSubgroup">Math Operators</span>
+          <span class="inspect-codepoint" id="inspectCodepoint">U+221E</span>
+        </div>
+        <div class="inspect-info-grid">
+          <div><span class="info-label">HEX:</span> <code id="inspectHex">221E</code></div>
+          <div><span class="info-label">DEC:</span> <code id="inspectDec">8734</code></div>
+          <div><span class="info-label">HTML:</span> <code id="inspectEntity">&amp;#8734;</code></div>
+        </div>
+      </div>
+      <div class="inspector-actions">
+        <button id="btnFav" class="btn-icon-fav" title="Favoritar">★</button>
+        <button id="btnCopyChar" class="btn-copy-primary">Copiar</button>
+        <button id="btnCopyHex" class="btn-copy-secondary">Hex</button>
+      </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+      <span class="toast-icon">✓</span>
+      <span id="toastMsg">Copiado para a área de transferência</span>
     </div>
 
-    <div id="alphanum">
-      <button class="js-load-chars" href="#alphanum">Alphanum</button>
-      <div class="chars"></div>
+    <!-- Fonts Recommendation Modal -->
+    <div id="fontsModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">🔤 Fontes Recomendadas</h3>
+          <button id="btnCloseModal" class="modal-close">✕</button>
+        </div>
+        <div class="modal-body">
+          <p>Alguns caracteres raros (como símbolos CJK clássicos, Braille ou símbolos matemáticos antigos) dependem de fontes completas instaladas no seu sistema operacional.</p>
+          <p>Se algum caractere aparecer como um quadrado vazio, recomendamos instalar estas fontes gratuitas:</p>
+          <ul class="font-list">
+            <li class="font-item"><a href="https://fonts.google.com/noto" target="_blank" rel="noopener">Google Noto Fonts <span>↗</span></a></li>
+            <li class="font-item"><a href="http://www.babelstone.co.uk/Fonts/Han.html" target="_blank" rel="noopener">BabelStone Han (CJK) <span>↗</span></a></li>
+            <li class="font-item"><a href="http://www.quivira-font.com/" target="_blank" rel="noopener">Quivira Unicode Font <span>↗</span></a></li>
+            <li class="font-item"><a href="https://dejavu-fonts.github.io/" target="_blank" rel="noopener">DejaVu Fonts <span>↗</span></a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <div id="games">
-      <button class="js-load-chars" href="#games">Games</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="math">
-      <button class="js-load-chars" href="#math">Math</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="arrows">
-      <button class="js-load-chars" href="#arrows">Arrows</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="forms">
-      <button class="js-load-chars" href="#forms">Forms</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="music">
-      <button class="js-load-chars" href="#music">Music</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="greek">
-      <button class="js-load-chars" href="#greek">Greek</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="latin">
-      <button class="js-load-chars" href="#latin">Latin</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="braile">
-      <button class="js-load-chars" href="#braile">Braile</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="arabic">
-      <button class="js-load-chars" href="#arabic">Arabic</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="cjk">
-      <button class="js-load-chars" href="#cjk">CJK</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="yi">
-      <button class="js-load-chars" href="#yi">Yi</button>
-      <div class="chars"></div>
-    </div>
-
-    <div id="other">
-      <button class="js-load-chars" href="#other">Other</button>
-      <div class="chars"></div>
-    </div>
-
-
-
-
-
-    <p><a href="#about">About</a></p>
-
-    <div id="about" >
-        <p>These are only a sample, it's really hard for the device to render so many fonts!</p>
-        <p>They appear depending on the fonts installed on the system, if you want more you can try to download this fonts:</p>
-        <ul>
-            <li><a href="http://www.babelstone.co.uk/Fonts/Han.html">BabelStone Han</a></li>
-            <li><a href="http://www.quivira-font.com/">Quivira</a></li>
-            <li><a href="http://dejavu-fonts.org/wiki/Main_Page">Deja Vu</a></li>
-            <li><a href="http://users.teilar.gr/~g1951d/">Unicode Fonts for Ancient Scripts</a></li>
-            <li><a href="http://www.fontspace.com/james-kass/code2000">Code2000</a></li>
-            <li><a href="http://www.wazu.jp/gallery/views/View_MPH2BDamase.html">WAZU JAPAN's Gallery of Unicode Fonts</a></li>
-        </ul>
-
-        <p>All about utf: <a href="http://www.unicode.org/">The Unicode Consortium</a></p>
-    </div>
+  </div>
 </body>
 </html>
