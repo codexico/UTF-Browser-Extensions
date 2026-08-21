@@ -187,6 +187,7 @@ function setupEventListeners() {
   const btnFontInfo = id('btnFontInfo');
   const fontsModal = id('fontsModal');
   const btnCloseModal = id('btnCloseModal');
+  const btnDismissModal = id('btnDismissModal');
 
   if (btnFontInfo && fontsModal) {
     btnFontInfo.addEventListener('click', () => {
@@ -196,6 +197,12 @@ function setupEventListeners() {
 
   if (btnCloseModal && fontsModal) {
     btnCloseModal.addEventListener('click', () => {
+      fontsModal.classList.add('hidden');
+    });
+  }
+
+  if (btnDismissModal && fontsModal) {
+    btnDismissModal.addEventListener('click', () => {
       fontsModal.classList.add('hidden');
     });
   }
