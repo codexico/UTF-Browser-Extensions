@@ -237,6 +237,10 @@ body {
   font-size: 13px;
 }
 
+.pill-label {
+  display: inline-block;
+}
+
 .nav-pill:hover {
   background-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
