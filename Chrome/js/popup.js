@@ -5,6 +5,7 @@
 // Storage Keys
 const STORAGE_FAVS = 'utf_favorites';
 const STORAGE_RECENT = 'utf_recents';
+const STORAGE_COPY_COUNT = 'utf_copy_count';
 
 // State
 let categoryCache = {}; // group -> array of character objects
@@ -12,6 +13,7 @@ let currentCategory = 'home';
 let activeGlyph = null;
 let favoriteGlyphs = [];
 let recentGlyphs = [];
+let copyCount = 0;
 let toastTimeout = null;
 
 // High-frequency explicit Unicode Character Name Lookup
@@ -130,20 +132,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Initialize storage for favorites and recents
+ * Initialize storage for favorites, recents, and copy counter
  */
 async function initStorage() {
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-    const data = await chrome.storage.local.get([STORAGE_FAVS, STORAGE_RECENT]);
+    const data = await chrome.storage.local.get([STORAGE_FAVS, STORAGE_RECENT, STORAGE_COPY_COUNT]);
     favoriteGlyphs = data[STORAGE_FAVS] || [];
     recentGlyphs = data[STORAGE_RECENT] || [];
+    copyCount = data[STORAGE_COPY_COUNT] || 0;
   } else {
     try {
       favoriteGlyphs = JSON.parse(localStorage.getItem(STORAGE_FAVS) || '[]');
       recentGlyphs = JSON.parse(localStorage.getItem(STORAGE_RECENT) || '[]');
+      copyCount = parseInt(localStorage.getItem(STORAGE_COPY_COUNT) || '0', 10);
     } catch (e) {
       favoriteGlyphs = [];
       recentGlyphs = [];
+      copyCount = 0;
     }
   }
 }
@@ -152,11 +157,22 @@ async function saveStorage() {
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
     await chrome.storage.local.set({
       [STORAGE_FAVS]: favoriteGlyphs,
-      [STORAGE_RECENT]: recentGlyphs
+      [STORAGE_RECENT]: recentGlyphs,
+      [STORAGE_COPY_COUNT]: copyCount
     });
   } else {
     localStorage.setItem(STORAGE_FAVS, JSON.stringify(favoriteGlyphs));
     localStorage.setItem(STORAGE_RECENT, JSON.stringify(recentGlyphs));
+    localStorage.setItem(STORAGE_COPY_COUNT, copyCount.toString());
+  }
+}
+
+function incrementCopyCount() {
+  copyCount++;
+  saveStorage();
+  if (currentCategory === 'about') {
+    const counterEl = id('copyCountNumber');
+    if (counterEl) counterEl.textContent = copyCount;
   }
 }
 
@@ -317,6 +333,8 @@ async function switchCategory(cat, pillElement) {
     renderHomeView();
   } else if (cat === 'favorites') {
     renderGlyphList(favoriteGlyphs, getMsg('emptyFavoritesMsg', 'Nenhum favorito salvo. Clique no ★ no painel inferior para salvar!'));
+  } else if (cat === 'about') {
+    renderAboutView();
   } else {
     await loadCategory(cat);
   }
@@ -382,6 +400,88 @@ function renderHomeView() {
 
   const firstGlyph = (recentGlyphs && recentGlyphs.length > 0) ? recentGlyphs[0] : popularList[0];
   if (firstGlyph) selectGlyph(firstGlyph, grid.querySelector('.glyph-card'));
+}
+
+/**
+ * Render ℹ️ Sobre View
+ */
+function renderAboutView() {
+  const grid = id('glyphGrid');
+  const emptyState = id('emptyState');
+  grid.innerHTML = '';
+  grid.classList.remove('utility-hidden');
+  emptyState.classList.add('hidden');
+
+  const container = document.createElement('div');
+  container.className = 'about-container';
+
+  const prefix = getMsg('aboutCopyCountPrefix', 'Você já copiou ');
+  const suffix = getMsg('aboutCopyCountSuffix', ' caracteres usando a extensão!');
+  const desc = getMsg('aboutDesc', 'Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente.');
+  const tip = getMsg('aboutSidePanelTip', 'Dica: Clique no ícone de Painel Lateral 🗂 no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!');
+  const githubBtnText = getMsg('aboutGithubBtn', 'Repositório no GitHub');
+
+  container.innerHTML = `
+    <div class="about-hero-card">
+      <div class="about-hero-top">
+        <div class="about-logo-badge">⚡</div>
+        <div>
+          <div class="about-hero-title">
+            <span>Unicode & UTF-8 Studio</span>
+            <span class="version-tag">v1.0.0</span>
+          </div>
+          <div class="about-hero-desc">${desc}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-counter-card">
+      <span class="counter-icon">📊</span>
+      <div class="counter-text-wrapper">
+        <span>${prefix}<strong id="copyCountNumber" class="counter-count-number">${copyCount}</strong>${suffix}</span>
+      </div>
+    </div>
+
+    <div class="sidepanel-tip-card">
+      <span class="tip-card-icon">💡</span>
+      <div>${tip}</div>
+    </div>
+
+    <div class="about-fonts-card">
+      <h4 data-i18n="modalTitle">🔤 Fontes Recomendadas</h4>
+      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;" data-i18n="modalSubtitle">
+        Alguns caracteres raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema.
+      </p>
+      <ul class="font-list" style="margin: 4px 0;">
+        <li class="font-item">
+          <a href="https://fonts.google.com/noto" target="_blank" rel="noopener">
+            <strong data-i18n="modalFontGoogleNoto">Google Noto Fonts</strong> — Cobertura Universal Unicode
+          </a>
+        </li>
+        <li class="font-item">
+          <a href="https://www.babelstone.co.uk/Fonts/" target="_blank" rel="noopener">
+            <strong data-i18n="modalFontBabelStone">BabelStone Fonts</strong> — Símbolos & Escritas Raras
+          </a>
+        </li>
+        <li class="font-item">
+          <a href="http://www.quivira-font.com/" target="_blank" rel="noopener">
+            <strong data-i18n="modalFontQuivira">Quivira</strong> — Fonte Unicode Abrangente
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="github-btn-card">
+      <a href="https://github.com/codexico/UTF-Browser-Extensions" target="_blank" rel="noopener" class="btn-github-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        <span>${githubBtnText}</span>
+      </a>
+    </div>
+  `;
+
+  grid.appendChild(container);
 }
 
 /**
@@ -661,6 +761,7 @@ async function addToRecent(glyph) {
  * Clipboard Copy Helper with Feedback
  */
 function copyToClipboard(text, message) {
+  incrementCopyCount();
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => {
       showToast(message);

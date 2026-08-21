@@ -172,5 +172,26 @@
   },
   "modalCloseBtn": {
     "message": "Entendi"
+  },
+  "navAbout": {
+    "message": "Sobre"
+  },
+  "aboutTitle": {
+    "message": "Unicode & UTF-8 Character Studio"
+  },
+  "aboutDesc": {
+    "message": "Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente."
+  },
+  "aboutCopyCountPrefix": {
+    "message": "Você já copiou "
+  },
+  "aboutCopyCountSuffix": {
+    "message": " caracteres usando a extensão!"
+  },
+  "aboutSidePanelTip": {
+    "message": "Dica: Clique no ícone de Painel Lateral 🗂 no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!"
+  },
+  "aboutGithubBtn": {
+    "message": "Repositório no GitHub"
   }
 }

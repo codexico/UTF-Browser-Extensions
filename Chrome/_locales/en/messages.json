@@ -172,5 +172,26 @@
   },
   "modalCloseBtn": {
     "message": "Got it"
+  },
+  "navAbout": {
+    "message": "About"
+  },
+  "aboutTitle": {
+    "message": "Unicode & UTF-8 Character Studio"
+  },
+  "aboutDesc": {
+    "message": "Complete, fast, and practical repository of 43,000+ Unicode characters, symbols, and emojis with fuzzy bilingual search."
+  },
+  "aboutCopyCountPrefix": {
+    "message": "You have copied "
+  },
+  "aboutCopyCountSuffix": {
+    "message": " characters using this extension!"
+  },
+  "aboutSidePanelTip": {
+    "message": "Tip: Click the Side Panel icon 🗂 in the header to keep this extension open on the side while you browse!"
+  },
+  "aboutGithubBtn": {
+    "message": "GitHub Repository"
   }
 }
