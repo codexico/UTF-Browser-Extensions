@@ -362,6 +362,13 @@ function handleGridArrowNavigation(e) {
     });
   }
 
+  const inspectKaomojiDisplay = id('inspectKaomojiDisplay');
+  if (inspectKaomojiDisplay) {
+    inspectKaomojiDisplay.addEventListener('click', () => {
+      if (activeGlyph) copyToClipboard(activeGlyph.symbol, `${getMsg('copiedMsg', 'Copiado: ')}${activeGlyph.symbol}`);
+    });
+  }
+
   // Side Panel / Sidebar Pin Button
   const btnSidePanel = id('btnSidePanel');
   if (btnSidePanel) {
@@ -955,26 +962,43 @@ function updateInspector(glyph) {
   const isKaomoji = (glyph.section === 'kaomoji' || currentCategory === 'kaomoji' || (glyph.name && glyph.name.startsWith('KAOMOJI:')) || (glyph.symbol && glyph.symbol.length > 2));
 
   const inspectGlyphEl = id('inspectGlyph');
-  inspectGlyphEl.textContent = glyph.symbol;
+  const inspectKaomojiDisplay = id('inspectKaomojiDisplay');
+  const subgroupEl = id('inspectSubgroup');
+  const inspectorEl = document.querySelector('.inspector');
 
   if (isKaomoji) {
     inspectGlyphEl.classList.add('is-kaomoji-inspect');
+    inspectGlyphEl.textContent = (glyph.symbol && glyph.symbol.length <= 4) ? glyph.symbol : '(⁠◕⁠‿⁠◕⁠)';
+
+    if (subgroupEl) {
+      const sectionName = (glyph.section && glyph.section !== 'kaomoji') ? glyph.section : 'Expressões';
+      subgroupEl.textContent = `Kaomoji • ${sectionName}`;
+      subgroupEl.title = glyph.symbol;
+    }
+
+    if (inspectKaomojiDisplay) {
+      inspectKaomojiDisplay.classList.remove('hidden');
+      inspectKaomojiDisplay.textContent = glyph.symbol;
+      inspectKaomojiDisplay.title = glyph.symbol;
+    }
+
+    if (inspectorEl) inspectorEl.classList.add('is-kaomoji-mode');
   } else {
     inspectGlyphEl.classList.remove('is-kaomoji-inspect');
-  }
+    inspectGlyphEl.textContent = glyph.symbol;
 
-  const fullName = isKaomoji ? `KAOMOJI: ${glyph.symbol}` : (glyph.name || `${glyph.section} Character`);
-  const subgroupEl = id('inspectSubgroup');
-  subgroupEl.textContent = fullName;
-  subgroupEl.title = isKaomoji ? glyph.symbol : `${fullName} (U+${glyph.hex})`;
-
-  const inspectorEl = document.querySelector('.inspector');
-  if (inspectorEl) {
-    if (isKaomoji) {
-      inspectorEl.classList.add('is-kaomoji-mode');
-    } else {
-      inspectorEl.classList.remove('is-kaomoji-mode');
+    const fullName = glyph.name || `${glyph.section} Character`;
+    if (subgroupEl) {
+      subgroupEl.textContent = fullName;
+      subgroupEl.title = `${fullName} (U+${glyph.hex})`;
     }
+
+    if (inspectKaomojiDisplay) {
+      inspectKaomojiDisplay.classList.add('hidden');
+      inspectKaomojiDisplay.textContent = '';
+    }
+
+    if (inspectorEl) inspectorEl.classList.remove('is-kaomoji-mode');
   }
 
   id('inspectCodepoint').textContent = `U+${glyph.hex}`;

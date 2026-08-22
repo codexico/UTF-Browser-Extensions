@@ -479,13 +479,30 @@ button.glyph-card:focus-visible {
 }
 
 .inspector-preview.is-kaomoji-inspect {
-  font-size: 11px;
-  line-height: 1.15;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
   text-align: center;
-  white-space: normal;
+  white-space: nowrap;
   padding: 4px;
+  color: var(--accent-primary);
+}
+
+.inspect-kaomoji-display {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  margin-top: 2px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.inspect-kaomoji-display:hover {
+  color: var(--accent-primary);
 }
 
 .inspector.is-kaomoji-mode .inspect-codepoint,
@@ -494,16 +511,13 @@ button.glyph-card:focus-visible {
 }
 
 .inspector.is-kaomoji-mode .inspect-subgroup {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
   max-width: 100%;
-  white-space: normal;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
 .inspector-details {
