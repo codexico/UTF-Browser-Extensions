@@ -969,9 +969,10 @@ function updateInspector(glyph) {
   const subgroupEl = id('inspectSubgroup');
   const inspectorEl = document.querySelector('.inspector');
 
+  inspectGlyphEl.textContent = glyph.symbol;
+
   if (isKaomoji) {
     inspectGlyphEl.classList.add('is-kaomoji-inspect');
-    inspectGlyphEl.textContent = (glyph.symbol && glyph.symbol.length <= 4) ? glyph.symbol : '(⁠◕⁠‿⁠◕⁠)';
 
     if (subgroupEl) {
       const sectionName = (glyph.section && glyph.section !== 'kaomoji') ? glyph.section : 'Expressões';
@@ -988,7 +989,6 @@ function updateInspector(glyph) {
     if (inspectorEl) inspectorEl.classList.add('is-kaomoji-mode');
   } else {
     inspectGlyphEl.classList.remove('is-kaomoji-inspect');
-    inspectGlyphEl.textContent = glyph.symbol;
 
     const fullName = glyph.name || `${glyph.section} Character`;
     if (subgroupEl) {

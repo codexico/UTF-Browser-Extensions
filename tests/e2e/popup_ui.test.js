@@ -14,6 +14,7 @@ test('Extension HTML UI Structure Integrity', (t) => {
   assert.ok(htmlContent.includes('id="glyphGrid"'), 'Must contain #glyphGrid');
   assert.ok(htmlContent.includes('class="inspector"'), 'Must contain footer.inspector');
   assert.ok(htmlContent.includes('id="inspectGlyph"'), 'Must contain #inspectGlyph');
+  assert.ok(htmlContent.includes('id="inspectKaomojiDisplay"'), 'Must contain #inspectKaomojiDisplay');
   assert.ok(htmlContent.includes('id="btnSidePanel"'), 'Must contain #btnSidePanel');
   assert.ok(htmlContent.includes('id="fontsModal"'), 'Must contain #fontsModal');
   assert.ok(htmlContent.includes('id="btnDismissModal"'), 'Must contain #btnDismissModal');
@@ -34,8 +35,6 @@ test('Extension HTML UI Structure Integrity', (t) => {
 
 test('Interactive UI Flow & State Simulation', (t) => {
   const popupJsCode = fs.readFileSync(path.join(srcDir, 'js/popup.js'), 'utf8');
-  const dataCode = fs.readFileSync(path.join(srcDir, 'js/unicode-data.js'), 'utf8');
-  const namesCode = fs.readFileSync(path.join(srcDir, 'js/unicode-names.js'), 'utf8');
 
   // Verify key UI functions exist in popup.js
   assert.ok(popupJsCode.includes('function renderAboutView()'), 'Must implement renderAboutView');
@@ -45,4 +44,65 @@ test('Interactive UI Flow & State Simulation', (t) => {
   assert.ok(popupJsCode.includes('function openSidePanel('), 'Must implement openSidePanel');
   assert.ok(popupJsCode.includes('function selectGlyph('), 'Must implement selectGlyph');
   assert.ok(popupJsCode.includes('function copyToClipboard('), 'Must implement copyToClipboard');
+});
+
+test('Kaomoji Inspector State & inspectGlyph Update Verification', (t) => {
+  const popupJsCode = fs.readFileSync(path.join(srcDir, 'js/popup.js'), 'utf8');
+
+  function makeClassList() {
+    const set = new Set();
+    return {
+      add: (c) => set.add(c),
+      remove: (c) => set.delete(c),
+      has: (c) => set.has(c)
+    };
+  }
+
+  const mockElements = {
+    inspectGlyph: { textContent: '', classList: makeClassList() },
+    inspectKaomojiDisplay: { textContent: '', classList: makeClassList(), title: '' },
+    inspectSubgroup: { textContent: '', title: '' },
+    inspectCodepoint: { textContent: '' },
+    inspectHex: { textContent: '' },
+    inspectDec: { textContent: '' },
+    inspectEntity: { textContent: '' },
+    btnFav: { classList: makeClassList() }
+  };
+
+  const mockInspector = { classList: makeClassList() };
+
+  const updateInspectorMatch = popupJsCode.match(/function updateInspector[\s\S]*?^}/m);
+
+  const evalContext = new Function('mockElements', 'mockInspector', `
+    let currentCategory = 'kaomoji';
+    let favoriteGlyphs = [];
+    
+    function id(name) {
+      return mockElements[name] || { textContent: '', classList: { add(){}, remove(){}, has(){ return false; } } };
+    }
+    
+    const document = {
+      querySelector: (sel) => sel === '.inspector' ? mockInspector : null
+    };
+
+    ${updateInspectorMatch ? updateInspectorMatch[0] : ''}
+
+    return { updateInspector };
+  `);
+
+  const { updateInspector } = evalContext(mockElements, mockInspector);
+
+  // Test updating inspector with first Kaomoji (^_^ )
+  const kaomoji1 = { symbol: '(^_^)', hex: '0028', dec: '40', section: 'Felizes & Alegres' };
+  updateInspector(kaomoji1);
+
+  assert.equal(mockElements.inspectGlyph.textContent, '(^_^)', '#inspectGlyph must match selected kaomoji symbol');
+  assert.equal(mockElements.inspectKaomojiDisplay.textContent, '(^_^)', '#inspectKaomojiDisplay must match selected kaomoji symbol');
+
+  // Test updating inspector with second Kaomoji (◠‿◠)
+  const kaomoji2 = { symbol: '(◠‿◠)', hex: '0028', dec: '40', section: 'Felizes & Alegres' };
+  updateInspector(kaomoji2);
+
+  assert.equal(mockElements.inspectGlyph.textContent, '(◠‿◠)', '#inspectGlyph must dynamically update to (◠‿◠)');
+  assert.equal(mockElements.inspectKaomojiDisplay.textContent, '(◠‿◠)', '#inspectKaomojiDisplay must dynamically update to (◠‿◠)');
 });
