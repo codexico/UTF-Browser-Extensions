@@ -43,7 +43,8 @@
       "16": "icon16.png",
       "48": "icon48.png",
       "128": "icon128-96.png"
-    }
+    },
+    "open_at_install": false
   },
   "background": {
     "service_worker": "js/background.js",
