@@ -365,38 +365,49 @@ function handleGridArrowNavigation(e) {
   // Side Panel / Sidebar Pin Button
   const btnSidePanel = id('btnSidePanel');
   if (btnSidePanel) {
-    btnSidePanel.addEventListener('click', async () => {
-      // 1. Chrome SidePanel API
-      const sp = (typeof window !== 'undefined' && window.chrome) ? window.chrome['sidePanel'] : null;
-      if (sp && typeof sp['open'] === 'function') {
-        try {
-          const [tab] = await window.chrome.tabs.query({ active: true, currentWindow: true });
-          if (tab && tab.windowId) {
-            await sp['open']({ windowId: tab.windowId });
-            window.close();
-            return;
-          }
-        } catch (err) {
-          console.error('Error opening Chrome side panel:', err);
-        }
-      }
-
-      // 2. Firefox SidebarAction API
-      const sb = (typeof window !== 'undefined' && window.browser) ? window.browser['sidebarAction'] : null;
-      if (sb && typeof sb['open'] === 'function') {
-        try {
-          await sb['open']();
-          window.close();
-          return;
-        } catch (err) {
-          console.error('Error opening Firefox sidebar:', err);
-        }
-      }
-
-      // 3. Fallback toast
-      showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
+    btnSidePanel.addEventListener('click', () => {
+      openSidePanel();
     });
   }
+}
+
+/**
+ * Helper to open Side Panel / Sidebar
+ */
+function openSidePanel() {
+  const c = typeof window !== 'undefined' ? window.chrome : null;
+  const b = typeof window !== 'undefined' ? window.browser : null;
+
+  // 1. Chrome SidePanel API
+  if (c && c['sidePanel'] && typeof c['sidePanel']['open'] === 'function') {
+    if (c.windows && typeof c.windows.getCurrent === 'function') {
+      c.windows.getCurrent((win) => {
+        if (win && win.id) {
+          c['sidePanel']['open']({ windowId: win.id }).then(() => {
+            window.close();
+          }).catch((err) => {
+            console.error('Chrome sidepanel error:', err);
+            showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
+          });
+        }
+      });
+      return;
+    }
+  }
+
+  // 2. Firefox SidebarAction API
+  if (b && b['sidebarAction'] && typeof b['sidebarAction']['open'] === 'function') {
+    b['sidebarAction']['open']().then(() => {
+      window.close();
+    }).catch((err) => {
+      console.error('Firefox sidebar error:', err);
+      showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
+    });
+    return;
+  }
+
+  // 3. Fallback Toast
+  showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
 }
 
 /**
@@ -570,6 +581,14 @@ function renderAboutView() {
     while (wrapper.firstChild) {
       container.appendChild(wrapper.firstChild);
     }
+  }
+
+  const tipCard = container.querySelector('.sidepanel-tip-card');
+  if (tipCard) {
+    tipCard.title = getMsg('sidepanelOpenTip', 'Clique para abrir o Painel Lateral');
+    tipCard.addEventListener('click', () => {
+      openSidePanel();
+    });
   }
 
   grid.appendChild(container);

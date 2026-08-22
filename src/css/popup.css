@@ -919,6 +919,16 @@ body.is-sidepanel .btn-icon-fav {
   font-size: 11.5px;
   color: var(--text-main);
   line-height: 1.45;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.sidepanel-tip-card:hover {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(245, 158, 11, 0.15));
+  border-color: rgba(249, 115, 22, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
 }
 
 .tip-card-icon {
