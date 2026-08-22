@@ -180,7 +180,7 @@
     "message": "Unicode & UTF-8 Character Studio"
   },
   "aboutDesc": {
-    "message": "Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente."
+    "message": "Criada originalmente em 2010. Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode."
   },
   "aboutCopyCountPrefix": {
     "message": "Você já copiou "
@@ -196,5 +196,8 @@
   },
   "aboutWebsiteBtn": {
     "message": "codexico.com.br"
+  },
+  "aboutSinceTag": {
+    "message": "Desde 2010"
   }
 }

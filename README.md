@@ -3,6 +3,7 @@
 > **O repositório completo, ultra-rápido e divertido para pesquisar, inspecionar e copiar símbolos Unicode, caracteres UTF-8 e Emojis!**
 
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-indigo?style=for-the-badge&logo=googlechrome)
+![Since](https://img.shields.io/badge/Since-2010-amber?style=for-the-badge)
 ![Language](https://img.shields.io/badge/i18n-EN%20%7C%20PT--BR%20%7C%20ES-emerald?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 ![Author](https://img.shields.io/badge/Author-codexico.com.br-orange?style=for-the-badge)
@@ -12,6 +13,7 @@
 ## ✨ Destaques & Funcionalidades
 
 - 📚 **43.000+ Nomes Oficiais do Unicode Consortium**: Mapeamento preciso e atualizado para todos os símbolos, pontuações, escritas antigas e emojis.
+- 🎉 **Criada Originalmente em 2010**: Extensão com histórico de mais de 16 anos de evolução contínua!
 - ⚡ **Visão `⚡ Início` Inteligente**:
   - **`⏱ Recentes`**: Histórico em tempo real dos seus últimos caracteres copiados.
   - **`🔥 45 Populares`**: Grade inicial com 5 linhas completas contendo os caracteres mais usados no dia a dia.
@@ -73,13 +75,15 @@ Chrome/
 ## ⌨️ Atalhos de Teclado Úteis
 
 - `Ctrl + F` ou `Cmd + F` ➔ Foca automaticamente na caixa de pesquisa.
+- `Seta para Baixo` (na busca) ➔ Salta o foco diretamente para o primeiro caractere da grade.
+- `Setas (Cima / Baixo / Esquerda / Direita)` ➔ Navegação 2D fluida por toda a grade de caracteres.
+- `Seta para Cima` (no topo da grade) ➔ Retorna o foco para a caixa de pesquisa.
 - `Esc` ➔ Limpa a busca ou fecha a janela de fontes.
-- `Seta para Cima / Baixo / Esquerda / Direita` ➔ Navega pela grade de caracteres via teclado.
 
 ---
 
 ## 👤 Autor & Licença
 
-Desenvolvido com carinho por **[codexico.com.br](https://codexico.com.br)**.
+Criada originalmente em **2010**, mantida e aprimorada com amor por **[codexico.com.br](https://codexico.com.br)**.
 
 Distribuído sob a licença [MIT](LICENSE). Dados e nomenclaturas mantidos em conformidade com o padrão oficial do **Unicode Consortium**.

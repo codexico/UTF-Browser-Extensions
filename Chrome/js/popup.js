@@ -256,8 +256,73 @@ function setupEventListeners() {
         renderCategory(currentCategory);
         searchInput.blur();
       }
+    } else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      handleGridArrowNavigation(e);
     }
   });
+
+/**
+ * 2D Grid Keyboard Arrow Navigation Handler
+ */
+function handleGridArrowNavigation(e) {
+  const grid = id('glyphGrid');
+  if (!grid || grid.classList.contains('utility-hidden')) return;
+
+  const cards = Array.from(grid.querySelectorAll('.glyph-card'));
+  if (cards.length === 0) return;
+
+  const searchInput = id('searchInput');
+  const isSearchFocused = (document.activeElement === searchInput);
+
+  if (isSearchFocused) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      cards[0].focus();
+    }
+    return;
+  }
+
+  let currentIndex = cards.findIndex(c => c === document.activeElement);
+  if (currentIndex === -1) {
+    currentIndex = cards.findIndex(c => c.classList.contains('selected'));
+  }
+  if (currentIndex === -1) currentIndex = 0;
+
+  const computedStyle = window.getComputedStyle(grid);
+  const gridTemplate = computedStyle.getPropertyValue('grid-template-columns');
+  let cols = 9;
+  if (gridTemplate) {
+    const colList = gridTemplate.split(/\s+/).filter(Boolean);
+    if (colList.length > 0) cols = colList.length;
+  }
+
+  let newIndex = currentIndex;
+
+  if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    newIndex = Math.min(cards.length - 1, currentIndex + 1);
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    newIndex = Math.max(0, currentIndex - 1);
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    newIndex = Math.min(cards.length - 1, currentIndex + cols);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (currentIndex - cols < 0 && searchInput) {
+      searchInput.focus();
+      searchInput.select();
+      return;
+    }
+    newIndex = Math.max(0, currentIndex - cols);
+  }
+
+  const targetCard = cards[newIndex];
+  if (targetCard) {
+    targetCard.focus();
+    targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
 
   // Inspector Action Buttons
   id('btnCopyChar').addEventListener('click', () => {
@@ -417,10 +482,11 @@ function renderAboutView() {
 
   const prefix = getMsg('aboutCopyCountPrefix', 'Você já copiou ');
   const suffix = getMsg('aboutCopyCountSuffix', ' caracteres usando a extensão!');
-  const desc = getMsg('aboutDesc', 'Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente.');
+  const desc = getMsg('aboutDesc', 'Criada originalmente em 2010. Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode.');
   const tip = getMsg('aboutSidePanelTip', 'Dica: Clique no ícone de Painel Lateral 🗂 no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!');
   const githubBtnText = getMsg('aboutGithubBtn', 'Repositório no GitHub');
   const websiteBtnText = getMsg('aboutWebsiteBtn', 'codexico.com.br');
+  const sinceTag = getMsg('aboutSinceTag', 'Desde 2010');
 
   const counterHtml = (copyCount > 0) ? `
     <div class="copy-counter-card">
@@ -439,6 +505,7 @@ function renderAboutView() {
           <div class="about-hero-title">
             <span>Unicode & UTF-8 Studio</span>
             <span class="version-tag">v4.0.0</span>
+            <span class="since-tag" style="font-size: 9.5px; font-weight: 700; color: #f59e0b; background-color: rgba(245, 158, 11, 0.12); padding: 1px 6px; border-radius: 9999px;">🎉 ${sinceTag}</span>
           </div>
           <div class="about-hero-desc">${desc}</div>
         </div>
@@ -452,24 +519,6 @@ function renderAboutView() {
       <div>${tip}</div>
     </div>
 
-    <div class="github-btn-card">
-    <a href="https://github.com/codexico/UTF-Browser-Extensions" target="_blank" rel="noopener" class="btn-github-link">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-    </svg>
-    <span>${githubBtnText}</span>
-    </a>
-    </div>
-    <div class="github-btn-card">
-    <a href="https://codexico.com.br" target="_blank" rel="noopener" class="btn-website-link">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"></circle>
-    <line x1="2" y1="12" x2="22" y2="12"></line>
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-    </svg>
-    <span>${websiteBtnText}</span>
-    </a>
-    </div>
     <div class="about-fonts-card">
       <h4 data-i18n="modalTitle">🔤 Fontes Recomendadas</h4>
       <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;" data-i18n="modalSubtitle">
