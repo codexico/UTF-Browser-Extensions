@@ -36,10 +36,19 @@
   "side_panel": {
     "default_path": "popup.html?mode=sidepanel"
   },
+  "sidebar_action": {
+    "default_title": "__MSG_extName__",
+    "default_panel": "popup.html?mode=sidepanel",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128-96.png"
+    }
+  },
   "background": {
-    "service_worker": "js/background.js",
     "scripts": [
       "js/background.js"
-    ]
+    ],
+    "service_worker": "js/background.js"
   }
 }

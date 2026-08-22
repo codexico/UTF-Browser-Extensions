@@ -362,10 +362,11 @@ function handleGridArrowNavigation(e) {
     });
   }
 
-  // Side Panel Pin Button
+  // Side Panel / Sidebar Pin Button
   const btnSidePanel = id('btnSidePanel');
   if (btnSidePanel) {
     btnSidePanel.addEventListener('click', async () => {
+      // 1. Chrome SidePanel API
       const sp = (typeof window !== 'undefined' && window.chrome) ? window.chrome['sidePanel'] : null;
       if (sp && typeof sp['open'] === 'function') {
         try {
@@ -373,13 +374,27 @@ function handleGridArrowNavigation(e) {
           if (tab && tab.windowId) {
             await sp['open']({ windowId: tab.windowId });
             window.close();
+            return;
           }
         } catch (err) {
-          console.error('Error opening side panel:', err);
+          console.error('Error opening Chrome side panel:', err);
         }
-      } else {
-        showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões do Chrome'));
       }
+
+      // 2. Firefox SidebarAction API
+      const sb = (typeof window !== 'undefined' && window.browser) ? window.browser['sidebarAction'] : null;
+      if (sb && typeof sb['open'] === 'function') {
+        try {
+          await sb['open']();
+          window.close();
+          return;
+        } catch (err) {
+          console.error('Error opening Firefox sidebar:', err);
+        }
+      }
+
+      // 3. Fallback toast
+      showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
     });
   }
 }
