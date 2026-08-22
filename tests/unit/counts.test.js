@@ -35,7 +35,7 @@ test('Category Group Character Counts Verification', (t) => {
     currency_symbols: 34,
     devanagari: 128,
     dingbats: 192,
-    emoticons: 80,
+    emoticons: 141,
     enclosed_alphanumerics: 160,
     ethiopic: 350,
     games: 203,
@@ -50,7 +50,7 @@ test('Category Group Character Counts Verification', (t) => {
     letterlike_symbols: 80,
     mathematical_operators: 256,
     miscellaneous_symbols: 256,
-    miscellaneous_symbols_and_pictographs: 350,
+    miscellaneous_symbols_and_pictographs: 1068,
     miscellaneous_technical: 256,
     mongolian: 158,
     number_forms: 60,
@@ -58,7 +58,7 @@ test('Category Group Character Counts Verification', (t) => {
     superscripts_and_subscripts: 42,
     thai: 87,
     tibetan: 211,
-    transport_and_map_symbols: 119,
+    transport_and_map_symbols: 128,
     yi: 1284
   };
 
@@ -86,5 +86,5 @@ test('Category Group Character Counts Verification', (t) => {
     actualTotal += count;
   });
 
-  assert.equal(actualTotal, 7643, 'Total curated group characters count must equal 7,643');
+  assert.equal(actualTotal, 8431, 'Total curated group characters count must equal 8,431');
 });
