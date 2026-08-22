@@ -383,12 +383,22 @@ function openSidePanel() {
     if (c.windows && typeof c.windows.getCurrent === 'function') {
       c.windows.getCurrent((win) => {
         if (win && win.id) {
-          c['sidePanel']['open']({ windowId: win.id }).then(() => {
-            window.close();
-          }).catch((err) => {
-            console.error('Chrome sidepanel error:', err);
+          try {
+            const res = c['sidePanel']['open']({ windowId: win.id }, () => {
+              if (c.runtime && c.runtime.lastError) {
+                console.error('Chrome sidepanel error:', c.runtime.lastError.message);
+                showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
+              } else {
+                window.close();
+              }
+            });
+            if (res && typeof res.then === 'function') {
+              res.then(() => window.close()).catch(() => {});
+            }
+          } catch (err) {
+            console.error('Chrome sidepanel exception:', err);
             showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
-          });
+          }
         }
       });
       return;
@@ -397,13 +407,17 @@ function openSidePanel() {
 
   // 2. Firefox SidebarAction API
   if (b && b['sidebarAction'] && typeof b['sidebarAction']['open'] === 'function') {
-    b['sidebarAction']['open']().then(() => {
-      window.close();
-    }).catch((err) => {
-      console.error('Firefox sidebar error:', err);
-      showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
-    });
-    return;
+    try {
+      b['sidebarAction']['open']().then(() => {
+        window.close();
+      }).catch((err) => {
+        console.error('Firefox sidebar error:', err);
+        showToast(getMsg('sidepanelOpenTip', 'Abra o Painel Lateral no menu de extensões'));
+      });
+      return;
+    } catch (err) {
+      console.error('Firefox sidebar exception:', err);
+    }
   }
 
   // 3. Fallback Toast

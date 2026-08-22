@@ -21,7 +21,8 @@
     "128": "icon128-96.png"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "sidePanel"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -45,6 +46,7 @@
     }
   },
   "background": {
+    "service_worker": "js/background.js",
     "scripts": [
       "js/background.js"
     ]
