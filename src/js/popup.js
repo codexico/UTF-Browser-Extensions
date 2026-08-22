@@ -627,6 +627,9 @@ function createCardElement(g) {
   const isKaomoji = (g.section === 'kaomoji' || currentCategory === 'kaomoji' || (g.name && g.name.startsWith('KAOMOJI:')) || (g.symbol && g.symbol.length > 2));
   if (isKaomoji) {
     card.classList.add('is-kaomoji-card');
+    if (g.symbol && g.symbol.length > 10) {
+      card.classList.add('is-long-kaomoji');
+    }
   }
 
   const labelText = isKaomoji ? (g.name || g.symbol) : `${g.name} (U+${g.hex})`;

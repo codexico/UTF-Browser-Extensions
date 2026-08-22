@@ -462,6 +462,37 @@ button.glyph-card:focus-visible {
   display: none !important;
 }
 
+/* Card-level Kaomoji styling for mixed grids (Favoritos, Recentes, Search) */
+.glyph-card.is-kaomoji-card {
+  grid-column: span 3;
+  aspect-ratio: auto;
+  min-height: 44px;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
+
+.glyph-card.is-kaomoji-card.is-long-kaomoji {
+  grid-column: span 4;
+}
+
+.glyph-card.is-kaomoji-card .glyph-symbol {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.glyph-card.is-kaomoji-card .glyph-code {
+  display: none !important;
+}
+
+.kaomoji-grid .glyph-card.is-kaomoji-card {
+  grid-column: auto;
+}
+
 .inspector-preview {
   width: 48px;
   height: 48px;
