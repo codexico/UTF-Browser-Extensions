@@ -617,20 +617,27 @@ function createCardElement(g) {
   card.className = 'glyph-card';
   card.dataset.hex = g.hex;
 
-  const labelText = `${g.name} (U+${g.hex})`;
-  card.setAttribute('aria-label', `${g.name}, U+${g.hex}, ${g.symbol}`);
+  const isKaomoji = (g.section === 'kaomoji' || currentCategory === 'kaomoji' || (g.name && g.name.startsWith('KAOMOJI:')) || (g.symbol && g.symbol.length > 2));
+  if (isKaomoji) {
+    card.classList.add('is-kaomoji-card');
+  }
+
+  const labelText = isKaomoji ? (g.name || g.symbol) : `${g.name} (U+${g.hex})`;
+  card.setAttribute('aria-label', isKaomoji ? g.symbol : `${g.name}, U+${g.hex}, ${g.symbol}`);
   card.title = labelText;
 
   const spanSym = document.createElement('span');
   spanSym.className = 'glyph-symbol';
   spanSym.textContent = g.symbol;
 
-  const spanCode = document.createElement('span');
-  spanCode.className = 'glyph-code';
-  spanCode.textContent = `U+${g.hex}`;
-
   card.appendChild(spanSym);
-  card.appendChild(spanCode);
+
+  if (!isKaomoji) {
+    const spanCode = document.createElement('span');
+    spanCode.className = 'glyph-code';
+    spanCode.textContent = `U+${g.hex}`;
+    card.appendChild(spanCode);
+  }
 
   card.addEventListener('click', () => {
     selectGlyph(g, card);
@@ -903,6 +910,12 @@ function renderGlyphList(glyphs, emptyMsg = 'Nenhum caractere nesta categoria') 
   const emptyState = id('emptyState');
   grid.innerHTML = '';
 
+  if (currentCategory === 'kaomoji') {
+    grid.classList.add('kaomoji-grid');
+  } else {
+    grid.classList.remove('kaomoji-grid');
+  }
+
   if (!glyphs || glyphs.length === 0) {
     grid.classList.add('utility-hidden');
     emptyState.classList.remove('hidden');
@@ -939,20 +952,37 @@ function selectGlyph(glyph, cardElement) {
  */
 function updateInspector(glyph) {
   if (!glyph) return;
-  const fullName = glyph.name || `${glyph.section} Character`;
-  
-  id('inspectGlyph').textContent = glyph.symbol;
-  
+  const isKaomoji = (glyph.section === 'kaomoji' || currentCategory === 'kaomoji' || (glyph.name && glyph.name.startsWith('KAOMOJI:')) || (glyph.symbol && glyph.symbol.length > 2));
+
+  const inspectGlyphEl = id('inspectGlyph');
+  inspectGlyphEl.textContent = glyph.symbol;
+
+  if (isKaomoji) {
+    inspectGlyphEl.classList.add('is-kaomoji-inspect');
+  } else {
+    inspectGlyphEl.classList.remove('is-kaomoji-inspect');
+  }
+
+  const fullName = isKaomoji ? `KAOMOJI: ${glyph.symbol}` : (glyph.name || `${glyph.section} Character`);
   const subgroupEl = id('inspectSubgroup');
   subgroupEl.textContent = fullName;
-  subgroupEl.title = `${fullName} (U+${glyph.hex})`;
-  
+  subgroupEl.title = isKaomoji ? glyph.symbol : `${fullName} (U+${glyph.hex})`;
+
+  const inspectorEl = document.querySelector('.inspector');
+  if (inspectorEl) {
+    if (isKaomoji) {
+      inspectorEl.classList.add('is-kaomoji-mode');
+    } else {
+      inspectorEl.classList.remove('is-kaomoji-mode');
+    }
+  }
+
   id('inspectCodepoint').textContent = `U+${glyph.hex}`;
   id('inspectHex').textContent = glyph.hex;
   id('inspectDec').textContent = glyph.dec;
   id('inspectEntity').textContent = `&#${glyph.dec};`;
 
-  const isFav = favoriteGlyphs.some(f => f.hex === glyph.hex);
+  const isFav = favoriteGlyphs.some(f => f.symbol === glyph.symbol || (f.hex === glyph.hex && !isKaomoji));
   const btnFav = id('btnFav');
   if (isFav) {
     btnFav.classList.add('is-fav');

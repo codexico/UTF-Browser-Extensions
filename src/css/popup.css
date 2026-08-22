@@ -259,6 +259,7 @@ body {
 .color-favorites   { --pill-color: var(--cat-fav); }
 .color-about       { --pill-color: #6366f1; }
 .color-emoticons   { --pill-color: var(--cat-fun); }
+.color-kaomoji     { --pill-color: #ff5e97; }
 
 /* Grid Section Header */
 .grid-section-header {
@@ -434,6 +435,33 @@ button.glyph-card:focus-visible {
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
 }
 
+/* Dedicated Kaomoji Grid Category Styles */
+.glyph-grid.kaomoji-grid {
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.kaomoji-grid .glyph-card {
+  aspect-ratio: auto;
+  min-height: 48px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+}
+
+.kaomoji-grid .glyph-symbol {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.kaomoji-grid .glyph-code {
+  display: none !important;
+}
+
 .inspector-preview {
   width: 48px;
   height: 48px;
@@ -445,6 +473,37 @@ button.glyph-card:focus-visible {
   justify-content: center;
   font-size: 28px;
   flex-shrink: 0;
+  overflow: hidden;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.inspector-preview.is-kaomoji-inspect {
+  font-size: 11px;
+  line-height: 1.15;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  text-align: center;
+  white-space: normal;
+  padding: 4px;
+}
+
+.inspector.is-kaomoji-mode .inspect-codepoint,
+.inspector.is-kaomoji-mode .inspect-info-grid {
+  display: none !important;
+}
+
+.inspector.is-kaomoji-mode .inspect-subgroup {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  max-width: 100%;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .inspector-details {
