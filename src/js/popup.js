@@ -679,7 +679,7 @@ function parseGroupHTML(htmlText, groupName) {
   let currentSection = groupName;
 
   paragraphs.forEach(p => {
-    const text = p.innerText.trim();
+    const text = (p.textContent || p.innerText || '').trim();
     if (!text) return;
 
     if (text.includes(' ') && text.match(/\d+$/)) {
@@ -704,6 +704,87 @@ function parseGroupHTML(htmlText, groupName) {
   });
 
   return glyphs;
+}
+
+/**
+ * Try parsing search term as Hex, Dec, or HTML Entity
+ */
+function tryParseCodepointOrEntity(term) {
+  let cleaned = term.trim();
+  if (!cleaned) return [];
+
+  const matches = [];
+  const seenHex = new Set();
+
+  function addMatch(hexVal, decVal, sectionLabel) {
+    if (decVal !== null && !isNaN(decVal) && decVal >= 0 && decVal <= 0x10FFFF) {
+      const hexPadded = hexVal.toUpperCase().padStart(4, '0');
+      if (!seenHex.has(hexPadded)) {
+        seenHex.add(hexPadded);
+        try {
+          const sym = String.fromCodePoint(decVal);
+          const name = getUnicodeName(sym, hexPadded, sectionLabel);
+          matches.push({
+            symbol: sym,
+            hex: hexPadded,
+            dec: decVal.toString(),
+            section: sectionLabel,
+            name: name
+          });
+        } catch (e) {}
+      }
+    }
+  }
+
+  const lowerClean = cleaned.toLowerCase();
+  const HTML_ENTITIES = {
+    '&copy;': '00A9', '&reg;': '00AE', '&trade;': '2122', '&euro;': '20AC', '&pound;': '00A3',
+    '&yen;': '00A5', '&cent;': '00A2', '&deg;': '00B0', '&micro;': '00B5', '&para;': '00B6',
+    '&sect;': '00A7', '&plusmn;': '00B1', '&times;': '00D7', '&divide;': '00F7', '&ne;': '2260',
+    '&le;': '2264', '&ge;': '2265', '&infin;': '221E', '&radic;': '221A', '&sum;': '2211',
+    '&prod;': '220F', '&int;': '222B', '&approx;': '2248', '&equiv;': '2261', '&alpha;': '03B1',
+    '&beta;': '03B2', '&gamma;': '03B3', '&delta;': '03B4', '&theta;': '03B8', '&lambda;': '03BB',
+    '&pi;': '03C0', '&sigma;': '03C3', '&omega;': '03C9', '&check;': '2713', '&cross;': '2717',
+    '&star;': '2605', '&spades;': '2660', '&clubs;': '2663', '&hearts;': '2665', '&diams;': '2666',
+    '&larr;': '2190', '&uarr;': '2191', '&rarr;': '2192', '&darr;': '2193', '&harr;': '2194',
+    '&lt;': '003C', '&gt;': '003E', '&amp;': '0026'
+  };
+
+  const entityKey = lowerClean.startsWith('&') ? (lowerClean.endsWith(';') ? lowerClean : `${lowerClean};`) : `&${lowerClean};`;
+  if (HTML_ENTITIES[entityKey]) {
+    const hex = HTML_ENTITIES[entityKey];
+    addMatch(hex, parseInt(hex, 16), 'HTML Entity');
+  }
+
+  let str = cleaned.replace(/;$/, '');
+
+  if (/^(?:&#x|0x|u\+|#|\\u)/i.test(str)) {
+    const m = str.match(/^(?:&#x|0x|u\+|#|\\u)?([0-9a-f]{2,6})$/i);
+    if (m) {
+      const hex = m[1];
+      addMatch(hex, parseInt(hex, 16), 'Hex');
+    }
+  }
+
+  if (/^&#\d+$/i.test(str)) {
+    const m = str.match(/^&#(\d+)$/);
+    if (m) {
+      const dec = parseInt(m[1], 10);
+      addMatch(dec.toString(16), dec, 'Dec Entity');
+    }
+  }
+
+  if (/^[0-9a-f]{4,6}$/i.test(str)) {
+    const dec = parseInt(str, 16);
+    addMatch(str, dec, 'Hex');
+  }
+
+  if (/^\d{1,7}$/.test(str)) {
+    const dec = parseInt(str, 10);
+    addMatch(dec.toString(16), dec, 'Dec');
+  }
+
+  return matches;
 }
 
 /**
@@ -748,11 +829,15 @@ async function performSearch(term) {
   const tokens = cleanTerm.split(/\s+/).filter(Boolean);
   const synonymsDict = (typeof SYNONYMS !== 'undefined') ? SYNONYMS : {};
 
+  const directMatches = tryParseCodepointOrEntity(term);
+  const directHexes = new Set(directMatches.map(m => m.hex));
+
   const results = uniquePool.filter(g => {
-    const textToSearch = `${g.symbol} U+${g.hex} ${g.dec} ${g.section} ${g.name || ''}`.toLowerCase();
+    const textToSearch = `${g.symbol} u+${g.hex} 0x${g.hex} #${g.hex} ${g.hex} ${g.dec} &#${g.dec}; &#x${g.hex}; ${g.section} ${g.name || ''}`.toLowerCase();
     
     return tokens.every(token => {
-      if (textToSearch.includes(token)) return true;
+      const cleanToken = token.replace(/^(?:u\+|0x|#|&#x|&#)/i, '').replace(/;$/, '');
+      if (textToSearch.includes(token) || (cleanToken && textToSearch.includes(cleanToken))) return true;
       if (synonymsDict[token]) {
         return synonymsDict[token].some(syn => textToSearch.includes(syn));
       }
@@ -765,11 +850,24 @@ async function performSearch(term) {
     });
   });
 
+  if (directMatches.length > 0) {
+    directMatches.reverse().forEach(m => {
+      const existingIdx = results.findIndex(g => g.hex === m.hex);
+      if (existingIdx !== -1) {
+        results.splice(existingIdx, 1);
+      }
+      results.unshift(m);
+    });
+  }
+
   results.sort((a, b) => {
+    if (directHexes.has(a.hex) && !directHexes.has(b.hex)) return -1;
+    if (directHexes.has(b.hex) && !directHexes.has(a.hex)) return 1;
+
     if (a.symbol === cleanTerm) return -1;
     if (b.symbol === cleanTerm) return 1;
 
-    const hexTerm = cleanTerm.replace(/^u\+/, '').toUpperCase();
+    const hexTerm = cleanTerm.replace(/^(?:u\+|0x|#|&#x|&#)/i, '').replace(/;$/, '').toUpperCase();
     if (a.hex === hexTerm) return -1;
     if (b.hex === hexTerm) return 1;
 
