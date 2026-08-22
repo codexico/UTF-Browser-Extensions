@@ -2,3 +2,4 @@ local/
 build/
 .tmp
 prints/
+web-ext-artifacts/
