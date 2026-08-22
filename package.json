@@ -4,15 +4,16 @@
   "description": "Unicode & UTF-8 Character Studio Browser Extension",
   "scripts": {
     "test": "node --test tests/**/*.test.js",
-    "lint": "npx web-ext lint --source-dir src"
+    "lint": "web-ext lint --source-dir src"
   },
   "keywords": [
     "unicode",
     "utf-8",
+    "emoji",
     "browser-extension",
     "chrome-extension",
     "firefox-addon"
   ],
   "author": "Francisco Kahil (codexico.com.br)",
-  "license": "MIT"
+  "license": "OSL"
 }

@@ -70,6 +70,11 @@ Chrome/
 5. Selecione a pasta `Chrome` localizada dentro do repositório clonado.
 6. Prontinho! A extensão aparecerá no seu menu de extensões do Chrome.
 
+## Dependencies (only for tests)
+
+- node
+- web-ext (you can change to `npx web-ext`)
+
 ---
 
 ## ⌨️ Atalhos de Teclado Úteis
