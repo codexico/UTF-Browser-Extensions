@@ -1,0 +1,79 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const fs = require('node:fs');
+
+const srcDir = path.join(__dirname, '../../src');
+
+const namesCode = fs.readFileSync(path.join(srcDir, 'js/unicode-names.js'), 'utf8');
+const dataCode = fs.readFileSync(path.join(srcDir, 'js/unicode-data.js'), 'utf8');
+const popupCode = fs.readFileSync(path.join(srcDir, 'js/popup.js'), 'utf8');
+
+eval(namesCode.replace('const OFFICIAL_UNICODE_NAMES', 'global.OFFICIAL_UNICODE_NAMES'));
+eval(dataCode.replace('const SYNONYMS', 'global.SYNONYMS'));
+
+const tryParseMatch = popupCode.match(/function tryParseCodepointOrEntity[\s\S]*?^}/m);
+
+// Evaluate tryParseCodepointOrEntity function
+const tryParseCodepointOrEntity = new Function('OFFICIAL_UNICODE_NAMES', 'SYNONYMS', `
+  function getUnicodeName(ch, hex, section) {
+    const cleanHex = hex.replace(/^0+/, '').toUpperCase();
+    return OFFICIAL_UNICODE_NAMES[cleanHex] || OFFICIAL_UNICODE_NAMES[hex] || 'CHARACTER U+' + hex;
+  }
+  ${tryParseMatch ? tryParseMatch[0] : ''}
+  return tryParseCodepointOrEntity;
+`)(global.OFFICIAL_UNICODE_NAMES, global.SYNONYMS);
+
+test('Hex Code Search Resolutions', (t) => {
+  const hexTests = ['2605', 'U+2605', 'u+2605', '0x2605', '#2605', '&#x2605;', '\\u2605'];
+  
+  hexTests.forEach(term => {
+    const matches = tryParseCodepointOrEntity(term);
+    assert.ok(matches.length > 0, `Expected matches for term: ${term}`);
+    const starMatch = matches.find(m => m.hex === '2605');
+    assert.ok(starMatch, `Expected U+2605 for term: ${term}`);
+    assert.equal(starMatch.symbol, '★');
+    assert.equal(starMatch.dec, '9733');
+  });
+
+  const emojiMatch = tryParseCodepointOrEntity('1F600');
+  assert.ok(emojiMatch.length > 0);
+  assert.equal(emojiMatch[0].symbol, '😀');
+  assert.equal(emojiMatch[0].hex, '1F600');
+  assert.equal(emojiMatch[0].dec, '128512');
+});
+
+test('Decimal Code Search Resolutions', (t) => {
+  const decTests = ['9733', '&#9733;', '&#9733'];
+  
+  decTests.forEach(term => {
+    const matches = tryParseCodepointOrEntity(term);
+    assert.ok(matches.length > 0, `Expected matches for dec term: ${term}`);
+    const starMatch = matches.find(m => m.hex === '2605');
+    assert.ok(starMatch, `Expected U+2605 for dec term: ${term}`);
+    assert.equal(starMatch.symbol, '★');
+    assert.equal(starMatch.dec, '9733');
+  });
+
+  const emojiDecMatch = tryParseCodepointOrEntity('&#128512;');
+  assert.ok(emojiDecMatch.length > 0);
+  assert.equal(emojiDecMatch[0].symbol, '😀');
+  assert.equal(emojiDecMatch[0].hex, '1F600');
+});
+
+test('HTML Named Entity Search Resolutions', (t) => {
+  const entityTests = ['&star;', 'star', '&copy;', 'copy', '&trade;', '&check;', '&lt;', '&gt;'];
+
+  entityTests.forEach(term => {
+    const matches = tryParseCodepointOrEntity(term);
+    assert.ok(matches.length > 0, `Expected matches for entity: ${term}`);
+  });
+
+  const starMatch = tryParseCodepointOrEntity('&star;');
+  assert.equal(starMatch[0].symbol, '★');
+  assert.equal(starMatch[0].hex, '2605');
+
+  const copyMatch = tryParseCodepointOrEntity('&copy;');
+  assert.equal(copyMatch[0].symbol, '©');
+  assert.equal(copyMatch[0].hex, '00A9');
+});
