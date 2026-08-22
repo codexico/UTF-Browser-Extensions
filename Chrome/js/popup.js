@@ -502,7 +502,7 @@ function renderAboutView() {
 
   const prefix = getMsg('aboutCopyCountPrefix', 'Você já copiou ');
   const suffix = getMsg('aboutCopyCountSuffix', ' caracteres usando a extensão!');
-  const desc = getMsg('aboutDesc', 'Criada originalmente em 2010. Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode.');
+  const desc = getMsg('aboutDesc', 'Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente.');
   const tip = getMsg('aboutSidePanelTip', 'Dica: Clique no ícone de Painel Lateral 🗂 no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!');
   const sinceTag = getMsg('aboutSinceTag', 'Desde 2010');
 
@@ -525,7 +525,7 @@ function renderAboutView() {
             <div class="about-hero-title">
               <span>Unicode & UTF-8 Studio</span>
               <span class="version-tag">v4.0.0</span>
-              <span class="since-tag" style="font-size: 9.5px; font-weight: 700; color: #f59e0b; background-color: rgba(245, 158, 11, 0.12); padding: 1px 6px; border-radius: 9999px;">🎉 ${sinceTag}</span>
+              <span class="since-tag">🎉 ${sinceTag}</span>
             </div>
             <div class="about-hero-desc">${desc}</div>
           </div>
