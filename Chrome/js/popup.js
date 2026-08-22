@@ -366,11 +366,12 @@ function handleGridArrowNavigation(e) {
   const btnSidePanel = id('btnSidePanel');
   if (btnSidePanel) {
     btnSidePanel.addEventListener('click', async () => {
-      if (typeof chrome !== 'undefined' && chrome.sidePanel && chrome.sidePanel.open) {
+      const sp = (typeof window !== 'undefined' && window.chrome) ? window.chrome['sidePanel'] : null;
+      if (sp && typeof sp['open'] === 'function') {
         try {
-          const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+          const [tab] = await window.chrome.tabs.query({ active: true, currentWindow: true });
           if (tab && tab.windowId) {
-            await chrome.sidePanel.open({ windowId: tab.windowId });
+            await sp['open']({ windowId: tab.windowId });
             window.close();
           }
         } catch (err) {
@@ -416,7 +417,7 @@ function renderCategory(cat) {
 }
 
 /**
- * Render ⚡ Início View (Sections: Recentes + Populares)
+ * Render ⚡ Início View
  */
 function renderHomeView() {
   const grid = id('glyphGrid');
@@ -431,7 +432,9 @@ function renderHomeView() {
   const headerRecents = document.createElement('div');
   headerRecents.className = 'grid-section-header';
   const recentsTitle = getMsg('sectionRecents', 'Recentes');
-  headerRecents.innerHTML = `<span>⏱ ${recentsTitle}</span>`;
+  const spanRecents = document.createElement('span');
+  spanRecents.textContent = `⏱ ${recentsTitle}`;
+  headerRecents.appendChild(spanRecents);
   fragment.appendChild(headerRecents);
 
   if (recentGlyphs && recentGlyphs.length > 0) {
@@ -453,7 +456,9 @@ function renderHomeView() {
   headerPopular.className = 'grid-section-header';
   headerPopular.style.marginTop = '12px';
   const popularTitle = getMsg('sectionPopular', 'Mais Populares');
-  headerPopular.innerHTML = `<span>🔥 ${popularTitle}</span>`;
+  const spanPopular = document.createElement('span');
+  spanPopular.textContent = `🔥 ${popularTitle}`;
+  headerPopular.appendChild(spanPopular);
   fragment.appendChild(headerPopular);
 
   const popularList = (typeof POPULAR_GLYPHS !== 'undefined') ? POPULAR_GLYPHS : [];
@@ -484,8 +489,6 @@ function renderAboutView() {
   const suffix = getMsg('aboutCopyCountSuffix', ' caracteres usando a extensão!');
   const desc = getMsg('aboutDesc', 'Criada originalmente em 2010. Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode.');
   const tip = getMsg('aboutSidePanelTip', 'Dica: Clique no ícone de Painel Lateral 🗂 no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!');
-  const githubBtnText = getMsg('aboutGithubBtn', 'Repositório no GitHub');
-  const websiteBtnText = getMsg('aboutWebsiteBtn', 'codexico.com.br');
   const sinceTag = getMsg('aboutSinceTag', 'Desde 2010');
 
   const counterHtml = (copyCount > 0) ? `
@@ -497,53 +500,62 @@ function renderAboutView() {
     </div>
   ` : '';
 
-  container.innerHTML = `
-    <div class="about-hero-card">
-      <div class="about-hero-top">
-        <div class="about-logo-badge">⚡</div>
-        <div>
-          <div class="about-hero-title">
-            <span>Unicode & UTF-8 Studio</span>
-            <span class="version-tag">v4.0.0</span>
-            <span class="since-tag" style="font-size: 9.5px; font-weight: 700; color: #f59e0b; background-color: rgba(245, 158, 11, 0.12); padding: 1px 6px; border-radius: 9999px;">🎉 ${sinceTag}</span>
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(`
+    <div>
+      <div class="about-hero-card">
+        <div class="about-hero-top">
+          <div class="about-logo-badge">⚡</div>
+          <div>
+            <div class="about-hero-title">
+              <span>Unicode & UTF-8 Studio</span>
+              <span class="version-tag">v4.0.0</span>
+              <span class="since-tag" style="font-size: 9.5px; font-weight: 700; color: #f59e0b; background-color: rgba(245, 158, 11, 0.12); padding: 1px 6px; border-radius: 9999px;">🎉 ${sinceTag}</span>
+            </div>
+            <div class="about-hero-desc">${desc}</div>
           </div>
-          <div class="about-hero-desc">${desc}</div>
         </div>
       </div>
+
+      ${counterHtml}
+
+      <div class="sidepanel-tip-card">
+        <span class="tip-card-icon">💡</span>
+        <div>${tip}</div>
+      </div>
+
+      <div class="about-fonts-card">
+        <h4 data-i18n="modalTitle">🔤 Fontes Recomendadas</h4>
+        <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;" data-i18n="modalSubtitle">
+          Alguns caracteres raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema.
+        </p>
+        <ul class="font-list" style="margin: 4px 0;">
+          <li class="font-item">
+            <a href="https://fonts.google.com/noto" target="_blank" rel="noopener">
+              <strong data-i18n="modalFontGoogleNoto">Google Noto Fonts</strong> — Cobertura Universal Unicode
+            </a>
+          </li>
+          <li class="font-item">
+            <a href="https://www.babelstone.co.uk/Fonts/" target="_blank" rel="noopener">
+              <strong data-i18n="modalFontBabelStone">BabelStone Fonts</strong> — Símbolos & Escritas Raras
+            </a>
+          </li>
+          <li class="font-item">
+            <a href="http://www.quivira-font.com/" target="_blank" rel="noopener">
+              <strong data-i18n="modalFontQuivira">Quivira</strong> — Fonte Unicode Abrangente
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
+  `, 'text/html');
 
-    ${counterHtml}
-
-    <div class="sidepanel-tip-card">
-      <span class="tip-card-icon">💡</span>
-      <div>${tip}</div>
-    </div>
-
-    <div class="about-fonts-card">
-      <h4 data-i18n="modalTitle">🔤 Fontes Recomendadas</h4>
-      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;" data-i18n="modalSubtitle">
-        Alguns caracteres raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema.
-      </p>
-      <ul class="font-list" style="margin: 4px 0;">
-        <li class="font-item">
-          <a href="https://fonts.google.com/noto" target="_blank" rel="noopener">
-            <strong data-i18n="modalFontGoogleNoto">Google Noto Fonts</strong> — Cobertura Universal Unicode
-          </a>
-        </li>
-        <li class="font-item">
-          <a href="https://www.babelstone.co.uk/Fonts/" target="_blank" rel="noopener">
-            <strong data-i18n="modalFontBabelStone">BabelStone Fonts</strong> — Símbolos & Escritas Raras
-          </a>
-        </li>
-        <li class="font-item">
-          <a href="http://www.quivira-font.com/" target="_blank" rel="noopener">
-            <strong data-i18n="modalFontQuivira">Quivira</strong> — Fonte Unicode Abrangente
-          </a>
-        </li>
-      </ul>
-    </div>
-
-  `;
+  const wrapper = doc.body.firstElementChild;
+  if (wrapper) {
+    while (wrapper.firstChild) {
+      container.appendChild(wrapper.firstChild);
+    }
+  }
 
   grid.appendChild(container);
 }
@@ -561,10 +573,16 @@ function createCardElement(g) {
   card.setAttribute('aria-label', `${g.name}, U+${g.hex}, ${g.symbol}`);
   card.title = labelText;
 
-  card.innerHTML = `
-    <span class="glyph-symbol">${g.symbol}</span>
-    <span class="glyph-code">U+${g.hex}</span>
-  `;
+  const spanSym = document.createElement('span');
+  spanSym.className = 'glyph-symbol';
+  spanSym.textContent = g.symbol;
+
+  const spanCode = document.createElement('span');
+  spanCode.className = 'glyph-code';
+  spanCode.textContent = `U+${g.hex}`;
+
+  card.appendChild(spanSym);
+  card.appendChild(spanCode);
 
   card.addEventListener('click', () => {
     selectGlyph(g, card);
