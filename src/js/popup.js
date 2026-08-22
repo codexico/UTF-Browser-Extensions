@@ -565,24 +565,24 @@ function renderAboutView() {
       </div>
 
       <div class="about-fonts-card">
-        <h4 data-i18n="modalTitle">🔤 Fontes Recomendadas</h4>
+        <h4 data-i18n="modalTitle">🔤 ${getMsg('modalTitle', 'Fontes Recomendadas')}</h4>
         <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;" data-i18n="modalSubtitle">
-          Alguns caracteres raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema.
+          ${getMsg('modalSubtitle', 'Alguns caracteres Unicode raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema operacional.')}
         </p>
         <ul class="font-list" style="margin: 4px 0;">
           <li class="font-item">
-            <a href="https://fonts.google.com/noto" target="_blank" rel="noopener">
-              <strong data-i18n="modalFontGoogleNoto">Google Noto Fonts</strong> — Cobertura Universal Unicode
+            <a href="https://fonts.google.com/noto" target="_blank" rel="noopener" data-i18n="modalFontGoogleNoto">
+              ${getMsg('modalFontGoogleNoto', 'Google Noto Fonts (Cobertura Universal)')}
             </a>
           </li>
           <li class="font-item">
-            <a href="https://www.babelstone.co.uk/Fonts/" target="_blank" rel="noopener">
-              <strong data-i18n="modalFontBabelStone">BabelStone Fonts</strong> — Símbolos & Escritas Raras
+            <a href="https://www.babelstone.co.uk/Fonts/" target="_blank" rel="noopener" data-i18n="modalFontBabelStone">
+              ${getMsg('modalFontBabelStone', 'BabelStone Fonts (Símbolos & Escritas Raras)')}
             </a>
           </li>
           <li class="font-item">
-            <a href="http://www.quivira-font.com/" target="_blank" rel="noopener">
-              <strong data-i18n="modalFontQuivira">Quivira</strong> — Fonte Unicode Abrangente
+            <a href="http://www.quivira-font.com/" target="_blank" rel="noopener" data-i18n="modalFontQuivira">
+              ${getMsg('modalFontQuivira', 'Quivira (Fonte Unicode Abrangente)')}
             </a>
           </li>
         </ul>
