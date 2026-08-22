@@ -684,6 +684,19 @@ function parseGroupHTML(htmlText, groupName) {
 
     if (text.includes(' ') && text.match(/\d+$/)) {
       currentSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
+    } else if (groupName === 'kaomoji') {
+      const items = text.split(/\n+|\s{2,}/).map(s => s.trim()).filter(Boolean);
+      items.forEach(item => {
+        const firstCp = item.codePointAt(0) || 0;
+        const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
+        glyphs.push({
+          symbol: item,
+          hex: hex,
+          dec: firstCp.toString(),
+          section: currentSection,
+          name: `KAOMOJI: ${item}`
+        });
+      });
     } else {
       const chars = Array.from(text);
       chars.forEach(ch => {
@@ -798,7 +811,7 @@ async function performSearch(term) {
   });
 
   const allGroups = [
-    'emoticons', 'miscellaneous_symbols_and_pictographs', 'transport_and_map_symbols', 'miscellaneous_symbols',
+    'emoticons', 'kaomoji', 'miscellaneous_symbols_and_pictographs', 'transport_and_map_symbols', 'miscellaneous_symbols',
     'dingbats', 'currency_symbols', 'mathematical_operators', 'arrows', 'miscellaneous_technical', 'enclosed_alphanumerics',
     'box_drawing', 'block_elements', 'geometric_shapes', 'general_punctuation', 'superscripts_and_subscripts',
     'letterlike_symbols', 'number_forms', 'games', 'latin', 'greek', 'hebrew', 'arabic', 'devanagari', 'thai',

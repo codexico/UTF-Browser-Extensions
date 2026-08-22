@@ -44,6 +44,7 @@ test('Category Group Character Counts Verification', (t) => {
     greek: 524,
     hebrew: 51,
     hiragana: 93,
+    kaomoji: 95,
     katakana: 96,
     khmer: 114,
     latin: 885,
@@ -76,15 +77,21 @@ test('Category Group Character Counts Verification', (t) => {
     paragraphMatches.forEach(p => {
       const text = p.replace(/<[^>]+>/g, '').trim();
       if (!text || (text.includes(' ') && text.match(/\d+$/))) return;
-      const chars = Array.from(text);
-      chars.forEach(ch => {
-        if (ch && ch !== ' ' && ch !== '\n') count++;
-      });
+
+      if (category === 'kaomoji') {
+        const items = text.split(/\n+|\s{2,}/).map(s => s.trim()).filter(Boolean);
+        count += items.length;
+      } else {
+        const chars = Array.from(text);
+        chars.forEach(ch => {
+          if (ch && ch !== ' ' && ch !== '\n') count++;
+        });
+      }
     });
 
     assert.equal(count, expectedCount, `Category '${category}' character count mismatch`);
     actualTotal += count;
   });
 
-  assert.equal(actualTotal, 8431, 'Total curated group characters count must equal 8,431');
+  assert.equal(actualTotal, 8526, 'Total curated group characters count must equal 8,526');
 });
