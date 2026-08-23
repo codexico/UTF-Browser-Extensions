@@ -702,26 +702,24 @@ function parseGroupHTML(htmlText, groupName) {
     if (text.includes(' ') && text.match(/\d+$/)) {
       currentSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
     } else if (groupName === 'kaomoji') {
-      const items = text.split(/\n+|\s{2,}/).map(s => s.trim()).filter(Boolean);
-      items.forEach(item => {
-        let symbol = item;
-        let itemCustomName = '';
-        if (item.includes(' :: ')) {
-          const parts = item.split(' :: ');
-          symbol = parts[0].trim();
-          itemCustomName = parts[1].trim();
-        }
-        const firstCp = symbol.codePointAt(0) || 0;
-        const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
-        const displayName = itemCustomName || currentSection;
-        glyphs.push({
-          symbol: symbol,
-          hex: hex,
-          dec: firstCp.toString(),
-          section: currentSection,
-          name: `KAOMOJI: ${displayName}`,
-          isKaomoji: true
-        });
+      let symbol = text;
+      let itemCustomName = '';
+      if (text.includes(' :: ')) {
+        const parts = text.split(' :: ');
+        symbol = parts[0].trim();
+        itemCustomName = parts[1].trim();
+      }
+      if (!symbol) return;
+      const firstCp = symbol.codePointAt(0) || 0;
+      const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
+      const displayName = itemCustomName || currentSection;
+      glyphs.push({
+        symbol: symbol,
+        hex: hex,
+        dec: firstCp.toString(),
+        section: currentSection,
+        name: `KAOMOJI: ${displayName}`,
+        isKaomoji: true
       });
     } else {
       const chars = Array.from(text);

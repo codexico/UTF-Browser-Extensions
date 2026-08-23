@@ -44,7 +44,7 @@ test('Category Group Character Counts Verification', (t) => {
     greek: 524,
     hebrew: 51,
     hiragana: 93,
-    kaomoji: 162,
+    kaomoji: 158,
     katakana: 96,
     khmer: 114,
     latin: 885,
@@ -79,8 +79,7 @@ test('Category Group Character Counts Verification', (t) => {
       if (!text || (text.includes(' ') && text.match(/\d+$/))) return;
 
       if (category === 'kaomoji') {
-        const items = text.split(/\n+|\s{2,}/).map(s => s.trim()).filter(Boolean);
-        count += items.length;
+        count++;
       } else {
         const chars = Array.from(text);
         chars.forEach(ch => {
@@ -93,5 +92,5 @@ test('Category Group Character Counts Verification', (t) => {
     actualTotal += count;
   });
 
-  assert.equal(actualTotal, 8593, 'Exact total curated characters count across all 36 category groups');
+  assert.equal(actualTotal, 8589, 'Exact total curated characters count across all 36 category groups');
 });
