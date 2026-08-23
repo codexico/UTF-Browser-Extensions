@@ -855,13 +855,47 @@ body.is-sidepanel .glyph-grid {
   gap: 4px;
 }
 
+body.is-sidepanel .glyph-grid.kaomoji-grid {
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
+  gap: 8px !important;
+}
+
 body.is-sidepanel .glyph-card {
   padding: 3px 1px;
   border-radius: 6px;
 }
 
+body.is-sidepanel .kaomoji-grid .glyph-card {
+  aspect-ratio: auto !important;
+  min-height: 48px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+}
+
 body.is-sidepanel .glyph-symbol {
   font-size: 18px;
+}
+
+body.is-sidepanel .kaomoji-grid .glyph-symbol {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+
+body.is-sidepanel .glyph-card.is-kaomoji-card {
+  grid-column: span 4 !important;
+  aspect-ratio: auto !important;
+  min-height: 44px !important;
+  padding: 6px 10px !important;
+}
+
+body.is-sidepanel .glyph-card.is-kaomoji-card .glyph-symbol {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+body.is-sidepanel .kaomoji-grid .glyph-card.is-kaomoji-card {
+  grid-column: auto !important;
 }
 
 body.is-sidepanel .glyph-code {
@@ -880,6 +914,22 @@ body.is-sidepanel .inspector-preview {
   width: 44px;
   height: 44px;
   font-size: 24px;
+}
+
+body.is-sidepanel .inspector-preview.is-kaomoji-inspect {
+  width: auto !important;
+  min-width: 50px !important;
+  max-width: 95px !important;
+  height: 44px !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+body.is-sidepanel .inspect-kaomoji-display {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  max-width: 130px !important;
 }
 
 body.is-sidepanel .inspector-details {
