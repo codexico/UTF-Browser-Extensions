@@ -1,6 +1,6 @@
 {
   "name": "utf-browser-extensions",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Unicode & UTF-8 Character Studio Browser Extension",
   "scripts": {
     "test": "node --test tests/**/*.test.js",
