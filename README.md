@@ -135,4 +135,4 @@ Para publicar uma nova versão da extensão (ZIP + Tag no GitHub):
 
 Criada originalmente em **2010**, mantida e aprimorada com amor por **[codexico.com.br](https://codexico.com.br)**.
 
-Distribuído sob a licença [MIT](LICENSE). Dados e nomenclaturas mantidos em conformidade com o padrão oficial do **Unicode Consortium**.
+Distribuído sob a licença [OSL](LICENSE). Dados e nomenclaturas mantidos em conformidade com o padrão oficial do **Unicode Consortium**.
