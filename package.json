@@ -4,7 +4,8 @@
   "description": "Unicode & UTF-8 Character Studio Browser Extension",
   "scripts": {
     "test": "node --test tests/**/*.test.js",
-    "lint": "web-ext lint --source-dir src"
+    "lint": "web-ext lint --source-dir src",
+    "release": "node ia/scripts/release.js"
   },
   "keywords": [
     "unicode",

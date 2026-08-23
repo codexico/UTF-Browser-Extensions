@@ -89,7 +89,18 @@ Chrome/
 
 ## 🚀 Procedimento de Release
 
-Para publicar uma nova versão da extensão (ZIP + Tag no GitHub):
+Para publicar uma nova versão completa da extensão (Testes + Lint + Bump + Build ZIP + Git Tag + Push + GitHub Release):
+
+### ⚡ Forma Automatizada (Recomendada):
+```bash
+npm run release          # Faz um incremento minor automático (ex: 4.1.2 -> 4.2.0)
+npm run release -- patch # Incremente patch (ex: 4.1.2 -> 4.1.3)
+npm run release -- major # Incremente major (ex: 4.1.2 -> 5.0.0)
+```
+
+---
+
+### 🛠️ Forma Manual (Passo a Passo):
 
 1. **Executar Suíte de Testes e Linting**:
    ```bash
