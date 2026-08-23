@@ -3,4 +3,6 @@ build/
 .tmp
 prints/
 web-ext-artifacts/
+test-results/
+playwright-report/
 ia/

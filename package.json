@@ -4,6 +4,8 @@
   "description": "Unicode & UTF-8 Character Studio Browser Extension",
   "scripts": {
     "test": "node --test tests/**/*.test.js",
+    "test:playwright": "playwright test",
+    "test:all": "npm run test && npm run test:playwright",
     "lint": "web-ext lint --source-dir src",
     "release": "node ia/scripts/release.js"
   },
@@ -16,5 +18,8 @@
     "firefox-addon"
   ],
   "author": "Francisco Kahil (codexico.com.br)",
-  "license": "OSL"
+  "license": "OSL",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1"
+  }
 }
