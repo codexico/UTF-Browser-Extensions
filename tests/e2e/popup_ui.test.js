@@ -98,11 +98,13 @@ test('Kaomoji Inspector State & inspectGlyph Update Verification', (t) => {
 
   assert.equal(mockElements.inspectGlyph.textContent, '(^_^)', '#inspectGlyph must match selected kaomoji symbol');
   assert.equal(mockElements.inspectKaomojiDisplay.textContent, '(^_^)', '#inspectKaomojiDisplay must match selected kaomoji symbol');
+  assert.ok(mockElements.inspectGlyph.classList.has('is-kaomoji-inspect'), '#inspectGlyph must have is-kaomoji-inspect class for auto width styling');
 
-  // Test updating inspector with second Kaomoji (◠‿◠)
-  const kaomoji2 = { symbol: '(◠‿◠)', hex: '0028', dec: '40', section: 'Felizes & Alegres' };
+  // Test updating inspector with a longer Kaomoji (*─3─)(─ε─*)
+  const kaomoji2 = { symbol: '(*─3─)(─ε─*)', hex: '0028', dec: '40', section: 'Amor & Abraços' };
   updateInspector(kaomoji2);
 
-  assert.equal(mockElements.inspectGlyph.textContent, '(◠‿◠)', '#inspectGlyph must dynamically update to (◠‿◠)');
-  assert.equal(mockElements.inspectKaomojiDisplay.textContent, '(◠‿◠)', '#inspectKaomojiDisplay must dynamically update to (◠‿◠)');
+  assert.equal(mockElements.inspectGlyph.textContent, '(*─3─)(─ε─*)', '#inspectGlyph must dynamically update to (*─3─)(─ε─*)');
+  assert.equal(mockElements.inspectKaomojiDisplay.textContent, '(*─3─)(─ε─*)', '#inspectKaomojiDisplay must dynamically update to (*─3─)(─ε─*)');
+  assert.ok(mockElements.inspectGlyph.classList.has('is-kaomoji-inspect'), '#inspectGlyph must retain is-kaomoji-inspect class');
 });

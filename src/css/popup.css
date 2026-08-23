@@ -510,13 +510,20 @@ button.glyph-card:focus-visible {
 }
 
 .inspector-preview.is-kaomoji-inspect {
-  font-size: 14px;
+  width: auto;
+  min-width: 56px;
+  max-width: 115px;
+  height: 48px;
+  padding: 4px 10px;
+  font-size: 12px;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.2;
   text-align: center;
   white-space: nowrap;
-  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--accent-primary);
+  box-sizing: border-box;
 }
 
 .inspect-kaomoji-display {
@@ -526,7 +533,7 @@ button.glyph-card:focus-visible {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 220px;
+  max-width: 160px;
   margin-top: 2px;
   cursor: pointer;
   transition: color 0.15s ease;
