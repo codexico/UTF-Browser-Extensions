@@ -704,14 +704,23 @@ function parseGroupHTML(htmlText, groupName) {
     } else if (groupName === 'kaomoji') {
       const items = text.split(/\n+|\s{2,}/).map(s => s.trim()).filter(Boolean);
       items.forEach(item => {
-        const firstCp = item.codePointAt(0) || 0;
+        let symbol = item;
+        let itemCustomName = '';
+        if (item.includes(' :: ')) {
+          const parts = item.split(' :: ');
+          symbol = parts[0].trim();
+          itemCustomName = parts[1].trim();
+        }
+        const firstCp = symbol.codePointAt(0) || 0;
         const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
+        const displayName = itemCustomName || currentSection;
         glyphs.push({
-          symbol: item,
+          symbol: symbol,
           hex: hex,
           dec: firstCp.toString(),
           section: currentSection,
-          name: `KAOMOJI: ${item}`
+          name: `KAOMOJI: ${displayName}`,
+          isKaomoji: true
         });
       });
     } else {
@@ -850,8 +859,9 @@ async function performSearch(term) {
 
   const seen = new Set();
   const uniquePool = searchPool.filter(g => {
-    if (seen.has(g.hex)) return false;
-    seen.add(g.hex);
+    const key = (g.isKaomoji || g.section === 'kaomoji' || (g.symbol && g.symbol.length > 2)) ? g.symbol : g.hex;
+    if (seen.has(key)) return false;
+    seen.add(key);
     return true;
   });
 
@@ -975,8 +985,9 @@ function updateInspector(glyph) {
     inspectGlyphEl.classList.add('is-kaomoji-inspect');
 
     if (subgroupEl) {
-      const sectionName = (glyph.section && glyph.section !== 'kaomoji') ? glyph.section : 'Expressões';
-      subgroupEl.textContent = `Kaomoji • ${sectionName}`;
+      const isCustomName = glyph.name && glyph.name.startsWith('KAOMOJI: ') && glyph.name !== `KAOMOJI: ${glyph.symbol}`;
+      const nameText = isCustomName ? glyph.name.replace('KAOMOJI: ', '') : (glyph.section && glyph.section !== 'kaomoji' ? glyph.section : 'Expressões');
+      subgroupEl.textContent = `Kaomoji • ${nameText}`;
       subgroupEl.title = glyph.symbol;
     }
 

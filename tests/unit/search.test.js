@@ -77,3 +77,40 @@ test('HTML Named Entity Search Resolutions', (t) => {
   assert.equal(copyMatch[0].symbol, '©');
   assert.equal(copyMatch[0].hex, '00A9');
 });
+
+test('Kaomoji Search Resolution by Name & Tags', (t) => {
+  const kaomojiHtml = fs.readFileSync(path.join(srcDir, 'html/groups/kaomoji.html'), 'utf8');
+
+  function mockDOMParser() {
+    return {
+      parseFromString: (html) => {
+        const paragraphs = [];
+        const regex = /<p>([\s\S]*?)<\/p>/gi;
+        let match;
+        while ((match = regex.exec(html)) !== null) {
+          paragraphs.push({ textContent: match[1].trim() });
+        }
+        return { querySelectorAll: () => paragraphs };
+      }
+    };
+  }
+
+  const parseGroupHTMLMatch = popupCode.match(/function parseGroupHTML[\s\S]*?^}/m);
+  const parseGroupHTML = new Function('DOMParser', `
+    function getUnicodeName(ch, hex, section) { return 'CHARACTER U+' + hex; }
+    ${parseGroupHTMLMatch ? parseGroupHTMLMatch[0] : ''}
+    return parseGroupHTML;
+  `)(mockDOMParser);
+
+  const parsedKaomojis = parseGroupHTML(kaomojiHtml, 'kaomoji');
+  assert.ok(parsedKaomojis.length >= 160, `Expected at least 160 Kaomojis, got ${parsedKaomojis.length}`);
+
+  // Test searching Kaomojis by name/tag tokens
+  const mesaMatch = parsedKaomojis.filter(g => g.name.toLowerCase().includes('mesa') || g.section.toLowerCase().includes('mesa'));
+  assert.ok(mesaMatch.length > 0, 'Must find table flip kaomojis when searching "mesa"');
+  assert.ok(mesaMatch.some(g => g.symbol.includes('┻━┻')), 'Must include (╯°□°)╯ ┻━┻ in "mesa" matches');
+
+  const shrugMatch = parsedKaomojis.filter(g => g.name.toLowerCase().includes('shrug') || g.section.toLowerCase().includes('ombros'));
+  assert.ok(shrugMatch.length > 0, 'Must find shrug kaomojis when searching "shrug"');
+  assert.ok(shrugMatch.some(g => g.symbol.includes('¯\\_(ツ)_/¯')), 'Must include ¯\\_(ツ)_/¯ in "shrug" matches');
+});
