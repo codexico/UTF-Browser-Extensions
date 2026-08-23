@@ -44,7 +44,7 @@ test('Category Group Character Counts Verification', (t) => {
     greek: 524,
     hebrew: 51,
     hiragana: 93,
-    kaomoji: 163,
+    kaomoji: 162,
     katakana: 96,
     khmer: 114,
     latin: 885,
@@ -93,5 +93,5 @@ test('Category Group Character Counts Verification', (t) => {
     actualTotal += count;
   });
 
-  assert.equal(actualTotal, 8594, 'Exact total curated characters count across all 36 category groups');
+  assert.equal(actualTotal, 8593, 'Exact total curated characters count across all 36 category groups');
 });

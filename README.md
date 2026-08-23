@@ -87,6 +87,50 @@ Chrome/
 
 ---
 
+## 🚀 Procedimento de Release
+
+Para publicar uma nova versão da extensão (ZIP + Tag no GitHub):
+
+1. **Executar Suíte de Testes e Linting**:
+   ```bash
+   npm test
+   npx web-ext lint --source-dir src
+   ```
+
+2. **Incrementar Versão (Bump)**:
+   Atualize o número de versão em `package.json` e `src/manifest.json`:
+   ```bash
+   npm version minor --no-git-tag-version
+   ```
+
+3. **Gerar o Pacote ZIP de Produção**:
+   ```bash
+   npx web-ext build --source-dir src --overwrite-dest
+   ```
+   *O artefato compilado será salvo em `web-ext-artifacts/unicode_utf-8_character_studio-X.Y.Z.zip`.*
+
+4. **Registrar Commit e Tag de Versão no Git**:
+   ```bash
+   git add package.json src/manifest.json README.md tests/
+   git commit -m "chore(release): v4.1.0"
+   git tag v4.1.0
+   ```
+
+5. **Enviar Commits e Tags ao Repositório Remoto**:
+   ```bash
+   git push origin main --tags
+   ```
+
+6. **Criar a Release Oficial no GitHub**:
+   ```bash
+   gh release create v4.1.0 web-ext-artifacts/unicode_utf-8_character_studio-4.1.0.zip \
+     --title "v4.1.0 - Kaomojis, Emojis Expandidos & Side Panel" \
+     --notes "Versão 4.1.0 com suporte a 163+ Kaomojis com busca inteligente por tags, 1.791 Emojis Unicode e suíte de testes automatizada."
+   ```
+
+---
+
+
 ## 👤 Autor & Licença
 
 Criada originalmente em **2010**, mantida e aprimorada com amor por **[codexico.com.br](https://codexico.com.br)**.
