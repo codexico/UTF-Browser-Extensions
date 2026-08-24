@@ -1013,10 +1013,14 @@ function updateInspector(glyph) {
     if (inspectorEl) inspectorEl.classList.remove('is-kaomoji-mode');
   }
 
-  id('inspectCodepoint').textContent = `U+${glyph.hex}`;
-  id('inspectHex').textContent = glyph.hex;
-  id('inspectDec').textContent = glyph.dec;
-  id('inspectEntity').textContent = `&#${glyph.dec};`;
+  const cpEl = id('inspectCodepoint');
+  if (cpEl) cpEl.textContent = `U+${glyph.hex}`;
+  const hexEl = id('inspectHex');
+  if (hexEl) hexEl.textContent = glyph.hex;
+  const decEl = id('inspectDec');
+  if (decEl) decEl.textContent = glyph.dec;
+  const entEl = id('inspectEntity');
+  if (entEl) entEl.textContent = `&#${glyph.dec};`;
 
   const isFav = favoriteGlyphs.some(f => f.symbol === glyph.symbol || (f.hex === glyph.hex && !isKaomoji));
   const btnFav = id('btnFav');
@@ -1094,6 +1098,8 @@ function fallbackCopy(text, message) {
 function showToast(message) {
   const toast = id('toast');
   const toastMsg = id('toastMsg');
+  if (!toast || !toastMsg) return;
+
   toastMsg.textContent = message;
 
   toast.classList.remove('hidden');
