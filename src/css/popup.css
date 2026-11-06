@@ -264,6 +264,7 @@ body:not(.is-sidepanel):not(.web-mode) {
 .color-favorites   { --pill-color: var(--cat-fav); }
 .color-about       { --pill-color: #6366f1; }
 .color-emoticons   { --pill-color: var(--cat-fun); }
+.color-text-emoticons { --pill-color: #0ea5e9; }
 .color-kaomoji     { --pill-color: #ff5e97; }
 
 /* Grid Section Header */

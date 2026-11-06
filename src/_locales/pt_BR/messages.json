@@ -21,7 +21,7 @@
     "message": "Favoritos"
   },
   "navEmoticons": {
-    "message": "Emoticons"
+    "message": "Emojis"
   },
   "navKaomoji": {
     "message": "Kaomoji"
@@ -202,5 +202,8 @@
   },
   "aboutSinceTag": {
     "message": "Desde 2010"
+  },
+  "navTextEmoticons": {
+    "message": "Emoticons"
   }
 }

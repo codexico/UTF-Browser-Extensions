@@ -643,7 +643,7 @@ function createCardElement(g) {
   card.className = 'glyph-card';
   card.dataset.hex = g.hex;
 
-  const isKaomoji = (g.section === 'kaomoji' || currentCategory === 'kaomoji' || (g.name && g.name.startsWith('KAOMOJI:')) || (g.symbol && g.symbol.length > 2));
+  const isKaomoji = (g.section === 'kaomoji' || g.section === 'text_emoticons' || currentCategory === 'kaomoji' || currentCategory === 'text_emoticons' || (g.name && (g.name.startsWith('KAOMOJI:') || g.name.startsWith('TEXT_EMOTICON:'))) || (g.symbol && g.symbol.length > 2));
   if (isKaomoji) {
     card.classList.add('is-kaomoji-card');
     if (g.symbol && g.symbol.length > 10) {
@@ -720,7 +720,7 @@ function parseGroupHTML(htmlText, groupName) {
 
     if (text.includes(' ') && text.match(/\d+$/)) {
       currentSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
-    } else if (groupName === 'kaomoji') {
+    } else if (groupName === 'kaomoji' || groupName === 'text_emoticons') {
       let symbol = text;
       let itemCustomName = '';
       if (text.includes(' :: ')) {
@@ -732,12 +732,13 @@ function parseGroupHTML(htmlText, groupName) {
       const firstCp = symbol.codePointAt(0) || 0;
       const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
       const displayName = itemCustomName || currentSection;
+      const prefix = groupName === 'text_emoticons' ? 'TEXT_EMOTICON' : 'KAOMOJI';
       glyphs.push({
         symbol: symbol,
         hex: hex,
         dec: firstCp.toString(),
         section: currentSection,
-        name: `KAOMOJI: ${displayName}`,
+        name: `${prefix}: ${displayName}`,
         isKaomoji: true
       });
     } else {
@@ -854,7 +855,7 @@ async function performSearch(term) {
   });
 
   const allGroups = [
-    'emoticons', 'kaomoji', 'miscellaneous_symbols_and_pictographs', 'transport_and_map_symbols', 'miscellaneous_symbols',
+    'emoticons', 'text_emoticons', 'kaomoji', 'miscellaneous_symbols_and_pictographs', 'transport_and_map_symbols', 'miscellaneous_symbols',
     'dingbats', 'currency_symbols', 'mathematical_operators', 'arrows', 'miscellaneous_technical', 'enclosed_alphanumerics',
     'box_drawing', 'block_elements', 'geometric_shapes', 'general_punctuation', 'superscripts_and_subscripts',
     'letterlike_symbols', 'number_forms', 'games', 'latin', 'greek', 'hebrew', 'arabic', 'devanagari', 'thai',
@@ -947,7 +948,7 @@ function renderGlyphList(glyphs, emptyMsg = 'Nenhum caractere nesta categoria') 
   const emptyState = id('emptyState');
   grid.innerHTML = '';
 
-  if (currentCategory === 'kaomoji') {
+  if (currentCategory === 'kaomoji' || currentCategory === 'text_emoticons') {
     grid.classList.add('kaomoji-grid');
   } else {
     grid.classList.remove('kaomoji-grid');
@@ -989,7 +990,7 @@ function selectGlyph(glyph, cardElement) {
  */
 function updateInspector(glyph) {
   if (!glyph) return;
-  const isKaomoji = (glyph.section === 'kaomoji' || currentCategory === 'kaomoji' || (glyph.name && glyph.name.startsWith('KAOMOJI:')) || (glyph.symbol && glyph.symbol.length > 2));
+  const isKaomoji = (glyph.section === 'kaomoji' || glyph.section === 'text_emoticons' || currentCategory === 'kaomoji' || currentCategory === 'text_emoticons' || (glyph.name && (glyph.name.startsWith('KAOMOJI:') || glyph.name.startsWith('TEXT_EMOTICON:'))) || (glyph.symbol && glyph.symbol.length > 2));
 
   const inspectGlyphEl = id('inspectGlyph');
   const inspectKaomojiDisplay = id('inspectKaomojiDisplay');
@@ -1002,9 +1003,10 @@ function updateInspector(glyph) {
     inspectGlyphEl.classList.add('is-kaomoji-inspect');
 
     if (subgroupEl) {
-      const isCustomName = glyph.name && glyph.name.startsWith('KAOMOJI: ') && glyph.name !== `KAOMOJI: ${glyph.symbol}`;
-      const nameText = isCustomName ? glyph.name.replace('KAOMOJI: ', '') : (glyph.section && glyph.section !== 'kaomoji' ? glyph.section : 'Expressões');
-      subgroupEl.textContent = `Kaomoji • ${nameText}`;
+      const isCustomName = glyph.name && (glyph.name.startsWith('KAOMOJI: ') || glyph.name.startsWith('TEXT_EMOTICON: ')) && glyph.name !== `KAOMOJI: ${glyph.symbol}` && glyph.name !== `TEXT_EMOTICON: ${glyph.symbol}`;
+      const prefix = glyph.section === 'text_emoticons' || (glyph.name && glyph.name.startsWith('TEXT_EMOTICON')) ? 'Emoticon' : 'Kaomoji';
+      const nameText = isCustomName ? glyph.name.replace(/^(KAOMOJI|TEXT_EMOTICON): /, '') : (glyph.section && glyph.section !== 'kaomoji' && glyph.section !== 'text_emoticons' ? glyph.section : 'Expressões');
+      subgroupEl.textContent = `${prefix} • ${nameText}`;
       subgroupEl.title = glyph.symbol;
     }
 
