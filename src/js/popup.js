@@ -590,85 +590,230 @@ function renderAboutView() {
   const container = document.createElement('div');
   container.className = 'about-container';
 
-  const prefix = getMsg('aboutCopyCountPrefix', 'Você já copiou ');
-  const suffix = getMsg('aboutCopyCountSuffix', ' caracteres usando a extensão!');
-  const desc = getMsg('aboutDesc', 'Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente.');
-  const tip = getMsg('aboutSidePanelTip', 'Dica: Clique no ícone de Painel Lateral 🗂 no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!');
+  // Obter versão dinâmica do manifest
+  const manifestVersion = (typeof chrome !== 'undefined' && chrome.runtime?.getManifest?.()?.version)
+    ? `v${chrome.runtime.getManifest().version}`
+    : 'v4.3.0';
+
   const sinceTag = getMsg('aboutSinceTag', 'Desde 2010');
+  const offlineTag = getMsg('aboutOfflineTag', '100% Offline');
+  const desc = getMsg('aboutDesc', 'Repositório completo, rápido e prático de mais de 43.000 caracteres, símbolos e emojis Unicode com busca inteligente.');
+  const tip = getMsg('aboutSidePanelTip', 'Dica: Clique no ícone de Painel Lateral no cabeçalho para manter esta extensão aberta ao lado enquanto você navega!');
 
-  const counterHtml = (copyCount > 0) ? `
-    <div class="copy-counter-card">
-      <span class="counter-icon">📊</span>
-      <div class="counter-text-wrapper">
-        <span>${prefix}<strong id="copyCountNumber" class="counter-count-number">${copyCount}</strong>${suffix}</span>
-      </div>
-    </div>
-  ` : '';
+  // 1. Hero Card
+  const heroCard = document.createElement('div');
+  heroCard.className = 'about-hero-card';
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(`
-    <div>
-      <div class="about-hero-card">
-        <div class="about-hero-top">
-          <div class="about-logo-badge">⚡</div>
-          <div>
-            <div class="about-hero-title">
-              <span>Unicode & UTF-8 Studio</span>
-              <span class="version-tag">v4.0.0</span>
-              <span class="since-tag">🎉 ${sinceTag}</span>
-            </div>
-            <div class="about-hero-desc">${desc}</div>
-          </div>
-        </div>
-      </div>
+  const heroTop = document.createElement('div');
+  heroTop.className = 'about-hero-top';
 
-      ${counterHtml}
+  const logoBadge = document.createElement('div');
+  logoBadge.className = 'about-logo-badge';
+  logoBadge.textContent = '⚡';
 
-      <div class="sidepanel-tip-card">
-        <span class="tip-card-icon">💡</span>
-        <div>${tip}</div>
-      </div>
+  const titleWrapper = document.createElement('div');
+  const heroTitle = document.createElement('div');
+  heroTitle.className = 'about-hero-title';
 
-      <div class="about-fonts-card">
-        <h4 data-i18n="modalTitle">🔤 ${getMsg('modalTitle', 'Fontes Recomendadas')}</h4>
-        <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;" data-i18n="modalSubtitle">
-          ${getMsg('modalSubtitle', 'Alguns caracteres Unicode raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema operacional.')}
-        </p>
-        <ul class="font-list" style="margin: 4px 0;">
-          <li class="font-item">
-            <a href="https://fonts.google.com/noto" target="_blank" rel="noopener" data-i18n="modalFontGoogleNoto">
-              ${getMsg('modalFontGoogleNoto', 'Google Noto Fonts (Cobertura Universal)')}
-            </a>
-          </li>
-          <li class="font-item">
-            <a href="https://www.babelstone.co.uk/Fonts/" target="_blank" rel="noopener" data-i18n="modalFontBabelStone">
-              ${getMsg('modalFontBabelStone', 'BabelStone Fonts (Símbolos & Escritas Raras)')}
-            </a>
-          </li>
-          <li class="font-item">
-            <a href="http://www.quivira-font.com/" target="_blank" rel="noopener" data-i18n="modalFontQuivira">
-              ${getMsg('modalFontQuivira', 'Quivira (Fonte Unicode Abrangente)')}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  `, 'text/html');
+  const titleText = document.createElement('span');
+  titleText.textContent = 'Unicode & UTF-8 Studio';
 
-  const wrapper = doc.body.firstElementChild;
-  if (wrapper) {
-    while (wrapper.firstChild) {
-      container.appendChild(wrapper.firstChild);
+  const versionTag = document.createElement('span');
+  versionTag.className = 'version-tag';
+  versionTag.textContent = manifestVersion;
+
+  const sinceBadge = document.createElement('span');
+  sinceBadge.className = 'since-tag';
+  sinceBadge.textContent = `🎉 ${sinceTag}`;
+
+  const offlineBadge = document.createElement('span');
+  offlineBadge.className = 'version-tag offline-tag';
+  offlineBadge.textContent = `✨ ${offlineTag}`;
+
+  heroTitle.append(titleText, versionTag, sinceBadge, offlineBadge);
+
+  const heroDesc = document.createElement('div');
+  heroDesc.className = 'about-hero-desc';
+  heroDesc.textContent = desc;
+
+  titleWrapper.append(heroTitle, heroDesc);
+  heroTop.append(logoBadge, titleWrapper);
+  heroCard.appendChild(heroTop);
+  container.appendChild(heroCard);
+
+  // 2. Personal Copy Counter Card (se copyCount > 0)
+  if (copyCount > 0) {
+    const counterCard = document.createElement('div');
+    counterCard.className = 'copy-counter-card';
+
+    const counterIcon = document.createElement('span');
+    counterIcon.className = 'counter-icon';
+    counterIcon.textContent = '📊';
+
+    const textWrapper = document.createElement('div');
+    textWrapper.className = 'counter-text-wrapper';
+
+    const prefix = getMsg('aboutCopyCountPrefix', 'Você já copiou ');
+    const suffix = getMsg('aboutCopyCountSuffix', ' caracteres usando a extensão!');
+
+    const countSpan = document.createElement('span');
+    countSpan.append(prefix);
+
+    const countNum = document.createElement('strong');
+    countNum.id = 'copyCountNumber';
+    countNum.className = 'counter-count-number';
+    countNum.textContent = String(copyCount);
+
+    countSpan.append(countNum, suffix);
+    textWrapper.appendChild(countSpan);
+    counterCard.append(counterIcon, textWrapper);
+    container.appendChild(counterCard);
+  }
+
+  // 3. Side Panel Tip Card (interativo)
+  const tipCard = document.createElement('div');
+  tipCard.className = 'sidepanel-tip-card';
+  tipCard.title = getMsg('sidepanelOpenTip', 'Clique para abrir o Painel Lateral');
+
+  const tipIcon = document.createElement('span');
+  tipIcon.className = 'tip-card-icon';
+  tipIcon.textContent = '💡';
+
+  const tipText = document.createElement('div');
+  tipText.textContent = tip;
+
+  tipCard.append(tipIcon, tipText);
+  tipCard.addEventListener('click', () => {
+    openSidePanel();
+  });
+  container.appendChild(tipCard);
+
+  // 4. Official Links Card (Grid 2x2 com os links Web, Chrome, Firefox, GitHub)
+  const linksCard = document.createElement('div');
+  linksCard.className = 'about-links-card';
+
+  const linksTitle = document.createElement('h4');
+  linksTitle.className = 'about-card-title';
+  linksTitle.textContent = `🔗 ${getMsg('aboutLinksTitle', 'Links Oficiais')}`;
+  linksCard.appendChild(linksTitle);
+
+  const linksGrid = document.createElement('div');
+  linksGrid.className = 'about-links-grid';
+
+  const linksData = [
+    {
+      href: 'https://codexico.com.br/unicode/',
+      label: getMsg('aboutWebVersionBtn', 'Versão Web Online'),
+      icon: '🌐',
+      isPrimary: true
+    },
+    {
+      href: 'https://chromewebstore.google.com/detail/unicode-utf-8-character-s/fcemphgmjnjpmmdhcedhjiegickfbiia',
+      label: getMsg('aboutChromeStoreBtn', 'Chrome Web Store'),
+      icon: '🛒',
+      isPrimary: false
+    },
+    {
+      href: 'https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/',
+      label: getMsg('aboutFirefoxAddonBtn', 'Firefox Add-ons'),
+      icon: '🦊',
+      isPrimary: false
+    },
+    {
+      href: 'https://github.com/codexico/UTF-Browser-Extensions',
+      label: getMsg('aboutGithubBtn', 'Repositório GitHub'),
+      icon: '💻',
+      isPrimary: false
     }
-  }
+  ];
 
-  const tipCard = container.querySelector('.sidepanel-tip-card');
-  if (tipCard) {
-    tipCard.title = getMsg('sidepanelOpenTip', 'Clique para abrir o Painel Lateral');
-    tipCard.addEventListener('click', () => {
-      openSidePanel();
-    });
-  }
+  linksData.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = `about-link-btn ${item.isPrimary ? 'btn-primary-accent' : ''}`;
+    a.textContent = `${item.icon} ${item.label}`;
+    linksGrid.appendChild(a);
+  });
+
+  linksCard.appendChild(linksGrid);
+  container.appendChild(linksCard);
+
+  // 5. Shortcuts Summary Card
+  const shortcutsCard = document.createElement('div');
+  shortcutsCard.className = 'about-shortcuts-card';
+
+  const shortcutsTitle = document.createElement('h4');
+  shortcutsTitle.className = 'about-card-title';
+  shortcutsTitle.textContent = `⌨️ ${getMsg('aboutShortcutsTitle', 'Atalhos de Teclado')}`;
+  shortcutsCard.appendChild(shortcutsTitle);
+
+  const shortcutsList = document.createElement('div');
+  shortcutsList.className = 'shortcuts-list';
+
+  const shortcutsData = [
+    { kbd: 'Ctrl+K /', desc: getMsg('shortcutSearchDesc', 'Focar na barra de busca') },
+    { kbd: 'Enter / C', desc: getMsg('shortcutCopyDesc', 'Copiar caractere focado') },
+    { kbd: '↑ ↓ ← →', desc: getMsg('shortcutNavDesc', 'Navegação 2D na grade') },
+    { kbd: 'F', desc: getMsg('shortcutFontsDesc', 'Guia de Fontes') },
+    { kbd: 'Esc', desc: getMsg('shortcutEscDesc', 'Limpar busca / fechar modal') }
+  ];
+
+  shortcutsData.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'shortcut-row';
+
+    const descEl = document.createElement('span');
+    descEl.textContent = s.desc;
+
+    const kbdEl = document.createElement('kbd');
+    kbdEl.textContent = s.kbd;
+
+    row.append(descEl, kbdEl);
+    shortcutsList.appendChild(row);
+  });
+
+  shortcutsCard.appendChild(shortcutsList);
+  container.appendChild(shortcutsCard);
+
+  // 6. Recommended Fonts Card
+  const fontsCard = document.createElement('div');
+  fontsCard.className = 'about-fonts-card';
+
+  const fontsTitle = document.createElement('h4');
+  fontsTitle.textContent = `🔤 ${getMsg('modalTitle', 'Fontes Recomendadas')}`;
+
+  const fontsSubtitle = document.createElement('p');
+  fontsSubtitle.style.fontSize = '11px';
+  fontsSubtitle.style.color = 'var(--text-muted)';
+  fontsSubtitle.style.marginBottom = '6px';
+  fontsSubtitle.textContent = getMsg('modalSubtitle', 'Alguns caracteres Unicode raros (como CJK, Tibetano, Rúnico ou Braille) exigem fontes específicas para renderizar corretamente no seu sistema operacional.');
+
+  const fontList = document.createElement('ul');
+  fontList.className = 'font-list';
+  fontList.style.margin = '4px 0';
+
+  const fonts = [
+    { href: 'https://fonts.google.com/noto', label: getMsg('modalFontGoogleNoto', 'Google Noto Fonts (Cobertura Universal)') },
+    { href: 'https://www.babelstone.co.uk/Fonts/', label: getMsg('modalFontBabelStone', 'BabelStone Fonts (Símbolos & Escritas Raras)') },
+    { href: 'http://www.quivira-font.com/', label: getMsg('modalFontQuivira', 'Quivira (Fonte Unicode Abrangente)') }
+  ];
+
+  fonts.forEach(f => {
+    const li = document.createElement('li');
+    li.className = 'font-item';
+    const a = document.createElement('a');
+    a.href = f.href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.textContent = f.label;
+    li.appendChild(a);
+    fontList.appendChild(li);
+  });
+
+  fontsCard.append(fontsTitle, fontsSubtitle, fontList);
+  container.appendChild(fontsCard);
 
   grid.appendChild(container);
 }
