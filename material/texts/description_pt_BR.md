@@ -42,6 +42,8 @@ Se alguns caracteres raros (como CJK, Tibetano ou Rúnico) aparecerem como caixa
 • DejaVu Fonts http://dejavu-fonts.org/
 
 
+🦊 Extensão para Firefox: https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/
+🌐 Versão Web Online (Astro): https://codexico.com.br/unicode/
 Código e repositório: https://github.com/codexico/UTF-Browser-Extensions
 Site oficial: https://codexico.com.br
 Tudo sobre Unicode: The Unicode Consortium http://www.unicode.org/

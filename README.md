@@ -3,11 +3,12 @@
 > **O repositório completo, ultra-rápido e divertido para pesquisar, inspecionar e copiar símbolos Unicode, caracteres UTF-8, Kaomojis e Emojis!**
 
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-indigo?style=for-the-badge&logo=googlechrome)
-![Firefox](https://img.shields.io/badge/Firefox-Add--on-orange?style=for-the-badge&logo=firefox)
+[![Firefox Add-on](https://img.shields.io/badge/Firefox-Add--on-orange?style=for-the-badge&logo=firefox)](https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/)
+[![Web Version](https://img.shields.io/badge/Web_Version-Astro-9333ea?style=for-the-badge&logo=astro)](https://codexico.com.br/unicode/)
 ![Since](https://img.shields.io/badge/Since-2010-amber?style=for-the-badge)
 ![Language](https://img.shields.io/badge/i18n-EN%20%7C%20PT--BR%20%7C%20ES-emerald?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
-![Author](https://img.shields.io/badge/Author-codexico.com.br-orange?style=for-the-badge)
+[![Author](https://img.shields.io/badge/Author-codexico.com.br-orange?style=for-the-badge)](https://codexico.com.br)
 
 ---
 
@@ -86,8 +87,12 @@ src/
 
 ---
 
-## 🦊 Como Instalar no Mozilla Firefox (Modo Temporário)
+## 🦊 Instalar no Mozilla Firefox
 
+- 🛒 **Instalação Oficial**: [Disponível no Firefox Add-ons (AMO)](https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/)
+- 🌐 **Versão Web Online**: [Acesse direto no navegador via codexico.com.br/unicode](https://codexico.com.br/unicode/)
+
+### Como instalar temporariamente para desenvolvimento no Firefox:
 1. Abra o Firefox e acesse `about:debugging#/runtime/this-firefox`.
 2. Clique no botão **"Carregar extensão temporária..."** (*Load Temporary Add-on*).
 3. Selecione o arquivo `src/manifest.json`.
@@ -145,5 +150,7 @@ npm run release -- major # Incremento major (ex: 4.3.0 -> 5.0.0)
 ## 👤 Autor & Licença
 
 Criada originalmente em **2010**, mantida e aprimorada com amor por **[codexico.com.br](https://codexico.com.br)**.
+- 🦊 **Extensão Firefox**: [addons.mozilla.org](https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/)
+- 🌐 **Versão Web Online**: [codexico.com.br/unicode](https://codexico.com.br/unicode/)
 
 Distribuído sob a licença [OSL](LICENSE). Dados e nomenclaturas mantidos em conformidade com o padrão oficial do **Unicode Consortium**.

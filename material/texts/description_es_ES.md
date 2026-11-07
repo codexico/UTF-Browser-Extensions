@@ -42,6 +42,8 @@ Si algunos caracteres poco comunes (como CJK, Tibetano o Rúnico) se muestran co
 • DejaVu Fonts http://dejavu-fonts.org/
 
 
+🦊 Extensión para Firefox: https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/
+🌐 Versión Web Online (Astro): https://codexico.com.br/unicode/
 Código y repositorio: https://github.com/codexico/UTF-Browser-Extensions
 Sitio web oficial: https://codexico.com.br
 Todo sobre Unicode: The Unicode Consortium http://www.unicode.org/
