@@ -89,39 +89,32 @@ test("Category Group Character Counts Verification", (t) => {
     yi: 1284,
   };
 
-  const groupsDir = path.join(srcDir, "html/groups");
+  const dataDir = path.join(srcDir, "data");
   let actualTotal = 0;
 
   Object.entries(expectedCategoryCounts).forEach(
     ([category, expectedCount]) => {
-      const filePath = path.join(groupsDir, `${category}.html`);
+      const jsonPath = path.join(dataDir, `${category}.json`);
       assert.ok(
-        fs.existsSync(filePath),
-        `Group file ${category}.html must exist`,
+        fs.existsSync(jsonPath),
+        `Dataset JSON file ${category}.json must exist`,
       );
 
-      const content = fs.readFileSync(filePath, "utf8");
-      const paragraphMatches = content.match(/<p>([\s\S]*?)<\/p>/gi) || [];
+      const dataset = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
       let count = 0;
 
-      paragraphMatches.forEach((p) => {
-        const text = p.replace(/<[^>]+>/g, "").trim();
-        if (!text || (text.includes(" ") && text.match(/\d+$/))) return;
-
-        if (category === "kaomoji" || category === "text_emoticons") {
-          count++;
-        } else {
-          const chars = Array.from(text);
-          chars.forEach((ch) => {
-            if (ch && ch !== " " && ch !== "\n") count++;
-          });
+      dataset.forEach((sec) => {
+        if (sec.items && Array.isArray(sec.items)) {
+          count += sec.items.length;
+        } else if (sec.chars) {
+          count += Array.from(sec.chars).length;
         }
       });
 
       assert.equal(
         count,
         expectedCount,
-        `Category '${category}' character count mismatch`,
+        `Category '${category}' character count mismatch in JSON dataset`,
       );
       actualTotal += count;
     },

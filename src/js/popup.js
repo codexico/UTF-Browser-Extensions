@@ -17,6 +17,7 @@ let favoriteGlyphs = [];
 let recentGlyphs = [];
 let copyCount = 0;
 let toastTimeout = null;
+let LOCALIZED_EMOJI_NAMES = {};
 
 // High-frequency explicit Unicode Character Name Lookup
 const UNICODE_EXACT_NAMES = {
@@ -68,10 +69,37 @@ function applyI18n() {
 }
 
 /**
+ * Load Localized Emoji and Symbol Names (pt / es) on demand
+ */
+async function loadLocalizedEmojiNames() {
+  const uiLang = (typeof chrome !== 'undefined' && chrome.i18n && chrome.i18n.getUILanguage) 
+    ? chrome.i18n.getUILanguage().toLowerCase() 
+    : (navigator.language || 'en').toLowerCase();
+
+  let langFile = null;
+  if (uiLang.startsWith('pt')) langFile = 'emojis_pt.json';
+  else if (uiLang.startsWith('es')) langFile = 'emojis_es.json';
+
+  if (!langFile) return;
+
+  try {
+    const res = await fetch(`/data/${langFile}`);
+    if (res.ok) {
+      LOCALIZED_EMOJI_NAMES = await res.json();
+    }
+  } catch (e) {
+    // Silently fallback to official unicode names
+  }
+}
+
+/**
  * Dynamic Unicode Character Naming Engine
  */
 function getUnicodeName(symbol, hex, section) {
   const upperHex = hex.toUpperCase();
+  if (LOCALIZED_EMOJI_NAMES && LOCALIZED_EMOJI_NAMES[upperHex]) {
+    return LOCALIZED_EMOJI_NAMES[upperHex];
+  }
   if (typeof OFFICIAL_UNICODE_NAMES !== 'undefined' && OFFICIAL_UNICODE_NAMES[upperHex]) {
     return OFFICIAL_UNICODE_NAMES[upperHex];
   }
@@ -112,6 +140,7 @@ function getUnicodeName(symbol, hex, section) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   applyI18n();
+  await loadLocalizedEmojiNames();
 
   // Detect Side Panel mode via query param or window width
   const urlParams = new URLSearchParams(window.location.search);
@@ -262,18 +291,28 @@ function setupEventListeners() {
 
   // Global Keyboard Shortcuts
   window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
+    const isSearchFocused = (document.activeElement === searchInput);
+
+    if (((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'f' || e.key.toLowerCase() === 'k')) ||
+        (e.key === '/' && !isSearchFocused)) {
       e.preventDefault();
       searchInput.focus();
       searchInput.select();
     } else if (e.key === 'Escape') {
       if (fontsModal && !fontsModal.classList.contains('hidden')) {
         fontsModal.classList.add('hidden');
-      } else if (document.activeElement === searchInput) {
+      } else if (isSearchFocused) {
         searchInput.value = '';
         renderCategory(currentCategory);
         searchInput.blur();
       }
+    } else if (!isSearchFocused && activeGlyph && (e.key.toLowerCase() === 'f')) {
+      e.preventDefault();
+      toggleFavorite(activeGlyph);
+    } else if (!isSearchFocused && activeGlyph && (e.key.toLowerCase() === 'c') && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      copyToClipboard(activeGlyph.symbol, `${getMsg('copiedMsg', 'Copiado: ')}${activeGlyph.symbol}`);
+      addToRecent(activeGlyph);
     } else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
       handleGridArrowNavigation(e);
     }
@@ -682,35 +721,21 @@ function createCardElement(g) {
 }
 
 /**
- * Fetch and Parse Category (JSON for structured datasets, HTML for raw glyph lists)
+ * Fetch and Parse Category JSON dataset
  */
 async function fetchAndParseCategory(group) {
   if (categoryCache[group]) return categoryCache[group];
 
-  if (group === 'text_emoticons' || group === 'kaomoji') {
-    try {
-      const res = await fetch(`/data/${group}.json`);
-      if (res.ok) {
-        const jsonData = await res.json();
-        const glyphs = parseGroupJSON(jsonData, group);
-        categoryCache[group] = glyphs;
-        return glyphs;
-      }
-    } catch (e) {
-      console.warn(`JSON load fallback to HTML for ${group}:`, e);
-    }
-  }
-
-  const response = await fetch(`/html/groups/${group}.html`);
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  const htmlText = await response.text();
-  const glyphs = parseGroupHTML(htmlText, group);
+  const res = await fetch(`/data/${group}.json`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} loading dataset for ${group}`);
+  const jsonData = await res.json();
+  const glyphs = parseGroupJSON(jsonData, group);
   categoryCache[group] = glyphs;
   return glyphs;
 }
 
 /**
- * Fetch and Parse Category HTML or JSON
+ * Fetch and Parse Category JSON and render
  */
 async function loadCategory(group) {
   if (categoryCache[group]) {
@@ -728,7 +753,7 @@ async function loadCategory(group) {
 }
 
 /**
- * Parse Group JSON content (for text_emoticons and kaomoji)
+ * Parse Group JSON content (supports structured items for emoticons/kaomoji and chars strings for unicode glyphs)
  */
 function parseGroupJSON(jsonData, groupName) {
   const glyphs = [];
@@ -736,104 +761,42 @@ function parseGroupJSON(jsonData, groupName) {
 
   jsonData.forEach(sec => {
     const sectionName = (sec.sectionKey ? getMsg(sec.sectionKey, sec.section) : sec.section) || groupName;
-    sec.items.forEach(item => {
-      const symbol = item.symbol;
-      if (!symbol) return;
-      const firstCp = symbol.codePointAt(0) || 0;
-      const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
-      const translatedName = item.key ? getMsg(item.key, item.name) : item.name;
-      const displayName = translatedName || sectionName;
-      glyphs.push({
-        symbol: symbol,
-        hex: hex,
-        dec: firstCp.toString(),
-        section: sectionName,
-        name: `${prefix}: ${displayName}`,
-        isKaomoji: true
-      });
-    });
-  });
 
-  return glyphs;
-}
-
-/**
- * Parse Group HTML content into glyph objects
- */
-function parseGroupHTML(htmlText, groupName) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlText, 'text/html');
-  const items = doc.querySelectorAll('p, [data-symbol]');
-  const glyphs = [];
-
-  let currentSection = groupName;
-
-  items.forEach(p => {
-    // 1. Suporte a elementos estruturados semânticos (data-symbol + data-i18n / data-name)
-    if (p.hasAttribute && p.hasAttribute('data-symbol')) {
-      const symbol = p.getAttribute('data-symbol').trim();
-      if (!symbol) return;
-      const i18nKey = p.getAttribute('data-i18n');
-      const fallbackName = p.getAttribute('data-name') || p.textContent.trim();
-      const translatedName = i18nKey ? getMsg(i18nKey, fallbackName) : fallbackName;
-      const displayName = translatedName || currentSection;
-      const firstCp = symbol.codePointAt(0) || 0;
-      const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
-      const prefix = groupName === 'text_emoticons' ? 'TEXT_EMOTICON' : 'KAOMOJI';
-      glyphs.push({
-        symbol: symbol,
-        hex: hex,
-        dec: firstCp.toString(),
-        section: currentSection,
-        name: `${prefix}: ${displayName}`,
-        isKaomoji: true
+    // Structured items (text_emoticons and kaomoji)
+    if (sec.items && Array.isArray(sec.items)) {
+      sec.items.forEach(item => {
+        const symbol = item.symbol;
+        if (!symbol) return;
+        const firstCp = symbol.codePointAt(0) || 0;
+        const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
+        const translatedName = item.key ? getMsg(item.key, item.name) : item.name;
+        const displayName = translatedName || sectionName;
+        glyphs.push({
+          symbol: symbol,
+          hex: hex,
+          dec: firstCp.toString(),
+          section: sectionName,
+          name: `${prefix}: ${displayName}`,
+          isKaomoji: true
+        });
       });
       return;
     }
 
-    const text = (p.textContent || p.innerText || '').trim();
-    if (!text) return;
-
-    const i18nKey = p.dataset && p.dataset.i18n ? p.dataset.i18n : (p.getAttribute ? p.getAttribute('data-i18n') : null);
-
-    if (text.includes(' ') && text.match(/\d+$/)) {
-      const fallbackSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
-      currentSection = i18nKey ? getMsg(i18nKey, fallbackSection) : fallbackSection;
-    } else if (groupName === 'kaomoji' || groupName === 'text_emoticons') {
-      let symbol = text;
-      let itemCustomName = '';
-      if (text.includes(' :: ')) {
-        const parts = text.split(' :: ');
-        symbol = parts[0].trim();
-        itemCustomName = parts[1].trim();
-      }
-      if (!symbol) return;
-      const firstCp = symbol.codePointAt(0) || 0;
-      const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
-      const translatedName = i18nKey ? getMsg(i18nKey, itemCustomName) : itemCustomName;
-      const displayName = translatedName || currentSection;
-      const prefix = groupName === 'text_emoticons' ? 'TEXT_EMOTICON' : 'KAOMOJI';
-      glyphs.push({
-        symbol: symbol,
-        hex: hex,
-        dec: firstCp.toString(),
-        section: currentSection,
-        name: `${prefix}: ${displayName}`,
-        isKaomoji: true
-      });
-    } else {
-      const chars = Array.from(text);
+    // Direct Unicode characters string
+    if (sec.chars) {
+      const chars = Array.from(sec.chars);
       chars.forEach(ch => {
-        if (!ch || ch === ' ' || ch === '\n') return;
+        if (!ch) return;
         const codePoint = ch.codePointAt(0);
         const hex = codePoint.toString(16).toUpperCase().padStart(4, '0');
-        const name = getUnicodeName(ch, hex, currentSection);
+        const name = getUnicodeName(ch, hex, sectionName);
 
         glyphs.push({
           symbol: ch,
           hex: hex,
           dec: codePoint.toString(),
-          section: currentSection,
+          section: sectionName,
           name: name
         });
       });

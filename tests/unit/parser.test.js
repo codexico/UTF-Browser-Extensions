@@ -4,45 +4,37 @@ const path = require('node:path');
 const fs = require('node:fs');
 
 const srcDir = path.join(__dirname, '../../src');
+const popupCode = fs.readFileSync(path.join(srcDir, 'js/popup.js'), 'utf8');
 
-test('Group HTML File Parsing', (t) => {
-  const sampleGroupHTML = `
-    <p>Setas Direcionais 10</p>
-    <p>➔ ➔ ➜ ➲ 🏹</p>
-    <p>Matemática 5</p>
-    <p>∑ ∏ ∫ √ ∞</p>
-  `;
-
-  const paragraphMatches = sampleGroupHTML.match(/<p>([\s\S]*?)<\/p>/gi) || [];
-  const glyphs = [];
-  let currentSection = 'arrows';
-
-  paragraphMatches.forEach(p => {
-    const text = p.replace(/<[^>]+>/g, '').trim();
-    if (!text) return;
-
-    if (text.includes(' ') && text.match(/\d+$/)) {
-      currentSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
-    } else {
-      const chars = Array.from(text);
-      chars.forEach(ch => {
-        if (!ch || ch === ' ' || ch === '\n') return;
-        const codePoint = ch.codePointAt(0);
-        const hex = codePoint.toString(16).toUpperCase().padStart(4, '0');
-
-        glyphs.push({
-          symbol: ch,
-          hex: hex,
-          dec: codePoint.toString(),
-          section: currentSection
-        });
-      });
+test('Group JSON Dataset Parsing', (t) => {
+  const sampleGroupJSON = [
+    {
+      section: 'Setas Direcionais',
+      sectionKey: 'sec_arrows_directional',
+      chars: '➔➜➲🏹'
+    },
+    {
+      section: 'Matemática',
+      sectionKey: 'sec_math',
+      chars: '∑∏∫√∞'
     }
-  });
+  ];
 
-  assert.ok(glyphs.length > 0, 'Parsed glyphs should not be empty');
+  const parseGroupJSONMatch = popupCode.match(/function parseGroupJSON[\s\S]*?^}/m);
+  const parseGroupJSON = new Function(`
+    function getMsg(k, fallback) { return fallback; }
+    function getUnicodeName(ch, hex, section) { return 'CHARACTER U+' + hex; }
+    ${parseGroupJSONMatch ? parseGroupJSONMatch[0] : ''}
+    return parseGroupJSON;
+  `)();
+
+  const glyphs = parseGroupJSON(sampleGroupJSON, 'arrows');
+
+  assert.ok(glyphs.length === 9, 'Parsed glyphs should match total characters');
   assert.equal(glyphs[0].symbol, '➔');
   assert.equal(glyphs[0].hex, '2794');
   assert.equal(glyphs[0].dec, '10132');
   assert.equal(glyphs[0].section, 'Setas Direcionais');
+  assert.equal(glyphs[4].symbol, '∑');
+  assert.equal(glyphs[4].section, 'Matemática');
 });

@@ -79,30 +79,17 @@ test('HTML Named Entity Search Resolutions', (t) => {
 });
 
 test('Kaomoji Search Resolution by Name & Tags', (t) => {
-  const kaomojiHtml = fs.readFileSync(path.join(srcDir, 'html/groups/kaomoji.html'), 'utf8');
+  const kaomojiData = JSON.parse(fs.readFileSync(path.join(srcDir, 'data/kaomoji.json'), 'utf8'));
 
-  function mockDOMParser() {
-    return {
-      parseFromString: (html) => {
-        const paragraphs = [];
-        const regex = /<p>([\s\S]*?)<\/p>/gi;
-        let match;
-        while ((match = regex.exec(html)) !== null) {
-          paragraphs.push({ textContent: match[1].trim() });
-        }
-        return { querySelectorAll: () => paragraphs };
-      }
-    };
-  }
-
-  const parseGroupHTMLMatch = popupCode.match(/function parseGroupHTML[\s\S]*?^}/m);
-  const parseGroupHTML = new Function('DOMParser', `
+  const parseGroupJSONMatch = popupCode.match(/function parseGroupJSON[\s\S]*?^}/m);
+  const parseGroupJSON = new Function(`
+    function getMsg(k, fallback) { return fallback; }
     function getUnicodeName(ch, hex, section) { return 'CHARACTER U+' + hex; }
-    ${parseGroupHTMLMatch ? parseGroupHTMLMatch[0] : ''}
-    return parseGroupHTML;
-  `)(mockDOMParser);
+    ${parseGroupJSONMatch ? parseGroupJSONMatch[0] : ''}
+    return parseGroupJSON;
+  `)();
 
-  const parsedKaomojis = parseGroupHTML(kaomojiHtml, 'kaomoji');
+  const parsedKaomojis = parseGroupJSON(kaomojiData, 'kaomoji');
   assert.ok(parsedKaomojis.length >= 150, `Expected at least 150 Kaomojis, got ${parsedKaomojis.length}`);
 
   // Test searching Kaomojis by name/tag tokens
@@ -110,7 +97,7 @@ test('Kaomoji Search Resolution by Name & Tags', (t) => {
   assert.ok(mesaMatch.length > 0, 'Must find table flip kaomojis when searching "mesa"');
   assert.ok(mesaMatch.some(g => g.symbol.includes('┻━┻')), 'Must include (╯°□°)╯ ┻━┻ in "mesa" matches');
 
-  const shrugMatch = parsedKaomojis.filter(g => g.name.toLowerCase().includes('shrug') || g.name.toLowerCase().includes('ombros'));
+  const shrugMatch = parsedKaomojis.filter(g => g.name.toLowerCase().includes('shrug') || g.name.toLowerCase().includes('ombros') || g.section.toLowerCase().includes('ombros'));
   assert.ok(shrugMatch.length >= 1, 'Search for "shrug" or "ombros" must return matches');
   assert.ok(shrugMatch.some(g => g.symbol.includes('ツ')), 'Must include Kaomoji containing ツ in "shrug" matches');
 });
