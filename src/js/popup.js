@@ -682,7 +682,35 @@ function createCardElement(g) {
 }
 
 /**
- * Fetch and Parse Category HTML
+ * Fetch and Parse Category (JSON for structured datasets, HTML for raw glyph lists)
+ */
+async function fetchAndParseCategory(group) {
+  if (categoryCache[group]) return categoryCache[group];
+
+  if (group === 'text_emoticons' || group === 'kaomoji') {
+    try {
+      const res = await fetch(`/data/${group}.json`);
+      if (res.ok) {
+        const jsonData = await res.json();
+        const glyphs = parseGroupJSON(jsonData, group);
+        categoryCache[group] = glyphs;
+        return glyphs;
+      }
+    } catch (e) {
+      console.warn(`JSON load fallback to HTML for ${group}:`, e);
+    }
+  }
+
+  const response = await fetch(`/html/groups/${group}.html`);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const htmlText = await response.text();
+  const glyphs = parseGroupHTML(htmlText, group);
+  categoryCache[group] = glyphs;
+  return glyphs;
+}
+
+/**
+ * Fetch and Parse Category HTML or JSON
  */
 async function loadCategory(group) {
   if (categoryCache[group]) {
@@ -691,11 +719,7 @@ async function loadCategory(group) {
   }
 
   try {
-    const response = await fetch(`/html/groups/${group}.html`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const htmlText = await response.text();
-    const parsedGlyphs = parseGroupHTML(htmlText, group);
-    categoryCache[group] = parsedGlyphs;
+    const parsedGlyphs = await fetchAndParseCategory(group);
     renderGlyphList(parsedGlyphs);
   } catch (err) {
     console.error('Error loading category:', err);
@@ -704,22 +728,77 @@ async function loadCategory(group) {
 }
 
 /**
+ * Parse Group JSON content (for text_emoticons and kaomoji)
+ */
+function parseGroupJSON(jsonData, groupName) {
+  const glyphs = [];
+  const prefix = groupName === 'text_emoticons' ? 'TEXT_EMOTICON' : 'KAOMOJI';
+
+  jsonData.forEach(sec => {
+    const sectionName = (sec.sectionKey ? getMsg(sec.sectionKey, sec.section) : sec.section) || groupName;
+    sec.items.forEach(item => {
+      const symbol = item.symbol;
+      if (!symbol) return;
+      const firstCp = symbol.codePointAt(0) || 0;
+      const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
+      const translatedName = item.key ? getMsg(item.key, item.name) : item.name;
+      const displayName = translatedName || sectionName;
+      glyphs.push({
+        symbol: symbol,
+        hex: hex,
+        dec: firstCp.toString(),
+        section: sectionName,
+        name: `${prefix}: ${displayName}`,
+        isKaomoji: true
+      });
+    });
+  });
+
+  return glyphs;
+}
+
+/**
  * Parse Group HTML content into glyph objects
  */
 function parseGroupHTML(htmlText, groupName) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlText, 'text/html');
-  const paragraphs = doc.querySelectorAll('p');
+  const items = doc.querySelectorAll('p, [data-symbol]');
   const glyphs = [];
 
   let currentSection = groupName;
 
-  paragraphs.forEach(p => {
+  items.forEach(p => {
+    // 1. Suporte a elementos estruturados semânticos (data-symbol + data-i18n / data-name)
+    if (p.hasAttribute && p.hasAttribute('data-symbol')) {
+      const symbol = p.getAttribute('data-symbol').trim();
+      if (!symbol) return;
+      const i18nKey = p.getAttribute('data-i18n');
+      const fallbackName = p.getAttribute('data-name') || p.textContent.trim();
+      const translatedName = i18nKey ? getMsg(i18nKey, fallbackName) : fallbackName;
+      const displayName = translatedName || currentSection;
+      const firstCp = symbol.codePointAt(0) || 0;
+      const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
+      const prefix = groupName === 'text_emoticons' ? 'TEXT_EMOTICON' : 'KAOMOJI';
+      glyphs.push({
+        symbol: symbol,
+        hex: hex,
+        dec: firstCp.toString(),
+        section: currentSection,
+        name: `${prefix}: ${displayName}`,
+        isKaomoji: true
+      });
+      return;
+    }
+
     const text = (p.textContent || p.innerText || '').trim();
     if (!text) return;
 
+    const i18nKey = p.dataset && p.dataset.i18n ? p.dataset.i18n : (p.getAttribute ? p.getAttribute('data-i18n') : null);
+
     if (text.includes(' ') && text.match(/\d+$/)) {
-      currentSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
+      const fallbackSection = text.replace(/\s+\d+$/, '').replace(/_/g, ' ');
+      currentSection = i18nKey ? getMsg(i18nKey, fallbackSection) : fallbackSection;
     } else if (groupName === 'kaomoji' || groupName === 'text_emoticons') {
       let symbol = text;
       let itemCustomName = '';
@@ -731,7 +810,8 @@ function parseGroupHTML(htmlText, groupName) {
       if (!symbol) return;
       const firstCp = symbol.codePointAt(0) || 0;
       const hex = firstCp.toString(16).toUpperCase().padStart(4, '0');
-      const displayName = itemCustomName || currentSection;
+      const translatedName = i18nKey ? getMsg(i18nKey, itemCustomName) : itemCustomName;
+      const displayName = translatedName || currentSection;
       const prefix = groupName === 'text_emoticons' ? 'TEXT_EMOTICON' : 'KAOMOJI';
       glyphs.push({
         symbol: symbol,
@@ -865,12 +945,8 @@ async function performSearch(term) {
   for (const group of allGroups) {
     if (!categoryCache[group]) {
       try {
-        const res = await fetch(`/html/groups/${group}.html`);
-        if (res.ok) {
-          const txt = await res.text();
-          categoryCache[group] = parseGroupHTML(txt, group);
-          searchPool = searchPool.concat(categoryCache[group]);
-        }
+        const glyphs = await fetchAndParseCategory(group);
+        searchPool = searchPool.concat(glyphs);
       } catch (e) {}
     }
   }

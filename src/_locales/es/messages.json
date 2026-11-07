@@ -205,5 +205,920 @@
   },
   "navTextEmoticons": {
     "message": "Emoticonos"
+  },
+  "section_sad_upset": {
+    "message": "Tristes y Molestos"
+  },
+  "emoticon_sad_classic": {
+    "message": "Triste Clásico"
+  },
+  "emoticon_sad_simple": {
+    "message": "Triste Simple"
+  },
+  "emoticon_very_upset": {
+    "message": "Muy Molesto"
+  },
+  "emoticon_upset_simple": {
+    "message": "Molesto Simple"
+  },
+  "text_emoticon_sec_felizes_sorrisos": {
+    "message": "Felices y Sonrisas"
+  },
+  "text_emoticon_sorriso_classico": {
+    "message": "Sonrisa Clásica"
+  },
+  "text_emoticon_sorriso_largo": {
+    "message": "Sonrisa Amplia"
+  },
+  "text_emoticon_olhos_felizes": {
+    "message": "Ojos Felices"
+  },
+  "text_emoticon_sorriso_alegre": {
+    "message": "Sonrisa Alegre"
+  },
+  "text_emoticon_sorriso_invertido": {
+    "message": "Sonrisa Invertida"
+  },
+  "text_emoticon_sorriso_simples": {
+    "message": "Sonrisa Simple"
+  },
+  "text_emoticon_sorriso_nervoso": {
+    "message": "Sonrisa Nerviosa"
+  },
+  "text_emoticon_sorriso_largo_nervoso": {
+    "message": "Sonrisa Amplia Nerviosa"
+  },
+  "text_emoticon_sorriso_com_oculos_de_sol": {
+    "message": "Sonrisa con Gafas de Sol"
+  },
+  "text_emoticon_sorriso_com_oculos": {
+    "message": "Sonrisa con Gafas"
+  },
+  "text_emoticon_pisadinha_sorriso": {
+    "message": "Guiño con Sonrisa"
+  },
+  "text_emoticon_pisadinha_largo": {
+    "message": "Guiño Amplio"
+  },
+  "text_emoticon_alegre_com_maos": {
+    "message": "Alegre con Manos"
+  },
+  "text_emoticon_rindo_com_olhos_fechados": {
+    "message": "Riendo con Ojos Cerrados"
+  },
+  "text_emoticon_gargalhada": {
+    "message": "Carcajada"
+  },
+  "text_emoticon_sorriso_pontudo": {
+    "message": "Sonrisa Puntiaguda"
+  },
+  "text_emoticon_expressao_espantada": {
+    "message": "Expresión Asombrada"
+  },
+  "text_emoticon_olhos_bem_abertos": {
+    "message": "Ojos Bien Abiertos"
+  },
+  "text_emoticon_sorriso_suave": {
+    "message": "Sonrisa Suave"
+  },
+  "text_emoticon_sec_tristes_chateados": {
+    "message": "Tristes y Molestos"
+  },
+  "text_emoticon_triste_classico": {
+    "message": "Triste Clásico"
+  },
+  "text_emoticon_triste_simples": {
+    "message": "Triste Simple"
+  },
+  "text_emoticon_muito_chateado": {
+    "message": "Muy Molesto"
+  },
+  "text_emoticon_chateado_simples": {
+    "message": "Molesto Simple"
+  },
+  "text_emoticon_rosto_envergonhado": {
+    "message": "Rostro Avergonzado"
+  },
+  "text_emoticon_envergonhado_simples": {
+    "message": "Avergonzado Simple"
+  },
+  "text_emoticon_bigode_triste": {
+    "message": "Bigote Triste"
+  },
+  "text_emoticon_chorando": {
+    "message": "Llorando"
+  },
+  "text_emoticon_chorando_com_lagrimas": {
+    "message": "Llorando con Lágrimas"
+  },
+  "text_emoticon_choro_profundo": {
+    "message": "Llanto Profundo"
+  },
+  "text_emoticon_choro_intenso": {
+    "message": "Llanto Intenso"
+  },
+  "text_emoticon_choro_solucando": {
+    "message": "Sollozos de Llanto"
+  },
+  "text_emoticon_tristeza_profunda": {
+    "message": "Tristeza Profunda"
+  },
+  "text_emoticon_triste_nervoso": {
+    "message": "Triste Nervioso"
+  },
+  "text_emoticon_sem_expressao": {
+    "message": "Sin Expresión"
+  },
+  "text_emoticon_desapontado": {
+    "message": "Decepcionado"
+  },
+  "text_emoticon_serio": {
+    "message": "Serio"
+  },
+  "text_emoticon_rosto_incomodado": {
+    "message": "Rostro Incómodo"
+  },
+  "text_emoticon_sec_surpresos_espantados": {
+    "message": "Sorprendidos y Asombrados"
+  },
+  "text_emoticon_boca_aberta_espanto": {
+    "message": "Boca Abierta de Asombro"
+  },
+  "text_emoticon_espanto_simples": {
+    "message": "Asombro Simple"
+  },
+  "text_emoticon_surpresa_leve": {
+    "message": "Sorpresa Leve"
+  },
+  "text_emoticon_surpresa_pequena": {
+    "message": "Sorpresa Pequeña"
+  },
+  "text_emoticon_boca_em_zero": {
+    "message": "Boca en Cero"
+  },
+  "text_emoticon_espanto_com_oculos": {
+    "message": "Asombro con Gafas"
+  },
+  "text_emoticon_confuso_tonto": {
+    "message": "Confuso y Mareado"
+  },
+  "text_emoticon_tonto_confuso": {
+    "message": "Mareado y Confuso"
+  },
+  "text_emoticon_olhos_redondos": {
+    "message": "Ojos Redondos"
+  },
+  "text_emoticon_olho_desalinhado": {
+    "message": "Ojos Desalineados"
+  },
+  "text_emoticon_espanto_assimetrico": {
+    "message": "Asombro Asimétrico"
+  },
+  "text_emoticon_espanto_aperto": {
+    "message": "Asombro Angustiado"
+  },
+  "text_emoticon_olhos_esbugalhados": {
+    "message": "Ojos Desorbitados"
+  },
+  "text_emoticon_sec_raiva_irritados": {
+    "message": "Enojo e Irritados"
+  },
+  "text_emoticon_muito_bravo_com_raiva": {
+    "message": "Muy Enojado con Furia"
+  },
+  "text_emoticon_bravo_classico": {
+    "message": "Enojado Clásico"
+  },
+  "text_emoticon_irritado_simples": {
+    "message": "Irritado Simple"
+  },
+  "text_emoticon_rosto_de_raiva_dentes": {
+    "message": "Enojo Mostrando Dientes"
+  },
+  "text_emoticon_gritando_raiva": {
+    "message": "Gritando de Enojo"
+  },
+  "text_emoticon_bravo_gritando": {
+    "message": "Enojado Gritando"
+  },
+  "text_emoticon_espanto_com_raiva": {
+    "message": "Asombro con Enojo"
+  },
+  "text_emoticon_muito_chateado_bravo": {
+    "message": "Muy Molesto y Enojado"
+  },
+  "text_emoticon_desaprovacao_disapproval": {
+    "message": "Mirada de Desaprobación"
+  },
+  "text_emoticon_choro_de_raiva": {
+    "message": "Lágrimas de Enojo"
+  },
+  "text_emoticon_sec_amor_beijos": {
+    "message": "Amor y Besos"
+  },
+  "text_emoticon_beijo_classico": {
+    "message": "Beso Clásico"
+  },
+  "text_emoticon_beijinho_simples": {
+    "message": "Besito Simple"
+  },
+  "text_emoticon_beijo_com_pisadinha": {
+    "message": "Beso con Guiño"
+  },
+  "text_emoticon_corado_sorrindo": {
+    "message": "Sonrojado Sonriendo"
+  },
+  "text_emoticon_sec_diversos_especiais": {
+    "message": "Varios y Especiales"
+  },
+  "text_emoticon_mostrando_a_lingua": {
+    "message": "Sacando la Lengua"
+  },
+  "text_emoticon_lingua_de_fora": {
+    "message": "Lengua Afuera"
+  },
+  "text_emoticon_pisadinha_lingua": {
+    "message": "Guiño con Lengua"
+  },
+  "text_emoticon_lingua_pequena": {
+    "message": "Lengua Pequeña"
+  },
+  "text_emoticon_lingua_simples": {
+    "message": "Lengua Simple"
+  },
+  "text_emoticon_lingua_estilizada": {
+    "message": "Lengua Estilizada"
+  },
+  "text_emoticon_lingua_olhos_fechados": {
+    "message": "Lengua con Ojos Cerrados"
+  },
+  "text_emoticon_boca_fechada_segredo": {
+    "message": "Labios Sellados"
+  },
+  "text_emoticon_silencio": {
+    "message": "Silencio"
+  },
+  "text_emoticon_boca_costurada": {
+    "message": "Boca Cosida"
+  },
+  "text_emoticon_segredo_guardado": {
+    "message": "Secreto Guardado"
+  },
+  "text_emoticon_cansado_confuso": {
+    "message": "Cansado y Confuso"
+  },
+  "text_emoticon_bocejando_sono": {
+    "message": "Bostezando de Sueño"
+  },
+  "text_emoticon_dormindo": {
+    "message": "Durmiendo"
+  },
+  "text_emoticon_olhos_fechados_dormindo": {
+    "message": "Ojos Cerrados Durmiendo"
+  },
+  "text_emoticon_vaca_espantada": {
+    "message": "Vaca Asombrada"
+  },
+  "text_emoticon_diabinho_sorridente": {
+    "message": "Diablillo Sonriente"
+  },
+  "text_emoticon_diabinho_classico": {
+    "message": "Diablillo Clásico"
+  },
+  "text_emoticon_anjinho_fofo": {
+    "message": "Angelito Tierno"
+  },
+  "text_emoticon_anjo_com_aureola": {
+    "message": "Ángel con Aureola"
+  },
+  "kaomoji_sec_felizes_alegres": {
+    "message": "Felices y Alegres"
+  },
+  "kaomoji_feliz_rosto_sorridente": {
+    "message": "Rostro Feliz y Sonriente"
+  },
+  "kaomoji_sorriso_alegre": {
+    "message": "Sonrisa Alegre"
+  },
+  "kaomoji_sorriso_fofo_corado": {
+    "message": "Sonrisa Tierna y Sonrojada"
+  },
+  "kaomoji_olhos_grandes_felizes": {
+    "message": "Ojos Grandes y Felices"
+  },
+  "kaomoji_sorriso_com_flor": {
+    "message": "Sonrisa con Flor"
+  },
+  "kaomoji_alegria_magica_sparkles": {
+    "message": "Alegría Mágica con Brillos"
+  },
+  "kaomoji_contentamento_fofo": {
+    "message": "Contento y Tierno"
+  },
+  "kaomoji_sorriso_suave": {
+    "message": "Sonrisa Suave"
+  },
+  "kaomoji_sorriso_simples": {
+    "message": "Sonrisa Simple"
+  },
+  "kaomoji_sorriso_fofo_pequeno": {
+    "message": "Sonrisa Tierna Pequeña"
+  },
+  "kaomoji_risada_aberta": {
+    "message": "Risa Abierta"
+  },
+  "kaomoji_risada_gargalhada": {
+    "message": "Gran Carcajada"
+  },
+  "kaomoji_felicidade_radiante": {
+    "message": "Felicidad Radiante"
+  },
+  "kaomoji_relaxado_e_feliz": {
+    "message": "Relajado y Feliz"
+  },
+  "kaomoji_sorriso_amigavel": {
+    "message": "Sonrisa Amigable"
+  },
+  "kaomoji_olhos_atentos_felizes": {
+    "message": "Ojos Atentos y Felices"
+  },
+  "kaomoji_empolgacao_maxima": {
+    "message": "Emoción Máxima"
+  },
+  "kaomoji_animacao_radiante": {
+    "message": "Gran Entusiasmo"
+  },
+  "kaomoji_olhos_estrelados": {
+    "message": "Ojos Estrellados"
+  },
+  "kaomoji_celebracao_de_alegria": {
+    "message": "Celebración de Alegría"
+  },
+  "kaomoji_sec_amor_beijos_abracos": {
+    "message": "Amor, Besos y Abrazos"
+  },
+  "kaomoji_amor_sonhador": {
+    "message": "Amor Soñador"
+  },
+  "kaomoji_apaixonado_com_musica": {
+    "message": "Enamorado con Música"
+  },
+  "kaomoji_abraco_fofo": {
+    "message": "Abrazo Tierno"
+  },
+  "kaomoji_abraco_caloroso": {
+    "message": "Abrazo Cálido"
+  },
+  "kaomoji_amor_fofinho": {
+    "message": "Amor Tierno"
+  },
+  "kaomoji_beijo_de_casal": {
+    "message": "Beso de Pareja"
+  },
+  "kaomoji_beijinho_carinhoso": {
+    "message": "Besito Cariñoso"
+  },
+  "kaomoji_enviando_coracao": {
+    "message": "Enviando Corazón"
+  },
+  "kaomoji_aceno_com_coracao": {
+    "message": "Saludo con Corazón"
+  },
+  "kaomoji_olhos_de_coracao": {
+    "message": "Ojos de Corazón"
+  },
+  "kaomoji_amor_intenso": {
+    "message": "Amor Intenso"
+  },
+  "kaomoji_apaixonado_radiante": {
+    "message": "Romance Radiante"
+  },
+  "kaomoji_rosto_apaixonado_corado": {
+    "message": "Rostro Enamorado y Sonrojado"
+  },
+  "kaomoji_carinho_doce": {
+    "message": "Cariño Dulce"
+  },
+  "kaomoji_querendo_abraco": {
+    "message": "Queriendo Abrazo"
+  },
+  "kaomoji_enviando_beijo": {
+    "message": "Enviando Beso"
+  },
+  "kaomoji_abraco_de_conforto": {
+    "message": "Abrazo de Consuelo"
+  },
+  "kaomoji_beijo_duplo": {
+    "message": "Doble Beso"
+  },
+  "kaomoji_abraco_apertado": {
+    "message": "Abrazo Fuerte"
+  },
+  "kaomoji_beijo_estrelado": {
+    "message": "Beso Estrellado"
+  },
+  "kaomoji_beijinho_fofo": {
+    "message": "Besito Tierno"
+  },
+  "kaomoji_beijo_doce": {
+    "message": "Beso Dulce"
+  },
+  "kaomoji_olhos_de_coracao_2": {
+    "message": "Ojos de Corazón"
+  },
+  "kaomoji_apaixonado": {
+    "message": "Enamorado"
+  },
+  "kaomoji_beijo_com_amor": {
+    "message": "Beso con Amor"
+  },
+  "kaomoji_olhar_apaixonado": {
+    "message": "Mirada Enamorada"
+  },
+  "kaomoji_rosto_apaixonado_corado_2": {
+    "message": "Rostro Enamorado y Sonrojado"
+  },
+  "kaomoji_fofinho_apaixonado": {
+    "message": "Tierno Enamorado"
+  },
+  "kaomoji_casal_apaixonado": {
+    "message": "Pareja Enamorada"
+  },
+  "kaomoji_coracoes_nos_olhos": {
+    "message": "Corazones en los Ojos"
+  },
+  "kaomoji_beijinho_com_coracao": {
+    "message": "Besito con Corazón"
+  },
+  "kaomoji_romantico_com_flor": {
+    "message": "Romántico con Flor"
+  },
+  "kaomoji_beijo_enviado": {
+    "message": "Beso Enviado"
+  },
+  "kaomoji_amor_e_carinho": {
+    "message": "Amor y Cariño"
+  },
+  "kaomoji_sec_fofos_animais": {
+    "message": "Tiernos y Animales"
+  },
+  "kaomoji_gato_fofo_cat": {
+    "message": "Gatito Tierno"
+  },
+  "kaomoji_patinha_de_animais": {
+    "message": "Patitas de Animal"
+  },
+  "kaomoji_urso_acenando_bear": {
+    "message": "Oso Saludando"
+  },
+  "kaomoji_ursinho_fofo_bear": {
+    "message": "Osito Tierno"
+  },
+  "kaomoji_cachorrinho_olhos_grandes_dog": {
+    "message": "Perrito con Ojos Grandes"
+  },
+  "kaomoji_urso_sorridente_bear": {
+    "message": "Oso Sonriente"
+  },
+  "kaomoji_rosto_amigavel": {
+    "message": "Rostro Amigable"
+  },
+  "kaomoji_gatinho_atento_cat": {
+    "message": "Gatito Atento"
+  },
+  "kaomoji_bichinho_curioso": {
+    "message": "Bichito Curioso"
+  },
+  "kaomoji_gato_relaxado_cat": {
+    "message": "Gato Relajado"
+  },
+  "kaomoji_cachorro_orelhudo_dog": {
+    "message": "Perro Orejudo"
+  },
+  "kaomoji_bichinho_nervoso": {
+    "message": "Bichito Nervioso"
+  },
+  "kaomoji_carinho_de_gatos_cat": {
+    "message": "Cariño de Gatos"
+  },
+  "kaomoji_urso_epico_bear": {
+    "message": "Oso Épico"
+  },
+  "kaomoji_ursinho_classico_bear": {
+    "message": "Osito Clásico"
+  },
+  "kaomoji_gatinho_pequeno_cat": {
+    "message": "Gatito Pequeño"
+  },
+  "kaomoji_coelho_fofo_bunny": {
+    "message": "Conejito Tierno"
+  },
+  "kaomoji_bichinho_fofo_simples": {
+    "message": "Bichito Tierno Simple"
+  },
+  "kaomoji_cachorro_feliz_dog": {
+    "message": "Perro Feliz"
+  },
+  "kaomoji_patinhas_de_gato_cat": {
+    "message": "Patitas de Gato"
+  },
+  "kaomoji_sec_dar_de_ombros_indiferenca": {
+    "message": "Encogerse de Hombros e Indiferencia"
+  },
+  "kaomoji_shrug_dar_de_ombros_classico": {
+    "message": "Encogimiento de Hombros Clásico"
+  },
+  "kaomoji_shrug_surpreso": {
+    "message": "Encogimiento de Hombros Sorprendido"
+  },
+  "kaomoji_indiferente_com_gota": {
+    "message": "Indiferente con Gota"
+  },
+  "kaomoji_sem_paciencia_meh": {
+    "message": "Sin Paciencia Meh"
+  },
+  "kaomoji_sorriso_sem_graca": {
+    "message": "Sonrisa Incómoda"
+  },
+  "kaomoji_shrug_triste": {
+    "message": "Encogimiento de Hombros Triste"
+  },
+  "kaomoji_o_que_fazer_meh": {
+    "message": "Qué Hacer Meh"
+  },
+  "kaomoji_desdem_sem_se_importar": {
+    "message": "Desdén sin Importar"
+  },
+  "kaomoji_shrug_relaxado": {
+    "message": "Encogimiento de Hombros Relajado"
+  },
+  "kaomoji_shrug_pirata": {
+    "message": "Encogimiento de Hombros Pirata"
+  },
+  "kaomoji_shrug_contente": {
+    "message": "Encogimiento de Hombros Contento"
+  },
+  "kaomoji_nem_liguei_meh": {
+    "message": "Ni Me Importa Meh"
+  },
+  "kaomoji_sem_comentarios": {
+    "message": "Sin Comentarios"
+  },
+  "kaomoji_shrug_desconfiado": {
+    "message": "Encogimiento de Hombros Desconfiado"
+  },
+  "kaomoji_sec_virando_mesa_raiva": {
+    "message": "Voltear Mesa y Furia"
+  },
+  "kaomoji_raiva_furia": {
+    "message": "Ira y Furia"
+  },
+  "kaomoji_virando_mesa_table_flip_classico": {
+    "message": "Voltear Mesa Clásico"
+  },
+  "kaomoji_olhar_serio_raiva": {
+    "message": "Mirada Seria de Furia"
+  },
+  "kaomoji_furia_intensa_veia": {
+    "message": "Furia con Vena Hinchada"
+  },
+  "kaomoji_irritado_com_veia": {
+    "message": "Irritado con Vena"
+  },
+  "kaomoji_raiva_extrema_dedo": {
+    "message": "Furia Extrema"
+  },
+  "kaomoji_virando_mesa_com_furia_table_flip": {
+    "message": "Voltear Mesa con Furia"
+  },
+  "kaomoji_desvirando_mesa_arrumando": {
+    "message": "Acomodando la Mesa de Vuelta"
+  },
+  "kaomoji_olhar_de_julgamento": {
+    "message": "Mirada de Juicio"
+  },
+  "kaomoji_virando_mesa_raiva": {
+    "message": "Volteando Mesa con Furia"
+  },
+  "kaomoji_virando_mesa_simples": {
+    "message": "Voltear Mesa Simple"
+  },
+  "kaomoji_arrumando_mesa_cuidado": {
+    "message": "Acomodando Mesa con Cuidado"
+  },
+  "kaomoji_rosto_de_furia": {
+    "message": "Rostro de Furia"
+  },
+  "kaomoji_bravo_irritado": {
+    "message": "Enfadado e Irritado"
+  },
+  "kaomoji_caminhando_com_raiva": {
+    "message": "Caminando con Furia"
+  },
+  "kaomoji_raiva_extrema": {
+    "message": "Ira Extrema"
+  },
+  "kaomoji_revolta": {
+    "message": "Indignación"
+  },
+  "kaomoji_dedo_do_meio": {
+    "message": "Gesto de Dedo Medio"
+  },
+  "kaomoji_sec_surpresos_chocados": {
+    "message": "Sorprendidos y Conmocionados"
+  },
+  "kaomoji_chocado_olhos_abertos": {
+    "message": "Conmocionado con Ojos Abiertos"
+  },
+  "kaomoji_surpreso_olhos_grandes": {
+    "message": "Sorpresa con Ojos Grandes"
+  },
+  "kaomoji_boca_aberta_espanto": {
+    "message": "Boca Abierta de Asombro"
+  },
+  "kaomoji_surpresa_fofa": {
+    "message": "Sorpresa Tierna"
+  },
+  "kaomoji_espanto_com_bracos": {
+    "message": "Asombro con Brazos"
+  },
+  "kaomoji_chocado_corado": {
+    "message": "Conmocionado y Sonrojado"
+  },
+  "kaomoji_incredulidade": {
+    "message": "Incredulidad"
+  },
+  "kaomoji_espanto_extremo": {
+    "message": "Asombro Extremo"
+  },
+  "kaomoji_olhar_fixo_chocado": {
+    "message": "Mirada Fija Conmocionada"
+  },
+  "kaomoji_impactado": {
+    "message": "Impactado"
+  },
+  "kaomoji_olhos_desiguais_surpreso": {
+    "message": "Sorpresa con Ojos Desiguales"
+  },
+  "kaomoji_muito_surpreso": {
+    "message": "Muy Sorprendido"
+  },
+  "kaomoji_espanto_total": {
+    "message": "Asombro Total"
+  },
+  "kaomoji_impressionado": {
+    "message": "Impresionado"
+  },
+  "kaomoji_susto_repentino": {
+    "message": "Susto Repentino"
+  },
+  "kaomoji_olhar_perplexo": {
+    "message": "Mirada Perpleja"
+  },
+  "kaomoji_surpresa_aberta": {
+    "message": "Sorpresa Abierta"
+  },
+  "kaomoji_surpresa_subita": {
+    "message": "Sorpresa Súbita"
+  },
+  "kaomoji_surpresa_com_susto": {
+    "message": "Sorpresa Asustada"
+  },
+  "kaomoji_susto_extremo": {
+    "message": "Susto Extremo"
+  },
+  "kaomoji_sec_tristes_chorando_desculpas": {
+    "message": "Tristes, Llorando y Disculpas"
+  },
+  "kaomoji_chorando_copiosamente": {
+    "message": "Llorando Copiosamente"
+  },
+  "kaomoji_lagrimas_triste": {
+    "message": "Lágrimas Tristes"
+  },
+  "kaomoji_chorando_choro_fofo": {
+    "message": "Llanto Tierno"
+  },
+  "kaomoji_choroso_q_q": {
+    "message": "Lloroso Q_Q"
+  },
+  "kaomoji_triste_t_t": {
+    "message": "Triste T_T"
+  },
+  "kaomoji_olhos_cheios_de_lagrimas": {
+    "message": "Ojos Llenos de Lágrimas"
+  },
+  "kaomoji_preocupado_triste": {
+    "message": "Preocupado y Triste"
+  },
+  "kaomoji_magoado_chateado": {
+    "message": "Dolido y Molesto"
+  },
+  "kaomoji_triste_arrependido": {
+    "message": "Triste y Arrepentido"
+  },
+  "kaomoji_chorando_muito": {
+    "message": "Llorando Mucho"
+  },
+  "kaomoji_pedindo_desculpas_curvado": {
+    "message": "Pidiendo Disculpas Inclinado"
+  },
+  "kaomoji_cabisbaixo_triste": {
+    "message": "Cabizbajo Triste"
+  },
+  "kaomoji_choro_classico": {
+    "message": "Llanto Clásico"
+  },
+  "kaomoji_olhar_de_desdem": {
+    "message": "Mirada de Desdén"
+  },
+  "kaomoji_irritacao_silenciosa": {
+    "message": "Irritación Silenciosa"
+  },
+  "kaomoji_sec_dancando_festivos": {
+    "message": "Bailando y Festivos"
+  },
+  "kaomoji_dancando_animado": {
+    "message": "Bailando Entusiasmado"
+  },
+  "kaomoji_danca_estelar_disco": {
+    "message": "Baile Estelar Disco"
+  },
+  "kaomoji_dancando_com_alegria": {
+    "message": "Bailando con Alegría"
+  },
+  "kaomoji_ouvindo_musica": {
+    "message": "Escuchando Música"
+  },
+  "kaomoji_danca_ritmo": {
+    "message": "Baile con Ritmo"
+  },
+  "kaomoji_festa_com_musica": {
+    "message": "Fiesta con Música"
+  },
+  "kaomoji_dancando_suave": {
+    "message": "Bailando Suave"
+  },
+  "kaomoji_acenando_na_festa": {
+    "message": "Saludando en la Fiesta"
+  },
+  "kaomoji_cantando": {
+    "message": "Cantando"
+  },
+  "kaomoji_dj_dancando_oculos": {
+    "message": "DJ Bailando con Gafas"
+  },
+  "kaomoji_deslizando_na_danca": {
+    "message": "Deslizándose en el Baile"
+  },
+  "kaomoji_danca_descontraida": {
+    "message": "Baile Relajado"
+  },
+  "kaomoji_dancando_passinho": {
+    "message": "Bailando Pasito"
+  },
+  "kaomoji_danca_com_ritmo": {
+    "message": "Bailando al Compás"
+  },
+  "kaomoji_sec_oculos_estilo": {
+    "message": "Gafas y Estilo"
+  },
+  "kaomoji_oculos_escuros_estilo_cool": {
+    "message": "Estilo con Gafas de Sol"
+  },
+  "kaomoji_colocando_oculos_estilo": {
+    "message": "Poniéndose las Gafas"
+  },
+  "kaomoji_espiando_atras_da_parede": {
+    "message": "Espiando Tras la Pared"
+  },
+  "kaomoji_magico_brilho_estilo": {
+    "message": "Estilo de Brillo Mágico"
+  },
+  "kaomoji_apontando_com_estilo": {
+    "message": "Señalando con Estilo"
+  },
+  "kaomoji_apontando_serio": {
+    "message": "Señalando Serio"
+  },
+  "kaomoji_lutador_pronto_estilo": {
+    "message": "Luchador en Guardia"
+  },
+  "kaomoji_forte_musculos": {
+    "message": "Flexionando Músculos"
+  },
+  "kaomoji_cool_sunglasses": {
+    "message": "Gafas de Sol Geniales"
+  },
+  "kaomoji_meme_colocando_oculos": {
+    "message": "Meme Poniéndose las Gafas"
+  },
+  "kaomoji_lenny_face_estilo": {
+    "message": "Estilo Lenny Face"
+  },
+  "kaomoji_elegante": {
+    "message": "Elegante y Distinguido"
+  },
+  "kaomoji_confiante_estilo": {
+    "message": "Estilo Confiado"
+  },
+  "kaomoji_agente_secreto": {
+    "message": "Agente Secreto"
+  },
+  "kaomoji_brilho_nos_olhos": {
+    "message": "Brillo en la Mirada"
+  },
+  "kaomoji_sec_acao_luta_armas": {
+    "message": "Acción, Lucha y Armas"
+  },
+  "kaomoji_pronto_pra_luta_boxing": {
+    "message": "Listo para el Boxeo"
+  },
+  "kaomoji_derrubando_parede_acao": {
+    "message": "Rompiendo la Pared"
+  },
+  "kaomoji_espada_magica_sword": {
+    "message": "Espada Mágica"
+  },
+  "kaomoji_atacando_com_espada": {
+    "message": "Atacando con Espada"
+  },
+  "kaomoji_determinado_luta": {
+    "message": "Luchador Determinado"
+  },
+  "kaomoji_segurando_firme": {
+    "message": "Sosteniendo Firme"
+  },
+  "kaomoji_ataque_especial": {
+    "message": "Ataque Especial"
+  },
+  "kaomoji_preparar_acao": {
+    "message": "Preparando la Acción"
+  },
+  "kaomoji_com_arma_gun": {
+    "message": "Apuntando Arma"
+  },
+  "emptySearchTitle": {
+    "message": "No se encontraron resultados"
+  },
+  "emptySearchSub": {
+    "message": "Intenta buscar otro término o código hex"
+  },
+  "copyCodepointTitle": {
+    "message": "Haz clic para copiar U+HEX"
+  },
+  "copyHexTitle": {
+    "message": "Haz clic para copiar HEX"
+  },
+  "copyDecTitle": {
+    "message": "Haz clic para copiar DEC"
+  },
+  "copyEntityTitle": {
+    "message": "Haz clic para copiar ENTITY"
+  },
+  "copyCharTitle": {
+    "message": "Copiar Carácter"
+  },
+  "copyCharBtn": {
+    "message": "Copiar"
+  },
+  "addFavTitle": {
+    "message": "Añadir a Favoritos"
+  },
+  "toastCopied": {
+    "message": "Copiado al portapapeles"
+  },
+  "text_emoticon_ranzinza": {
+    "message": "Gruñón"
+  },
+  "text_emoticon_triste_canto": {
+    "message": "Mirada Triste"
+  },
+  "text_emoticon_piscadela_seria": {
+    "message": "Guiño Serio"
+  },
+  "text_emoticon_expressao_de_dor_raiva": {
+    "message": "Expresión de Dolor/Enojo"
+  },
+  "text_emoticon_apertado_com_raiva": {
+    "message": "Mueca de Furia"
+  },
+  "text_emoticon_nervoso": {
+    "message": "Nervioso y Estresado"
+  },
+  "kaomoji_sorriso_apaixonado": {
+    "message": "Sorriso Apaixonado"
+  },
+  "kaomoji_raiva_com_marca": {
+    "message": "Raiva com Marca"
+  },
+  "kaomoji_escondendo_o_rosto_chorando": {
+    "message": "Escondendo o Rosto Chorando"
+  },
+  "kaomoji_decepcionado_triste": {
+    "message": "Decepcionado Triste"
+  },
+  "kaomoji_comemorando_festa": {
+    "message": "Comemorando Festa"
   }
 }
