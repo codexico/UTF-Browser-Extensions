@@ -2,6 +2,10 @@
 
 ➩ I ❤ ☕ with chrome in the ☔ ☺☻
 
+✨ What's New in Version v4.4.0:
+
+- Performance improvements, updated store links, and refined documentation.
+
 ✨ What's New in Version v4.3.0:
 
 ⚡ Ultra-fast JSON Engine: Complete migration of all 37 character datasets to structured JSON — instant category loading with zero DOMParser overhead!

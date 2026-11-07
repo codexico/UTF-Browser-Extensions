@@ -9,6 +9,7 @@
     "lint": "web-ext lint --source-dir src",
     "release": "node ia/scripts/release.js",
     "check:docs": "node scripts/check_docs.js",
+    "update:docs": "node scripts/update_descriptions.js",
     "sync:astro": "node ia/scripts/sync_to_astro.js"
   },
   "keywords": [

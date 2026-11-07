@@ -147,7 +147,7 @@ Para publicar uma nova versão completa da extensão (Testes + Lint + Bump + Bui
 
 ### ⚡ Forma Automatizada:
 ```bash
-npm run release          # Faz um incremento patch automático (ex: 4.3.0 -> 4.3.1)
+npm run release          # Faz um incremento patch automático (ex: 4.4.0 -> 4.4.1)
 npm run release -- minor # Incremento minor (ex: 4.3.0 -> 4.4.0)
 npm run release -- major # Incremento major (ex: 4.3.0 -> 5.0.0)
 ```

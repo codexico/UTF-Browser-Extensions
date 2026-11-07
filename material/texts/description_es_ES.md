@@ -2,6 +2,10 @@
 
 ➩ Yo ❤ ☕ con Chrome en la ☔ ☺☻
 
+✨ Novedades de la Versión v4.4.0:
+
+- Mejoras de rendimiento, enlaces oficiales de tiendas actualizados y documentación refinada.
+
 ✨ Novedades de la Versión v4.3.0:
 
 ⚡ Motor JSON Ultra Rápido: Migración completa de las 37 categorías a JSON estructurado — ¡carga instantánea de caracteres sin la sobrecarga de DOMParser!
