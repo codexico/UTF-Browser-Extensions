@@ -53,3 +53,4 @@ test('Documentation & Store Descriptions Integrity Verification', (t) => {
   assert.ok(popupJs.includes(OFFICIAL_LINKS.web), 'renderAboutView must include Online Web link');
   assert.ok(popupJs.includes(OFFICIAL_LINKS.github), 'renderAboutView must include GitHub link');
 });
+
