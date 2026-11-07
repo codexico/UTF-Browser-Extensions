@@ -2,6 +2,11 @@
 
 ➩ I ❤ ☕ with chrome in the ☔ ☺☻
 
+✨ What's New in Version v4.4.1:
+
+- add trailing newline to update_descriptions.js
+- automate store descriptions and changelog generation for releases
+
 ✨ What's New in Version v4.4.0:
 
 - Performance improvements, updated store links, and refined documentation.

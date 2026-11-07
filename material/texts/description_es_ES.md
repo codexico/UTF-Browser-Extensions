@@ -2,6 +2,11 @@
 
 ➩ Yo ❤ ☕ con Chrome en la ☔ ☺☻
 
+✨ Novedades de la Versión v4.4.1:
+
+- add trailing newline to update_descriptions.js
+- automate store descriptions and changelog generation for releases
+
 ✨ Novedades de la Versión v4.4.0:
 
 - Mejoras de rendimiento, enlaces oficiales de tiendas actualizados y documentación refinada.
