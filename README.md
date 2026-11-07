@@ -126,6 +126,9 @@ A suíte de testes utiliza o test runner nativo do Node.js (`node:test`), sem de
 # Executa todos os testes unitários (validação de JSONs, contagens, busca, parsers)
 npm test
 
+# Valida se as descrições de loja (material/texts/) e a tela Sobre estão em dia
+npm run check:docs
+
 # Executa o linter oficial de extensões da Mozilla (compatibilidade Chrome e Firefox)
 npm run lint
 

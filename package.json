@@ -8,6 +8,7 @@
     "test:all": "npm run test && npm run test:playwright",
     "lint": "web-ext lint --source-dir src",
     "release": "node ia/scripts/release.js",
+    "check:docs": "node scripts/check_docs.js",
     "sync:astro": "node ia/scripts/sync_to_astro.js"
   },
   "keywords": [
