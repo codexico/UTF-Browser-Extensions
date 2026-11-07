@@ -42,8 +42,9 @@ If some rare characters (such as CJK, Tibetan, or Runic) display empty boxes, yo
 • DejaVu Fonts http://dejavu-fonts.org/
 
 
-🦊 Firefox Add-on: https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/
 🌐 Web Version (Online): https://codexico.com.br/unicode/
+🛒 Chrome Extension: https://chromewebstore.google.com/detail/unicode-utf-8-character-s/fcemphgmjnjpmmdhcedhjiegickfbiia
+🦊 Firefox Add-on: https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/
 Code & repository: https://github.com/codexico/UTF-Browser-Extensions
 Official website: https://codexico.com.br
 All about Unicode: The Unicode Consortium http://www.unicode.org/

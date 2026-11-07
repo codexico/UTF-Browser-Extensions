@@ -2,7 +2,7 @@
 
 > **O repositório completo, ultra-rápido e divertido para pesquisar, inspecionar e copiar símbolos Unicode, caracteres UTF-8, Kaomojis e Emojis!**
 
-![Manifest V3](https://img.shields.io/badge/Manifest-V3-indigo?style=for-the-badge&logo=googlechrome)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/unicode-utf-8-character-s/fcemphgmjnjpmmdhcedhjiegickfbiia)
 [![Firefox Add-on](https://img.shields.io/badge/Firefox-Add--on-orange?style=for-the-badge&logo=firefox)](https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/)
 [![Web Version](https://img.shields.io/badge/Web_Version-Astro-9333ea?style=for-the-badge&logo=astro)](https://codexico.com.br/unicode/)
 ![Since](https://img.shields.io/badge/Since-2010-amber?style=for-the-badge)
@@ -73,8 +73,12 @@ src/
 
 ---
 
-## 📦 Como Instalar no Google Chrome / Chromium (Modo Desenvolvedor)
+## 📦 Instalar no Google Chrome / Chromium
 
+- 🛒 **Instalação Oficial**: [Disponível na Chrome Web Store](https://chromewebstore.google.com/detail/unicode-utf-8-character-s/fcemphgmjnjpmmdhcedhjiegickfbiia)
+- 🌐 **Versão Web Online**: [Acesse direto no navegador via codexico.com.br/unicode](https://codexico.com.br/unicode/)
+
+### Como instalar localmente (Modo Desenvolvedor):
 1. Faça o clone ou download deste repositório:
    ```bash
    git clone https://github.com/codexico/UTF-Browser-Extensions.git
@@ -150,7 +154,8 @@ npm run release -- major # Incremento major (ex: 4.3.0 -> 5.0.0)
 ## 👤 Autor & Licença
 
 Criada originalmente em **2010**, mantida e aprimorada com amor por **[codexico.com.br](https://codexico.com.br)**.
-- 🦊 **Extensão Firefox**: [addons.mozilla.org](https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/)
 - 🌐 **Versão Web Online**: [codexico.com.br/unicode](https://codexico.com.br/unicode/)
+- 🛒 **Extensão Chrome**: [Chrome Web Store](https://chromewebstore.google.com/detail/unicode-utf-8-character-s/fcemphgmjnjpmmdhcedhjiegickfbiia)
+- 🦊 **Extensão Firefox**: [Firefox Add-ons (AMO)](https://addons.mozilla.org/pt-BR/firefox/addon/unicode-utf-8-character-studio/)
 
 Distribuído sob a licença [OSL](LICENSE). Dados e nomenclaturas mantidos em conformidade com o padrão oficial do **Unicode Consortium**.
